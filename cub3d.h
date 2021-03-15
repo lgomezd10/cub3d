@@ -12,7 +12,6 @@ typedef struct s_color
     unsigned char blue;
 } t_color;
 
-
 typedef struct s_file
 {
     int width;
@@ -22,8 +21,8 @@ typedef struct s_file
     char *t_WE;
     char *t_EA;
     char *sprite;
-    t_color floor;
-    t_color ceiling;
+    t_color *floor;
+    t_color *ceiling;
 } t_file;
 
 char	**ft_split_set(char const *s, char *set);

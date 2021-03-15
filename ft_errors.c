@@ -3,5 +3,5 @@
 void ft_errors(char *msg)
 {
     perror(msg);
-    exit(-1);
+    exit(0);
 }

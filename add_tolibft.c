@@ -69,30 +69,33 @@ int ft_array_len(char **a)
 	return (count);
 }
 
-char *ft_delete_set(char **str, char *set)
+char *ft_delete_set(char **str1, char *set)
 {
 	char *copy;
+	char *str;
 	int len;
 	int i;
 	int j;
 
-	len = ft_strlen(*str);
+	str = *str1;
+	len = ft_strlen(str);
 	copy = ft_calloc(sizeof(char), len + 1);
+	copy[len] = '\0';
 	if (copy)
 	{
 		i = 0;
 		j = 0;
-		while (str[i])
+		while (i < len && str[i])
 		{
 			if (!ft_strrchr(set, str[i]))
 				copy[j++] = str[i];
 			i++;
 		}
-		free(*str);
-		*str = ft_strdup(copy);
+		free(*str1);
+		*str1 = ft_strdup(copy);
 		free(copy);
 	}
-	return (*str);
+	return (str);
 }
 
 int ft_is_nbr(char *str)
@@ -101,6 +104,7 @@ int ft_is_nbr(char *str)
 	{
 		if (!ft_isdigit(*str))
 			return (0);
+		str++;
 	}
 	return (1);
 }
