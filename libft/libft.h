@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 17:07:57 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/04 18:00:48 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:41:11 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,10 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		get_next_line(int fd, char **line);
+char	**ft_split_set(char const *s, char *set);
+int		ft_array_len(void **a);
+int		ft_str_is_nbr(char *str);
+int		ft_str_in_set(char *str, char *set);
+char	*ft_delete_set(char **str, char *set)
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 16:10:44 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/04 18:20:32 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:23:33 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,31 @@ char	**ft_split(char const *s, char c)
 			split[i++] = ft_subchr(s, c);
 			s = ft_strchr(s, c);
 			s++;
+		}
+	}
+	return (split);
+}
+
+char	**ft_split_set(char const *s, char *set)
+{
+	size_t	i;
+	size_t	count;
+	char	**split;
+
+	i = 0;
+	count = ft_count_fragments(s, set);
+	split = (char **)malloc(sizeof(char *) * (count + 1));
+	if (split)
+	{
+		split[count] = 0;
+		i = 0;
+		while (i < count)
+		{
+			while (ft_strrchr(set, *s))
+				s++;
+			split[i++] = ft_subchr(s, set);
+			while (!ft_strrchr(set, *s))
+				s++;
 		}
 	}
 	return (split);

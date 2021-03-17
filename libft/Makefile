@@ -6,7 +6,7 @@
 #    By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/01 12:43:32 by lgomez-d          #+#    #+#              #
-#    Updated: 2021/02/01 15:41:29 by lgomez-d         ###   ########.fr        #
+#    Updated: 2021/03/17 15:41:23 by lgomez-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ ft_isalnum.c ft_isascii.c ft_isprint.c ft_toupper.c ft_tolower.c ft_calloc.c \
 ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
 ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 ft_lstmap.c ft_strncpy.c get_next_line/get_next_line.c \
-get_next_line/get_next_line_utils.c
+get_next_line/get_next_line_utils.c \
+ft_str_is_nbr.c ft_array_len.c ft_str_in_set.c ft_delete_set.c
 
 CFLAGS	= -Wall -Wextra -Werror
 

@@ -34,10 +34,6 @@ typedef struct s_file
     t_table *table;
 } t_file;
 
-char	**ft_split_set(char const *s, char *set);
-int ft_array_len(char **a);
-int ft_is_nbr(char *str);
-char *ft_delete_set(char **str, char *set);
 int load_file(char *file, t_file *data);
 void ft_errors(char *msg);
 int correct_line_map(char *str, t_file *data);
