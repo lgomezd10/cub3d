@@ -10,13 +10,10 @@ int follow_wall(t_file *data, int row, int col)
     if (row > 0)
     {
         follow = table[row - 1][col] == '1';
-        printf("el de arriba %d \n", follow);
         if (col > 0)
             follow = follow || table[row - 1][col - 1] == '1';
-        printf("el de medio %d \n", follow);
         if (col < data->table->cols - 1)
             follow = follow || table[row - 1][col + 1] == '1';
-        printf("el de abajo %d \n", follow);
     }
     else
         return (1);
@@ -76,8 +73,24 @@ int data_loaded(t_file *data)
     out = out && data->floor && data->ceiling;
     out = out && data->sprite;
     out = out && data->height && data->width;
-
     return (out);
+}
+
+void	clear_list(t_list **list)
+{
+	t_list	*temp;
+    char *str;
+
+    temp = *list;
+	while (*list)
+    {
+        temp = *list;
+        free((char *)temp->content);
+        temp->content = 0;
+        *list = temp->next;
+        free(temp);
+    }
+    *list = 0;
 }
 
 int get_map(int fd, char *str, t_file *data)
@@ -91,6 +104,7 @@ int get_map(int fd, char *str, t_file *data)
     if (!data->table)
         data->table = (t_table *)ft_calloc(sizeof(t_table), 1);
     len = ft_strlen(str);
+    str = ft_strdup(str);
     while (noend >= 0 && str[0] && len && correct_line_map(str, data))
     {
         while (str[len - 1] == ' ')
@@ -106,5 +120,6 @@ int get_map(int fd, char *str, t_file *data)
         build_map(list, data);
     else
         ft_errors("El mapa no es correcto");
+    clear_list(&list);
     return (1);
 }

@@ -19,7 +19,7 @@ void free_split(char **split)
 int get_color(char *color)
 {
     int nbr;
-    if (ft_is_nbr(color))
+    if (ft_str_is_nbr(color))
     {
         nbr = ft_atoi(color);
         if (nbr >= 0 && nbr <= 255)
@@ -33,15 +33,17 @@ int load_color(char *line, t_file *data)
 {
     char **split;
     t_color **color;
+    char *temp;
 
     color = 0;
-    line = ft_delete_set(&line, " \t");
-    split = ft_split(&line[1], ',');
-    if (ft_array_len(split) == 3)
+    temp = ft_strdup(line);
+    temp = ft_delete_set(&temp, " \t");
+    split = ft_split_set(&temp[1], ",");
+    if (ft_array_len((void **)split) == 3)
     {
-        if (line[0] == 'F')
+        if (temp[0] == 'F')
             color = &data->floor;
-        if (line[0] == 'C')
+        if (temp[0] == 'C')
             color = &data->ceiling;
         if (*color)
             ft_errors("Linea repetida");
@@ -53,10 +55,12 @@ int load_color(char *line, t_file *data)
             (*color)->blue = get_color(split[2]);
             free_split(split);
             free(split);
+            free(temp);
             return (1);
         }
     }
     ft_errors("El formato para color es X xxx,xxx,xxx");
+    return (0);
 }
 
 int load_texture(char **split, t_file *data)
@@ -89,15 +93,16 @@ int load_resolution(char **split, t_file *data)
 {
     if (data->height && data->width)
         ft_errors("Resolución repetida");
-    if (ft_array_len(split) == 3)
+    if (ft_array_len((void **)split) == 3)
     {
-        if (ft_is_nbr(split[1]) && ft_is_nbr(split[2]))
+        if (ft_str_is_nbr(split[1]) && ft_str_is_nbr(split[2]))
             data->height = ft_atoi(split[1]);
             data->width = ft_atoi(split[2]);
             if (data->height && data->width)
                 return (1);
     }
     ft_errors("Formato para resoltion R nbr1 nbr2");
+    return (0);
 }
 
 int load_line(int fd, char *line, t_file *data)
@@ -122,12 +127,11 @@ int load_line(int fd, char *line, t_file *data)
             load_resolution(split, data);
     }
     else if (ft_strlen(split[0]) == 2)
-    {
         load_texture(split, data);
-    }
     free_split(split);
     free(split);
     split = 0;
+    return (0);
 }
 
 int name_file_ok(char *file)
@@ -155,15 +159,13 @@ int load_file(char *file, t_file *data)
     if (fd < 0)
         ft_errors("No se puede abrir el archivo");
     line = 0;
-    while (noend > 0)
-    {
-        free(line);
-        line = 0;
+    while (noend > 0 || (line && *line))
+    {        
         noend = get_next_line(fd, &line);
         if (ft_strlen(line))
-        {
             load_line(fd, line, data);
-        }
+        free(line);
+        line = 0;
     }
-
+    return (0);
 }

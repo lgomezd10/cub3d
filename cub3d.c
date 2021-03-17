@@ -25,9 +25,11 @@ void print_struct(t_file *data)
                printf("%c ", data->table->table[i][j]);
                j++;
             }
+            free(data->table->table[i]);
             printf("\n");
             i++;
         }
+        free(data->table->table);
     }
 }
 
@@ -42,9 +44,8 @@ int main(int argc, char **argv)
         ft_errors("Solo se permiten dos argumentos");
     else
     {
-        load_file(argv[1], &data);
-        system("leaks a.out");
+        load_file(argv[1], &data);        
         print_struct(&data);
-        
+        system("leaks cub3d");
     }
 }
