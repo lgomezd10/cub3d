@@ -1,15 +1,31 @@
 #include "cub3d.h"
 
+void free_split(char **split)
+{
+    int i;
+
+    i = 0;
+    if (split)
+    {
+        while (split[i])
+        {
+            free(split[i]);
+            split[i] = 0;
+            i++;
+        }
+    }
+}
+
 int get_color(char *color)
 {
     int nbr;
-
     if (ft_is_nbr(color))
     {
         nbr = ft_atoi(color);
         if (nbr >= 0 && nbr <= 255)
             return (nbr);
     }
+    ft_errors("El color puede estar entre 0 y 255");
     return (-1);
 }
 
@@ -21,24 +37,22 @@ int load_color(char *line, t_file *data)
     color = 0;
     line = ft_delete_set(&line, " \t");
     split = ft_split(&line[1], ',');
-    if (ft_array_len(split) != 3)
-        ft_errors("Error formato* color");
-    if (line[0] == 'F')
-        color = &data->floor;
-    if (line[0] == 'C')
-        color = &data->ceiling;
-    if (*color)
-        ft_errors("LInea repetida");
-    *color = (t_color *)ft_calloc(sizeof(t_color), 1);
-    if (*color)
+    if (ft_array_len(split) == 3)
     {
-        (*color)->red = get_color(split[0]);
-        (*color)->green = get_color(split[1]);
-        (*color)->blue = get_color(split[1]);
-        if ((*color)->red >= 0 && (*color)->green >= 0 &&
-        (*color)->blue >= 0)
+        if (line[0] == 'F')
+            color = &data->floor;
+        if (line[0] == 'C')
+            color = &data->ceiling;
+        if (*color)
+            ft_errors("Linea repetida");
+        *color = (t_color *)ft_calloc(sizeof(t_color), 1);
+        if (*color)
         {
-            
+            (*color)->red = get_color(split[0]);
+            (*color)->green = get_color(split[1]);
+            (*color)->blue = get_color(split[2]);
+            free_split(split);
+            free(split);
             return (1);
         }
     }
@@ -50,7 +64,7 @@ int load_texture(char **split, t_file *data)
     char *texture;
     char **opt;
 
-    texture = split[1];
+    texture = ft_strdup(split[1]);
     opt = 0;
     //TODO intentar abrir el fichero
     if (!ft_strncmp(split[0], "NO", 3))
@@ -71,27 +85,49 @@ int load_texture(char **split, t_file *data)
     return (1);
 }
 
-int load_line(char *line, t_file *data)
+int load_resolution(char **split, t_file *data)
+{
+    if (data->height && data->width)
+        ft_errors("Resolución repetida");
+    if (ft_array_len(split) == 3)
+    {
+        if (ft_is_nbr(split[1]) && ft_is_nbr(split[2]))
+            data->height = ft_atoi(split[1]);
+            data->width = ft_atoi(split[2]);
+            if (data->height && data->width)
+                return (1);
+    }
+    ft_errors("Formato para resoltion R nbr1 nbr2");
+}
+
+int load_line(int fd, char *line, t_file *data)
 {
     char **split;
 
     split = ft_split_set(line, " \t");
     if (ft_strlen(split[0]) > 2)
     {
-        //TODO comprobar si es mapa solo si se ha cargado todo
-        ft_errors("Linea no válida");
+        if (data_loaded(data))
+            get_map(fd, line, data);
+        else
+            ft_errors("Linea no válida");
     }
     else if (ft_strlen(split[0]) == 1)
     {
         if (!ft_strncmp(split[0], "F", 1) || !ft_strncmp(split[0], "C", 1))
             load_color(line, data);
-        if (!ft_strncmp(split[0], "S", 1)) //color
+        else if (!ft_strncmp(split[0], "S", 1))
             load_texture(split, data);
+        else if (!ft_strncmp(split[0], "R", 1))
+            load_resolution(split, data);
     }
     else if (ft_strlen(split[0]) == 2)
     {
         load_texture(split, data);
     }
+    free_split(split);
+    free(split);
+    split = 0;
 }
 
 int name_file_ok(char *file)
@@ -126,8 +162,7 @@ int load_file(char *file, t_file *data)
         noend = get_next_line(fd, &line);
         if (ft_strlen(line))
         {
-            printf("COMProbando %s\n", line);
-            load_line(line, data);
+            load_line(fd, line, data);
         }
     }
 

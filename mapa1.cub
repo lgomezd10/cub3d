@@ -1,6 +1,14 @@
-NO prueba/NO
-WE prueba/WE
+R 1200 2300
+NO  prueba/NO
+SO prueba/SO
+WE      prueba/WE
 EA Pru/EA
-F 123, 111, 222
 
 S ppe
+C 222 ,, 112, 255
+F 123, 111, 0
+
+  111111111  
+  1111000111   
+  12222211N01
+  11111111111
