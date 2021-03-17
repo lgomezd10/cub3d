@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 17:07:57 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/17 15:41:11 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:47:00 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ char	**ft_split_set(char const *s, char *set);
 int		ft_array_len(void **a);
 int		ft_str_is_nbr(char *str);
 int		ft_str_in_set(char *str, char *set);
-char	*ft_delete_set(char **str, char *set)
+char	*ft_delete_set(char **str, char *set);
 
 #endif

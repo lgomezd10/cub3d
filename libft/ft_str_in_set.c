@@ -6,9 +6,11 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:36:09 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/17 15:36:35 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:02:17 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_str_in_set(char *str, char *set)
 {
