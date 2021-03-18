@@ -13,6 +13,7 @@ t_point *update_point(t_point *point, int x, int y)
 {
     point->x = x;
     point->y = y;
+    return (point);
 }
 
 t_wall *get_points(t_file *data)
@@ -36,26 +37,5 @@ t_wall *get_points(t_file *data)
             walls->up_left = new_point(0, i);
         }
     }
-}
-
-int check_walls(t_file *data, int x, int y)
-{
-    t_table *table;
-    int i;
-    int j;
-
-    table = data->table->table;
-    j = y;
-    if (x < data->table->rows)
-    {
-        while (j < data->table->cols)
-        {
-            if (data[x][y] == 1)
-            {
-
-            }
-        }
-    }
-    else
-        return (1);
+    return (walls);
 }

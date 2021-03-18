@@ -4,6 +4,7 @@ void print_struct(t_file *data)
 {
     int i;
     int j;
+    /*
     printf("NO: %s\n", data->t_NO);
     printf("SO: %s\n", data->t_SO);
     printf("WE: %s\n", data->t_WE);
@@ -13,6 +14,7 @@ void print_struct(t_file *data)
     if (data->ceiling)
         printf("CELING: %d %d %d\n", data->ceiling->red, data->ceiling->green, data->ceiling->blue);
     printf("SPRITE: %s\n", data->sprite);
+    */
     if (data->table && data->table->table)
     {
         i = 0;
@@ -25,11 +27,11 @@ void print_struct(t_file *data)
                printf("%c ", data->table->table[i][j]);
                j++;
             }
-            free(data->table->table[i]);
+            //free(data->table->table[i]);
             printf("\n");
             i++;
         }
-        free(data->table->table);
+        //free(data->table->table);
     }
 }
 
@@ -45,6 +47,8 @@ int main(int argc, char **argv)
     else
     {
         load_file(argv[1], &data);        
+        print_struct(&data);
+        check_walls(&data);
         print_struct(&data);
         system("leaks cub3d");
     }
