@@ -19,6 +19,23 @@ typedef struct s_table
     char **table;
 }   t_table;
 
+typedef struct s_point
+{
+    int x;
+    int y;
+} t_point;
+
+
+typedef struct s_wall
+{
+    t_point *up_right;
+    t_point *up_left;
+    t_point *down_right;
+    t_point *down_left;
+} t_wall;
+
+
+
 typedef struct s_file
 {
     int width;
