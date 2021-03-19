@@ -44,12 +44,16 @@ int build_map(t_list *list, t_file *data)
 int correct_line_map(char *str, t_file *data)
 {
     int i;
+    int hasone;
 
     i = 0;
+    hasone = 0;
     if (str && str[i])
     {
         while (str[i] && ft_strrchr(" 012NSEW", str[i]))
         {
+            if (str[i] == '1')
+                hasone = 1;
             if (ft_strrchr("NSEW", str[i]))
             {
                 if (!data->gamer)
@@ -59,7 +63,7 @@ int correct_line_map(char *str, t_file *data)
             }
             i++;
         }
-        if (!str[i])
+        if (!str[i] && hasone)
             return (1);
     }
     return (0);
