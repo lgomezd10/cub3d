@@ -56,8 +56,8 @@ int correct_line_map(char *str, t_file *data)
                 hasone = 1;
             if (ft_strrchr("NSEW", str[i]))
             {
-                if (!data->gamer)
-                    data->gamer = str[i];
+                if (!data->gamer_init)
+                    data->gamer_init = str[i];
                 else
                     ft_errors("Varios jugadores en el mapa");
             }
@@ -120,7 +120,7 @@ int get_map(int fd, char *str, t_file *data)
         noend = get_next_line(fd, &str);
         len = ft_strlen(str);
     }
-    if (!noend)
+    if (!noend && data->gamer_init)
         build_map(list, data);
     else
         ft_errors("El mapa no es correcto");

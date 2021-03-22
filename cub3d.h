@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <mlx.h>
 #include "libft/libft.h"
 
 typedef struct s_color
@@ -19,12 +20,25 @@ typedef struct s_table
     char **table;
 }   t_table;
 
-typedef struct s_point
+typedef struct s_point_int
 {
     int x;
     int y;
+} t_point_int;
+
+typedef struct s_point
+{
+    double x;
+    double y;
 } t_point;
 
+typedef struct t_gamer
+{
+    t_point position;
+    t_point direction;
+    int unitWidth;
+    int unitHeight;
+} t_gamer;
 
 typedef struct s_wall
 {
@@ -38,7 +52,8 @@ typedef struct s_file
 {
     int width;
     int height;
-    char gamer;
+    char gamer_init;
+    t_gamer *gamer;
     char *t_NO;
     char *t_SO;
     char *t_WE;
@@ -53,7 +68,9 @@ int load_file(char *file, t_file *data);
 void ft_errors(char *msg);
 int correct_line_map(char *str, t_file *data);
 int data_loaded(t_file *data);
+void load_gamer(t_file *data, int y, int x, char pos);
 int get_map(int fd, char *str, t_file *data);
 void print_struct(t_file *data);
 void wall_connected(t_file *data);
+void paint_map(t_file *data);
 #endif

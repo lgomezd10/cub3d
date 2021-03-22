@@ -100,27 +100,39 @@ int through_space(t_file *data, int y, int x)
 	return (-1);
 }
 
+void check_conexions(t_file *data, int y, int x)
+{
+	char **table;
+
+	table = data->table->table;
+
+	if (ft_strchr("NSEW", table[y][x]))
+	{
+		load_gamer(data, y, x, table[y][x]);
+		table[y][x] = '0';
+	}
+	if (x == 0 && table[y][x] == '1')
+		check_connected(data, y, x, 1);
+	if (x == data->table->cols - 1 && table[y][x] == '1')
+		check_connected(data, y, x, 0);
+	if (x > 0 && table[y][x] == ' ' && table[y][x - 1] == '1')
+		check_connected(data, y, x - 1, 0);
+}
+
 void wall_connected(t_file *data)
 {
 	char **table;
 	int i;
 	int j;
-	int connected;
 
 	table = data->table->table;
-	i = 0;    
-	connected = 0;
+	i = 0;
 	while (i < data->table->rows)
 	{
 		j = 0;
 		while (j < data->table->cols)
 		{
-			if (j == 0 && table[i][j] == '1')
-				check_connected(data, i, j, 1);
-			if (j == data->table->cols - 1 && table[i][j] == '1')
-				check_connected(data, i, j, 0);
-			if (j > 0 && table[i][j] == ' ' && table[i][j - 1] == '1')
-				check_connected(data, i, j - 1, 0);
+			check_conexions(data, i, j);
 			if (table[i][j] == ' ')
 				j = through_space(data, i, j);
 			else
