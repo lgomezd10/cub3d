@@ -48,7 +48,7 @@ int main(int argc, char **argv)
     {
         load_file(argv[1], &data);        
         print_struct(&data);
-        check_walls(&data);
+        wall_connected(&data);
         print_struct(&data);
         system("leaks cub3d");
     }

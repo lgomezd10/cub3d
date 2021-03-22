@@ -54,6 +54,6 @@ void ft_errors(char *msg);
 int correct_line_map(char *str, t_file *data);
 int data_loaded(t_file *data);
 int get_map(int fd, char *str, t_file *data);
-void check_walls(t_file *data);
 void print_struct(t_file *data);
+void wall_connected(t_file *data);
 #endif

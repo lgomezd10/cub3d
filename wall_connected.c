@@ -1,61 +1,135 @@
 #include "cub3d.h"
 
-int is_conect(t_file *data, int y, int x)
+int is_connected(t_file *data, int y, int x, int up)
 {
-    char **table;
-
-    table = data->table->table;
-    if (table[y-1][x-1] == '1' || table[y-1][x] == '1' || table[y+1] == '1')
-        return (1);
-    return (0);
+	char **table;
+	int connected;
+	int add;
+	
+	table = data->table->table;
+	connected = y == 0;
+	add = -1;
+	if (!up)
+	{
+		connected = y == data->table->rows - 1;
+		add = 1;
+	}
+	if (!connected)
+	{
+		if (x > 0)
+			connected = table[y + add][x - 1] == '1';
+		connected = connected || table[y + add][x] == '1';
+		if (x < data->table->cols - 1)
+			connected = connected || table[y + add][x + 1] == '1';
+	}
+	return (connected);
 }
 
-int wall_conected(t_file *data)
+int check_connected(t_file *data, int y, int x, int right)
 {
-    char **table;
-    int i;
-    int j;
-    int connected;
+	char **table;
+	int conn_up;
+	int conn_down;
+	int i;
+	int add;
 
-    table = data->table->table;
-    i = 1;    
-    connected = 0;
-    while (i < data->table->rows - 1)
-    {
-        j = 0;
-        while (j < data->table->cols - 3 && table[i][j] == ' ')
-        {
-            table[i][j] = '*';
-            j++;
-        }
-        if (table[i][j] != '1')
-            ft_errors("el mapa tiene el muro abierto");
-        while (!connected && table[i][j] == '1' && j < data->table->cols - 1)
-        {
-            if (is_conect(table, i, j))
-                connected = 1;
-            table[i][j] = '1';
-            j++;
-        }
-        if (!connected)
-            ft_errors("El muro no está conectado");        
-        j = data->table->cols - 1;
-        while (j >= 0 && table[i][j] == ' ')
-        {
-            table[i][j] = '*';
-            j--;
-        }
-        if (table[i][j] != '1')
-            ft_errors("el mapa tiene el muro abierto");
-        while (!connected && table[i][j] == '1' && j >= 0)
-        {
-            if (is_conect(table, i, j))
-                connected = 1;
-            table[i][j] = '1';
-            j--;
-        }
-        if (!connected)
-            ft_errors("El muro no está conectado");
-    }
-    
+	conn_up = 0;
+	conn_down = 0;
+	table = data->table->table;
+	i = x;
+	add = 1;
+	if (!right)
+		add = -1;
+	while ((!conn_down || !conn_up)  && i < data->table->cols && i >= 0 && table[y][i] == '1')
+	{
+		if (is_connected(data, y, i, 1))
+			conn_up = 1;
+		if (is_connected(data, y, i, 0))
+			conn_down = 1;
+		i += add;
+	}	
+	if (!conn_up || !conn_down)
+	{
+		printf("muros no conectados en fila %d\n", y);
+		ft_errors("muros no conectados");
+	}
+	return (i);
+}
+
+int check_space(t_file *data, int y, int x)
+{
+	int up;
+	int right;
+	int down;
+	int left;
+	char **table;
+
+	table = data->table->table;
+	up = y == 0 || ft_strchr("*1", table[y - 1][x]);
+	down = y == data->table->rows - 1 || ft_strchr(" 1", table[y + 1][x]);
+	left = x == 0 || ft_strchr("*1", table[y][x - 1]);
+	right = x == data->table->cols - 1 || ft_strchr(" 1", table[y][x + 1]);
+	if (!up || !down || !left || !right)
+	{
+		printf("espacio en y: %d x: %d %d %d %d %d\n", y, x, up, down, left, right);
+		ft_errors("Espacio dentro del muro");
+	}
+	return (1);
+}
+
+int through_space(t_file *data, int y, int x)
+{
+	char **table;
+
+	table = data->table->table;
+	if (x == 0 || ft_strchr("*1", table[y][x - 1]))
+	{
+		if (x == data->table->cols - 1 || ft_strchr(" 1", table[y][x + 1]))
+		{
+			while (table[y][x] == ' ' && check_space(data, y, x))
+				table[y][x++] = '*';
+			if (x < data->table->cols && table[y][x] != '1')
+				ft_errors("el mapa tiene el muro abierto");
+			else if (x < data->table->cols && table[y][x] == '1')
+				x = check_connected(data, y, x, 1);
+			return (x);
+		}
+	}
+	printf("Error en y: %d x: %d\n", y, x);
+	ft_errors("No se permiten los espacios entre muros");
+	return (-1);
+}
+
+void wall_connected(t_file *data)
+{
+	char **table;
+	int i;
+	int j;
+	int connected;
+
+	table = data->table->table;
+	i = 0;    
+	connected = 0;
+	while (i < data->table->rows)
+	{
+		j = 0;
+		while (j < data->table->cols)
+		{
+			if (j == 0 && table[i][j] == '1')
+				check_connected(data, i, j, 1);
+			if (j == data->table->cols - 1 && table[i][j] == '1')
+				check_connected(data, i, j, 0);
+			if (j > 0 && table[i][j] == ' ' && table[i][j - 1] == '1')
+				check_connected(data, i, j - 1, 0);
+			if (table[i][j] == ' ')
+				j = through_space(data, i, j);
+			else
+			{
+				if (table[i][j] != '1' && (i == 0 || j == 0 || i == data->table->rows - 1 || j == data->table->cols - 1))
+					ft_errors("El muro no cerrado 2");
+				j++;
+			}
+		}
+		i++;
+	}
 }
