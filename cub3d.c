@@ -50,7 +50,8 @@ int main(int argc, char **argv)
         print_struct(&data);
         wall_connected(&data);
         print_struct(&data);
-        paint_map(&data);
+        //print_image(&data);
+        print_image(&data);
         system("leaks cub3d");
     }
 }

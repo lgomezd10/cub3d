@@ -7,6 +7,13 @@
 #include "libft/libft.h"
 #include <math.h>
 
+#define K_LEFT 0
+#define K_RIGHT 2
+#define K_UP 13
+#define K_DOWN 1
+#define K_ROT_L 123
+#define K_ROT_R 124
+
 typedef struct s_color
 {
     unsigned char red;
@@ -33,11 +40,28 @@ typedef struct s_point
     double y;
 } t_point;
 
+typedef struct s_image
+{
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+} t_image;
+
+typedef struct t_window
+{
+    void *ptr;
+    void *win;
+    t_image img;
+} t_window;
+
 typedef struct t_gamer
 {
     t_point position;
     t_point direction;
     t_point move;
+    int rotate;
     int unitWidth;
     int unitHeight;
 } t_gamer;
@@ -56,6 +80,7 @@ typedef struct s_file
     int height;
     char gamer_init;
     t_gamer *gamer;
+    t_window window;
     char *t_NO;
     char *t_SO;
     char *t_WE;
@@ -75,5 +100,12 @@ int get_map(int fd, char *str, t_file *data);
 void print_struct(t_file *data);
 void wall_connected(t_file *data);
 void paint_map(t_file *data);
-void draw_circle(void *mlx, void *win, t_point center, double radius, int color);
+void draw_circle(t_file *data, t_image *img, t_point center, double radius, int color);
+int press_key(int keycode, t_gamer *gamer);
+int release_key(int keycode, t_gamer *gamer);
+void my_mlx_pixel_put(t_image *data, int x, int y, int color);
+int init_window(t_file *data);
+void print_map(t_file *data, t_image *img);
+int print_image(t_file *data);
+void paint_map_antiguo(t_file *data);
 #endif

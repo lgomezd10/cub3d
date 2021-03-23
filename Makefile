@@ -7,7 +7,7 @@ FLAGS = -c -Wall -Wextra - Werror
 NAME = cub3d 
 
 SRC = cub3d.c load_file.c ft_errors.c add_tolibft.c get_map.c \
-ft_utils.c wall_connected.c view_map.c utils_draw.c
+ft_utils.c wall_connected.c view_map.c utils_draw.c move_gamer.c window.c
 
 OBJS = ${SRC:.c=.o}
 

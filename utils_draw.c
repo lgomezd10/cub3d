@@ -52,7 +52,7 @@ int
 	return (0);
 }*/
 
-void draw_circle(void *mlx, void *win, t_point center, double radius, int color)
+void draw_circle(t_file *data, t_image *img, t_point center, double radius, int color)
 {
     int i;
     int j;
@@ -70,9 +70,81 @@ void draw_circle(void *mlx, void *win, t_point center, double radius, int color)
         {
             distancia = (j - center.x) * (j - center.x) + (i - center.y) * (i - center.y);
             if (sqrt(distancia) <= radius)
-                mlx_pixel_put(mlx, win, j, i, color);
+                my_mlx_pixel_put(img, j, i, color);
             j++;
         }
         i++;
     }
 }
+
+void print_map(t_file *data, t_image *img)
+{
+    int i;
+    int j;
+    int x;
+    int y;
+
+    i = 0; 
+    while (i < data->height)
+    {
+        j = 0;
+        while (j < data->width)
+        {        
+           //y = i / unitHeight;
+           //x = j / unitWidth;
+        
+           y = i / data->gamer->unitHeight;
+           x = j / data->gamer->unitWidth;
+           if (data->table->table[y][x] == '1')
+            my_mlx_pixel_put(img, j, i, 0255255255);
+           j++;
+        }
+        i++;
+    }
+}
+
+void my_mlx_pixel_put(t_image *data, int x, int y, int color)
+{
+    char    *dst;
+
+    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
+
+int press_key(int keycode, t_gamer *gamer)
+{
+    printf("key: %d\n", keycode);
+    if (keycode == K_LEFT)
+        gamer->move.x = -1;
+    if (keycode == K_RIGHT)
+        gamer->move.x = 1;
+    if (keycode == K_UP)
+        gamer->move.y = -1;
+    if (keycode == K_DOWN)
+        gamer->move.y = 1;
+    if (keycode == K_ROT_L)
+        gamer->rotate = -1;
+    if (keycode == K_ROT_R)
+        gamer->rotate = 1;
+    return (0);
+}
+
+int release_key(int keycode, t_gamer *gamer)
+{
+    if (keycode == K_LEFT)
+        gamer->move.x = 0;
+    if (keycode == K_RIGHT)
+        gamer->move.x = 0;
+    if (keycode == K_UP)
+        gamer->move.y = 0;
+    if (keycode == K_DOWN)
+        gamer->move.y = 0;
+    if (keycode == K_ROT_L)
+        gamer->rotate = 0;
+    if (keycode == K_ROT_R)
+        gamer->rotate = 0;
+    return (0);
+}
+
+
+
