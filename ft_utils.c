@@ -29,26 +29,26 @@ void load_gamer(t_file *data, int y, int x, char pos)
 		ft_errors("Error de memoria");
 	gamer->unitHeight = data->height / data->table->rows;
 	gamer->unitWidth = data->width / data->table->cols;
-	gamer->position.x = x * gamer->unitWidth - 0.5;
-	gamer->position.y = y * gamer->unitHeight - 0.5;
+	gamer->position.x = x * gamer->unitWidth + (gamer->unitWidth / 2);
+	gamer->position.y = y * gamer->unitHeight + (gamer->unitHeight / 2);
 	if (pos == 'N')
 	{
 		gamer->direction.x = gamer->position.x; 
-		gamer->direction.y = gamer->position.y - 1; 
+		gamer->direction.y = gamer->position.y - gamer->unitHeight; 
 	}
 	if (pos == 'S')
 	{
 		gamer->direction.x = gamer->position.x; 
-		gamer->direction.y = gamer->position.y + 1; 
+		gamer->direction.y = gamer->position.y + gamer->unitHeight; 
 	}
 	if (pos == 'E')
 	{
-		gamer->direction.x = gamer->position.x + 1; 
+		gamer->direction.x = gamer->position.x + gamer->unitWidth; 
 		gamer->direction.y = gamer->position.y; 
 	}
 	if (pos == 'W')
 	{
-		gamer->direction.x = gamer->position.x - 1; 
+		gamer->direction.x = gamer->position.x - gamer->unitWidth; 
 		gamer->direction.y = gamer->position.y; 
 	}
 	data->gamer = gamer;	

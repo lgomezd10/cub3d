@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <mlx.h>
 #include "libft/libft.h"
+#include <math.h>
 
 typedef struct s_color
 {
@@ -36,6 +37,7 @@ typedef struct t_gamer
 {
     t_point position;
     t_point direction;
+    t_point move;
     int unitWidth;
     int unitHeight;
 } t_gamer;
@@ -73,4 +75,5 @@ int get_map(int fd, char *str, t_file *data);
 void print_struct(t_file *data);
 void wall_connected(t_file *data);
 void paint_map(t_file *data);
+void draw_circle(void *mlx, void *win, t_point center, double radius, int color);
 #endif
