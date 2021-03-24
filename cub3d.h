@@ -108,4 +108,5 @@ int init_window(t_file *data);
 void print_map(t_file *data, t_image *img);
 int print_image(t_file *data);
 void paint_map_antiguo(t_file *data);
+int load_image(t_file *data);
 #endif

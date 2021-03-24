@@ -113,7 +113,7 @@ void my_mlx_pixel_put(t_image *data, int x, int y, int color)
 
 int press_key(int keycode, t_gamer *gamer)
 {
-    printf("key: %d\n", keycode);
+    printf("press key: %d\n", keycode);
     if (keycode == K_LEFT)
         gamer->move.x = -1;
     if (keycode == K_RIGHT)
@@ -131,6 +131,7 @@ int press_key(int keycode, t_gamer *gamer)
 
 int release_key(int keycode, t_gamer *gamer)
 {
+    printf("release key: %d\n", keycode);
     if (keycode == K_LEFT)
         gamer->move.x = 0;
     if (keycode == K_RIGHT)
@@ -145,6 +146,3 @@ int release_key(int keycode, t_gamer *gamer)
         gamer->rotate = 0;
     return (0);
 }
-
-
-
