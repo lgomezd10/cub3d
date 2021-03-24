@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   view_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/03/24 17:38:46 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int press_key_2(int keycode, t_gamer *gamer)
@@ -54,17 +66,18 @@ void paint_map_antiguo(t_file *data)
 int load_image(t_file *data)
 {
     t_image *img;
+    int has_move;
+    t_point dir;
 
     img = &data->window.img;
     
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-    if (data->gamer->move.x == 1 && data->gamer->position.x + 5 < (double)data->width)
-        data->gamer->position.x += 5;
-    if (data->gamer->move.x == -1 && data->gamer->position.x - 5 > 0)
-        data->gamer->position.x -= 5;
+    move(data);
     print_map(data, img);
     draw_circle(data, img, data->gamer->position, 5, 0255000042);
-    draw_circle(data, img, data->gamer->direction, 5, 0000255000);
+    dir.x = data->gamer->position.x + data->gamer->direction.x;
+    dir.y = data->gamer->position.y + data->gamer->direction.y;
+    draw_circle(data, img, dir, 5, 0000255000);
 
     mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
 
@@ -75,12 +88,13 @@ int print_image(t_file *data)
 {
     
     init_window(data);
+
     data->window.img.img = mlx_new_image(data->window.ptr, data->width, data->height);
     load_image(data);
     
-    mlx_hook(data->window.win, 2, 0, &press_key_2, data->gamer);
-    //mlx_hook(data->window.ptr, 3, 0, release_key, data->gamer);
-    //mlx_loop_hook(data->window.ptr, load_image, data);
+    mlx_hook(data->window.win, 2, 0, press_key, data->gamer);
+    mlx_hook(data->window.win, 3, 0, release_key, data->gamer);
+    mlx_loop_hook(data->window.ptr, load_image, data);
     mlx_loop(data->window.ptr);
     
     return (0);

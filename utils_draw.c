@@ -146,3 +146,113 @@ int release_key(int keycode, t_gamer *gamer)
         gamer->rotate = 0;
     return (0);
 }
+
+int in_space(t_file *data, double y, double x)
+{
+    int i;
+    int j;
+    int is_space;
+
+    i = y / data->gamer->unitHeight;
+    j = x / data->gamer->unitWidth;
+    is_space = y >= 0 && y < (double)data->height;
+    is_space = is_space && x >= 0 && x < (double)data->width;
+    is_space = is_space && data->table->table[i][j] == '0';
+    return (is_space);
+}
+
+int move(t_file *data)
+{
+    t_point move;
+    int rotate;
+    int has_move;
+    double new_x;
+    double new_y;
+    double rot;
+    t_point dir;
+    double multx;
+    double multy;
+    t_point perp;
+
+    rot = 0.3;
+    move = data->gamer->move;
+    rotate = data->gamer->rotate;
+    has_move = 0;
+    dir = data->gamer->direction;
+    if (rotate)
+    {
+        
+        data->gamer->direction.x = dir.x * cos(rotate * rot) - dir.y * sin(rotate * rot);
+        data->gamer->direction.y = dir.x * sin(rotate * rot) + dir.y * cos(rotate * rot);
+        has_move = 1;
+        printf("new rotate y: %f, x: %f\n", data->gamer->direction.y, data->gamer->direction.x);
+    }
+
+    if (move.y)
+    {
+        if (move.y == -1)
+        {
+            new_x = data->gamer->position.x + (dir.x * 2);
+            new_y = data->gamer->position.y + (dir.y * 2);
+        }
+        if (move.y == 1)
+        {
+            new_x = data->gamer->position.x - (dir.x * 2);
+            new_y = data->gamer->position.y - (dir.y * 2);
+        }
+        if (move.x == -1)
+        {
+            new_x = data->gamer->position.y - (dir.y * 2);
+            new_y = data->gamer->position.x + (dir.x * 2);
+        }
+        if (move.x == 1)
+        {
+            new_x = data->gamer->position.y + (dir.y * 2);
+            new_y = data->gamer->position.x - (dir.x * 2);
+        }
+        
+        if (in_space(data, new_y, new_x))
+        {
+            data->gamer->position.y = new_y;
+            data->gamer->position.x = new_x;
+            has_move = 1;
+        }
+    }
+
+    /*
+    if (move.x || move.y)
+    {
+        multx = 1;
+        multy = 1;
+        if (data->gamer->direction.x)
+            multx = data->gamer->direction.x;
+        if (data->gamer->direction.y)
+           multy = data->gamer->direction.y;
+            new_y = data->gamer->position.y + (multy * move.y);
+            new_x = data->gamer->position.x + (multx * move.x);
+        
+        if (move.x)
+        {
+            new_x = data->gamer->position.x + (multx * move.x);
+            new_y = data->gamer->position.y + (multy);
+        }        
+        if (move.y)
+        {
+            new_y = data->gamer->position.y + (multy * move.y);
+            new_x = data->gamer->position.x + (multx);
+        }
+        
+        if (in_space(data, new_y, new_x))
+        {
+            data->gamer->position.y = new_y;
+            data->gamer->position.x = new_x;
+            has_move = 1;
+        }
+    }
+    */
+
+    
+    return (has_move);
+}
+
+

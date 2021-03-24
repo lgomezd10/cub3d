@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:18:02 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/22 20:17:16 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/03/24 17:43:26 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@ void load_gamer(t_file *data, int y, int x, char pos)
 	gamer->position.y = y * gamer->unitHeight + (gamer->unitHeight / 2);
 	if (pos == 'N')
 	{
-		gamer->direction.x = gamer->position.x; 
-		gamer->direction.y = gamer->position.y - gamer->unitHeight; 
+		gamer->direction.x = 0; 
+		gamer->direction.y = -3; 
 	}
 	if (pos == 'S')
 	{
-		gamer->direction.x = gamer->position.x; 
-		gamer->direction.y = gamer->position.y + gamer->unitHeight; 
+		gamer->direction.x = 0; 
+		gamer->direction.y = 3; 
 	}
 	if (pos == 'E')
 	{
-		gamer->direction.x = gamer->position.x + gamer->unitWidth; 
-		gamer->direction.y = gamer->position.y; 
+		gamer->direction.x = 3; 
+		gamer->direction.y = 0; 
 	}
 	if (pos == 'W')
 	{
-		gamer->direction.x = gamer->position.x - gamer->unitWidth; 
-		gamer->direction.y = gamer->position.y; 
+		gamer->direction.x = -3; 
+		gamer->direction.y = 0; 
 	}
 	data->gamer = gamer;	
 }
