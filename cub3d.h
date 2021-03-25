@@ -7,12 +7,23 @@
 #include "libft/libft.h"
 #include <math.h>
 
+//MAC
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
 #define K_DOWN 1
 #define K_ROT_L 123
 #define K_ROT_R 124
+*/
+//LINUX
+
+#define K_LEFT 97
+#define K_RIGHT 100
+#define K_UP 119
+#define K_DOWN 115
+#define K_ROT_L 65361
+#define K_ROT_R 65363
 
 typedef struct s_color
 {

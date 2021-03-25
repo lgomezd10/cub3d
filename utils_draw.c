@@ -117,15 +117,24 @@ int press_key(int keycode, t_gamer *gamer)
     if (keycode == K_LEFT)
         gamer->move.x = -1;
     if (keycode == K_RIGHT)
+    {
+        printf("presionada right\n");
         gamer->move.x = 1;
+    }
     if (keycode == K_UP)
         gamer->move.y = -1;
     if (keycode == K_DOWN)
         gamer->move.y = 1;
     if (keycode == K_ROT_L)
+    {
+        printf("presionada rot left\n");
         gamer->rotate = -1;
+    }
     if (keycode == K_ROT_R)
+    {
+        printf("presionada rot right\n");
         gamer->rotate = 1;
+    }
     return (0);
 }
 
@@ -188,27 +197,29 @@ int move(t_file *data)
         printf("new rotate y: %f, x: %f\n", data->gamer->direction.y, data->gamer->direction.x);
     }
 
-    if (move.y)
+    if (move.y || move.x)
     {
         if (move.y == -1)
         {
             new_x = data->gamer->position.x + (dir.x * 2);
             new_y = data->gamer->position.y + (dir.y * 2);
         }
-        if (move.y == 1)
+        else if (move.y == 1)
         {
             new_x = data->gamer->position.x - (dir.x * 2);
             new_y = data->gamer->position.y - (dir.y * 2);
         }
-        if (move.x == -1)
-        {
-            new_x = data->gamer->position.y - (dir.y * 2);
-            new_y = data->gamer->position.x + (dir.x * 2);
+        else if (move.x == -1)
+        {            
+            new_x = data->gamer->position.y - (dir.x * 2);
+            new_y = data->gamer->position.x + (dir.y * 2);
+            printf("x izquierda newx %f nwy %f\n", new_x, new_y);
         }
-        if (move.x == 1)
+        else if (move.x == 1)
         {
-            new_x = data->gamer->position.y + (dir.y * 2);
-            new_y = data->gamer->position.x - (dir.x * 2);
+            new_x = data->gamer->position.y + (dir.x * 2);
+            new_y = data->gamer->position.x - (dir.y * 2);
+            printf("x derecha newx %f nwy %f\n", new_x, new_y);
         }
         
         if (in_space(data, new_y, new_x))

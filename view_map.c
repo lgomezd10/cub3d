@@ -92,8 +92,8 @@ int print_image(t_file *data)
     data->window.img.img = mlx_new_image(data->window.ptr, data->width, data->height);
     load_image(data);
     
-    mlx_hook(data->window.win, 2, 0, press_key, data->gamer);
-    mlx_hook(data->window.win, 3, 0, release_key, data->gamer);
+    mlx_hook(data->window.win, 2, 1L << 0, press_key, data->gamer);
+    mlx_hook(data->window.win, 3, 1L << 1, release_key, data->gamer);
     mlx_loop_hook(data->window.ptr, load_image, data);
     mlx_loop(data->window.ptr);
     
