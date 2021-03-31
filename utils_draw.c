@@ -87,7 +87,7 @@ void print_line(t_file *data, t_point from, t_point to, int color, t_image *img)
 	x = from.x;
 	y = from.y;
 	end = to.x;
-	if (abs(to.x - from.x) < abs(to.y - from.y))
+	if (fabs(to.x - from.x) < fabs(to.y - from.y))
 	{
 		end = to.y;
 		y = from.y;

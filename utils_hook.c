@@ -46,3 +46,17 @@ int in_space(t_file *data, double y, double x)
 	is_space = is_space && data->table->table[i][j] == '0';
 	return (is_space);
 }
+
+int in_space_int(t_file *data, int y, int x)
+{	
+	int is_space;
+
+	is_space = y >= 0 && y < (double)data->height;
+	is_space = is_space && x >= 0 && x < (double)data->width;
+	if (data->gamer->direction.x > 0 && x > 0)
+		x--;
+	if (data->gamer->direction.y > 0 && y > 0)
+		y--;
+	is_space = is_space && data->table->table[y][x] == '0';
+	return (is_space);
+}

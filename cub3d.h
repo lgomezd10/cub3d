@@ -12,7 +12,7 @@
 #define EVENT_EXIT 17
 
 //MAC
-/*
+
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -20,16 +20,16 @@
 #define K_ROT_L 123
 #define K_ROT_R 124
 
-*/
-//LINUX
 
+//LINUX
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
 #define K_DOWN 115
 #define K_ROT_L 65361
 #define K_ROT_R 65363
-
+*/
 typedef struct s_color
 {
     unsigned char red;
@@ -139,6 +139,7 @@ int print_image(t_file *data);
 void paint_map_antiguo(t_file *data);
 int load_image(t_file *data);
 int in_space(t_file *data, double y, double x);
+int in_space_int(t_file *data, int y, int x);
 int move(t_file *data);
 int color_int(int red, int green, int blue);
 int event_exit(int keycode, t_gamer *gamer);
