@@ -9,26 +9,27 @@
 
 #define ROTATE_SPEED .11
 #define MOVE_SPEED .11
+#define EVENT_EXIT 17
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
 #define K_DOWN 1
 #define K_ROT_L 123
 #define K_ROT_R 124
-#define EVENT_EXIT 17
 
+*/
 //LINUX
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
 #define K_DOWN 115
 #define K_ROT_L 65361
 #define K_ROT_R 65363
-*/
+
 typedef struct s_color
 {
     unsigned char red;
@@ -75,6 +76,7 @@ typedef struct t_gamer
 {
     t_point position;
     t_point direction;
+    t_point plane;
     int move;
     int rotate;
     int unitWidth;
@@ -93,8 +95,7 @@ typedef struct t_view
 {
     double cameraX;
     t_point rayDir;
-    t_point plane;
-    t_point map;
+    t_point_int map;
     t_point sideDist;
     t_point deltaDist;
     double perpWaDist;
@@ -141,4 +142,8 @@ int in_space(t_file *data, double y, double x);
 int move(t_file *data);
 int color_int(int red, int green, int blue);
 int event_exit(int keycode, t_gamer *gamer);
+void print_line(t_file *data, t_point from, t_point to, int color, t_image *img);
+int view_game(t_file *data);
+void set_point(t_point *point, double x, double y);
+char get_value(t_file *data, t_point pos, t_point dir);
 #endif

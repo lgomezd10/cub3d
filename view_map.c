@@ -18,17 +18,32 @@ int load_image(t_file *data)
     t_image *img;
     int has_move;
     t_point dir;
+    t_point p1;
+    t_point p2;
+    int change;
+    static int nofirts = 1;
 
     img = &data->window.img;
     //TODO añadir comprobación por si no ha cambiado nada
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-    move(data);
-    print_map(data, img);
-    draw_circle(data, img, data->gamer->position, 5, color_int(255, 0, 0));
-    dir.x = data->gamer->position.x + data->gamer->direction.x;
-    dir.y = data->gamer->position.y + data->gamer->direction.y;
-    draw_circle(data, img, dir, 5, color_int(0, 255, 0));
-    mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
+    change = move(data);
+    if (nofirts || change)
+    {
+        nofirts = 0;
+        print_map(data, img);    
+        draw_circle(data, img, data->gamer->position, 5, color_int(255, 0, 0));
+        dir.x = data->gamer->position.x + data->gamer->direction.x;
+        dir.y = data->gamer->position.y + data->gamer->direction.y;
+        draw_circle(data, img, dir, 5, color_int(0, 255, 0));
+        p1.x = 300;
+        p1.y = 300;
+        dir.x = data->gamer->position.x + (data->gamer->direction.x * 10);
+        dir.y = data->gamer->position.y + (data->gamer->direction.y * 10);
+        //draw_circle(data, img, dir, 5, color_int(0, 255, 0));
+        //print_line(data, data->gamer->position, dir, color_int(0, 0, 255), img);
+        view_game(data);
+        mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
+    }
     return (0);
 }
 

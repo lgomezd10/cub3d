@@ -1,5 +1,10 @@
 #include "cub3d.h"
 
+void set_point(t_point *point, double x, double y)
+{
+    point->x = x;
+    point->y = y;
+}
 int move_up(t_file *data)
 {
     double new_x;
@@ -42,16 +47,22 @@ int move(t_file *data)
 	int has_move;
 	double rot;
 	t_point dir;
+    t_point plane;
 
 	rot = .11;
 	rotate = data->gamer->rotate;
 	has_move = 0;
-	dir = data->gamer->direction;    
+	dir = data->gamer->direction;
+    plane = data->gamer->plane;
+    
 	if (rotate)
 	{		
 		data->gamer->direction.x = dir.x * cos(rotate * rot) - dir.y * sin(rotate * rot);
 		data->gamer->direction.y = dir.x * sin(rotate * rot) + dir.y * cos(rotate * rot);
-		has_move = 1;		
+        data->gamer->plane.x = plane.x * cos(rotate * rot) - plane.y * sin(rotate * rot);
+        data->gamer->plane.y = plane.x * sin(rotate * rot) + plane.y * cos(rotate * rot);
+		has_move = 1;
+        printf("new direction x: %f, y %f\n", data->gamer->direction.x, data->gamer->direction.y);	
 	}
 	if (data->gamer->move)
 	{

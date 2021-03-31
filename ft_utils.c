@@ -31,25 +31,27 @@ void load_gamer(t_file *data, int y, int x, char pos)
 	gamer->unitWidth = data->width / data->table->cols;
 	gamer->position.x = x * gamer->unitWidth + (gamer->unitWidth / 2);
 	gamer->position.y = y * gamer->unitHeight + (gamer->unitHeight / 2);
-	if (pos == 'N')
-	{
-		gamer->direction.x = 0; 
-		gamer->direction.y = -3; 
-	}
-	if (pos == 'S')
-	{
-		gamer->direction.x = 0; 
-		gamer->direction.y = 3; 
-	}
-	if (pos == 'E')
-	{
-		gamer->direction.x = 3; 
-		gamer->direction.y = 0; 
-	}
-	if (pos == 'W')
-	{
-		gamer->direction.x = -3; 
-		gamer->direction.y = 0; 
-	}
+	printf("llega a antes\n");
+	if (data->gamer_init == 'N')
+    {
+        set_point(&gamer->direction, 0, -1);
+        set_point(&gamer->plane, 0.66, 0.0);
+    }
+    if (data->gamer_init == 'S')
+    {
+        set_point(&gamer->direction, 0, 1);
+        set_point(&gamer->plane, -0.66, 0.0);
+    }
+    if (data->gamer_init == 'W')
+    {
+        set_point(&gamer->direction, -1, 0);
+        set_point(&gamer->plane, 0, -0.66);
+    }
+    if (data->gamer_init == 'E')
+    {
+        set_point(&gamer->direction, 1, 0);
+        set_point(&gamer->plane, 0, 0.66);
+    }
+
 	data->gamer = gamer;	
 }

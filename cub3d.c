@@ -46,7 +46,7 @@ int main(int argc, char **argv)
         ft_errors("Solo se permiten dos argumentos");
     else
     {
-        load_file(argv[1], &data);        
+        load_file(argv[1], &data);
         print_struct(&data);
         wall_connected(&data);
         print_struct(&data);

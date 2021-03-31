@@ -77,6 +77,57 @@ void draw_circle(t_file *data, t_image *img, t_point center, double radius, int 
 	}
 }
 
+void print_line(t_file *data, t_point from, t_point to, int color, t_image *img)
+{
+	double x;
+	double y;
+	int end;
+	t_point center;
+
+	x = from.x;
+	y = from.y;
+	end = to.x;
+	if (abs(to.x - from.x) < abs(to.y - from.y))
+	{
+		end = to.y;
+		y = from.y;
+		if (to.y < from.y)
+		{
+			end = from.y;
+			y = to.y;
+		}
+		x = from.x;
+		while (y < end && x < data->width && y < data->height)
+		{
+			center.y = y;
+			x = ((y - from.y) / (to.y - from.y)) * (to.x - from.x) + from.x;
+			center.y = y;
+			//draw_circle(data, img, center, 3, color);
+			my_mlx_pixel_put(img, x, y, color);
+			y++;
+		}
+	}
+	else
+	{
+	
+		if (to.x < from.x)
+		{
+			end = from.x;
+			x = to.x;
+		}
+		y = from.y;
+		while (x < end && x < data->width && y < data->height)
+		{
+			center.x = x;
+			y = ((x - from.x) / (to.x - from.x)) * (to.y - from.y) + from.y;
+			center.y = y;
+			//draw_circle(data, img, center, 3, color);
+			my_mlx_pixel_put(img, x, y, color);
+			x++;
+		}
+	}
+}
+
 void print_map(t_file *data, t_image *img)
 {
 	int i;
@@ -113,4 +164,24 @@ void my_mlx_pixel_put(t_image *data, int x, int y, int color)
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+char get_value(t_file *data, t_point pos, t_point dir)
+{
+	char c;
+	int x;
+	int y;
+
+	c = 0;
+	x = pos.x / data->gamer->unitWidth;
+	y = pos.y / data->gamer->unitHeight;
+
+	if (x > 0 && dir.x < 0)
+		x--;
+	if (y > 0 && dir.y < 0)
+		y--;
+
+	if (x >= 0 && x < data->table->cols && y >=0 && y < data->table->rows)
+		c = data->table->table[y][x];
+	return (c);
 }
