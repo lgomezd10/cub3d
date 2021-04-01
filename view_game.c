@@ -14,8 +14,10 @@ void load_view(t_file *data, int x)
 	double perpWallDist;
 
 	//pos = data->gamer->position;
-	pos.x = data->gamer->position.x / data->gamer->unitWidth;
-	pos.y = data->gamer->position.y / data->gamer->unitHeight;
+	//pos.x = data->gamer->position.x / data->gamer->unitWidth;
+	//pos.y = data->gamer->position.y / data->gamer->unitHeight;
+	pos.x = 9;
+	pos.y = 6;
 	dir = data->gamer->direction;
 	view = &data->view;
 	plane = &data->gamer->plane;
@@ -28,72 +30,84 @@ void load_view(t_file *data, int x)
 	print_line(data, data->gamer->position, dir1, color_int(0,255,0), &data->window.img);
 	view->map.x = (int)pos.x;
 	view->map.y = (int)pos.y;
-	view->deltaDist.x = fabs(1 / view->rayDir.x);
-	view->deltaDist.y = fabs(1 / view->rayDir.y);
-	//view->deltaDist.x = sqrt(1 + (view->rayDir.y * view->rayDir.y) / (view->rayDir.x * view->rayDir.x));
-	//view->deltaDist.y = sqrt(1 + (view->rayDir.x * view->rayDir.x) / (view->rayDir.y * view->rayDir.y));
+	//view->deltaDist.x = fabs(1 / view->rayDir.x);
+	//view->deltaDist.y = fabs(1 / view->rayDir.y);
+	view->deltaDist.x = sqrt(1 + (view->rayDir.y * view->rayDir.y) / (view->rayDir.x * view->rayDir.x));
+	view->deltaDist.y = sqrt(1 + (view->rayDir.x * view->rayDir.x) / (view->rayDir.y * view->rayDir.y));
+	printf("EMPEZANDO con POS: x: %f, y: %f deltaDist: x: %f y: %f\n", pos.x, pos.y, view->deltaDist.x, view->deltaDist.y);
 	if (view->rayDir.x < 0)
 	{
 		view->step.x = -1;
 		view->sideDist.x = (pos.x - view->map.x) * view->deltaDist.x;
+		printf("asignado en x < 0 side.x %f\n", view->sideDist.x);
 	}
 	else
 	{
 		view->step.x = 1;
 		view->sideDist.x = (view->map.x + 1.0 - pos.x) * view->deltaDist.x;
+		printf("asignado en x > 0 side.x %f\n", view->sideDist.x);
 	}
 	if (view->rayDir.y < 0)
 	{
 		view->step.y = -1;
-		view->sideDist.y = (pos.y - view->map.x) * view->deltaDist.y;
+		view->sideDist.y = (pos.y - view->map.y) * view->deltaDist.y;
+		printf("asignado en y < 0 side.y %f\n", view->sideDist.y);
 	}
 	else
 	{
 		view->step.y = 1;
 		view->sideDist.y = (view->map.y + 1.0 - pos.y) * view->deltaDist.y;
+		printf("asignado en y > 0 side.y %f\n", view->sideDist.y);
 	}
 	hit = 0;
+	printf("EMPEZANDO EN x: %d, y: %d deltaDist: x: %f y: %f\n", view->map.x, view->map.y, view->sideDist.x, view->sideDist.y);
 	while (!hit)
 	{
 		if (view->sideDist.x < view->sideDist.y)
 		{
-			if (in_space_int(data, view->map.y, view->map.x + view->step.x))
-			{
+			//if (in_space_int(data, view->map.y, view->map.x + view->step.x))
+			//{
 				view->sideDist.x += view->deltaDist.x;
 				view->map.x += view->step.x;
 				side = 0;
+				printf("aumentado x x: %d, y: %d deltaDist: x: %f y: %f\n", view->map.x, view->map.y, view->sideDist.x, view->sideDist.y);
+			/*	
 			}
 			else
 			{
 				hit = 1;
 				side = 0;
-				printf("choque en x: %d, y: %d\n", view->map.x, view->map.y);
+				printf("choque en x x: %d, y: %d\n", view->map.x, view->map.y);
 			}
+			*/
 		}
 		else
 		{
-			if (in_space_int(data, view->map.y + view->step.y, view->map.x))
-			{
+			//if (in_space_int(data, view->map.y + view->step.y, view->map.x))
+			//{
 				view->sideDist.y += view->deltaDist.y;
 				view->map.y += view->step.y;
 				side = 1;
+				printf("aumentado y x: %d, y: %d deltaDist: x: %f y: %f\n", view->map.x, view->map.y, view->sideDist.x, view->sideDist.y);
+			/*
 			}
 			else
 			{
 				hit = 1;
 				side = 1;
-				printf("choque en x: %d, y: %d\n", view->map.x, view->map.y);
+				printf("choque en y x: %d, y: %d\n", view->map.x, view->map.y);
 			}
+			*/
 		}
 		
-		/*
+		
 		//printf("map x: %d y: %d\n", view->map.x, view->map.y);
-		if (data->table->table[view->map.y][view->map.x] != '0')
+		if (!in_space_int(data, view->map.y, view->map.x))
 		{
 			//printf("nevo x: %d y: %d\n", view->map.x, view->map.y);
 			hit = 1;
 		}
-		*/
+		
 	}
 
 	printf("choque x: %d y: %d\n", view->map.x, view->map.y);
@@ -225,8 +239,8 @@ int view_game(t_file *data)
 	x = 0;
 	
 	printf("plane x: %f y: %f\n", data->gamer->plane.x, data->gamer->plane.y);
-	//while (x < 5)
-	while (x < data->width)
+	while (x < 3)
+	//while (x < data->width)
 	{
 		load_view(data, x);
 		x++;
