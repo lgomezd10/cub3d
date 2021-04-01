@@ -65,12 +65,28 @@ typedef struct s_image
     int         endian;
 } t_image;
 
+typedef struct s_cont_img
+{
+    t_image img;
+    int width;
+    int height;
+    int unitHeight;
+    int unitWidth;
+    t_point_int init;
+} t_cont_img;
+
+
 typedef struct s_window
 {
     void *ptr;
     void *win;
-    t_image img;
+    t_cont_img img;
 } t_window;
+
+typedef struct s_map
+{
+    
+} t_map;
 
 typedef struct s_gamer
 {
@@ -116,6 +132,7 @@ typedef struct s_file
     t_gamer *gamer;
     t_view view;
     t_window window;
+    t_cont_img map;
     char *t_NO;
     char *t_SO;
     char *t_WE;
@@ -136,12 +153,12 @@ int get_map(int fd, char *str, t_file *data);
 void print_struct(t_file *data);
 void wall_connected(t_file *data);
 void paint_map(t_file *data);
-void draw_circle(t_file *data, t_image *img, t_point center, double radius, int color);
+void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, int color);
 int press_key(int keycode, t_gamer *gamer);
 int release_key(int keycode, t_gamer *gamer);
-void my_mlx_pixel_put(t_image *data, int x, int y, int color);
+void my_mlx_pixel_put(t_cont_img *data, int x, int y, int color);
 int init_window(t_file *data);
-void print_map(t_file *data, t_image *img);
+void print_map(t_file *data, t_cont_img *img);
 int print_image(t_file *data);
 void paint_map_antiguo(t_file *data);
 int load_image(t_file *data);
@@ -150,8 +167,10 @@ int in_space_int(t_file *data, int x, int y);
 int move(t_file *data);
 int color_int(int red, int green, int blue);
 int event_exit(int keycode, t_gamer *gamer);
-void print_line(t_file *data, t_point from, t_point to, int color, t_image *img);
+void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img);
 int view_game(t_file *data);
 void set_point(t_point *point, double x, double y);
+void set_point_int(t_point_int *point, int x, int y);
 char get_value(t_file *data, t_point pos, t_point dir);
+void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img);
 #endif

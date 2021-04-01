@@ -5,6 +5,11 @@ void set_point(t_point *point, double x, double y)
     point->x = x;
     point->y = y;
 }
+void set_point_int(t_point_int *point, int x, int y)
+{
+    point->x = x;
+    point->y = y;
+}
 int move_up(t_file *data)
 {
     double new_x;
@@ -62,7 +67,6 @@ int move(t_file *data)
         data->gamer->plane.x = plane.x * cos(rotate * rot) - plane.y * sin(rotate * rot);
         data->gamer->plane.y = plane.x * sin(rotate * rot) + plane.y * cos(rotate * rot);
 		has_move = 1;
-        printf("new direction x: %f, y %f\n", data->gamer->direction.x, data->gamer->direction.y);	
 	}
 	if (data->gamer->move)
 	{

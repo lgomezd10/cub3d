@@ -52,7 +52,7 @@ int
 	return (0);
 }*/
 
-void draw_circle(t_file *data, t_image *img, t_point center, double radius, int color)
+void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, int color)
 {
 	int i;
 	int j;
@@ -60,8 +60,8 @@ void draw_circle(t_file *data, t_image *img, t_point center, double radius, int 
 	int to_x;
 	double distancia;
 
-	center.x *= data->gamer->unitWidth;
-	center.y *= data->gamer->unitHeight;
+	center.x *= img->unitWidth;
+	center.y *= img->unitHeight;
 	i = center.y - radius;
 	to_y = i + (2 * radius);
 	while (i <= to_y)
@@ -79,17 +79,17 @@ void draw_circle(t_file *data, t_image *img, t_point center, double radius, int 
 	}
 }
 
-void print_line(t_file *data, t_point from, t_point to, int color, t_image *img)
+void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img)
 {
 	double x;
 	double y;
 	int end;
 	t_point center;
 
-	from.x *= data->gamer->unitWidth;
-	from.y *= data->gamer->unitHeight;
-	to.x *= data->gamer->unitWidth;
-	to.y *= data->gamer->unitHeight;
+	from.x *= img->unitWidth;
+	from.y *= img->unitHeight;
+	to.x *= img->unitWidth;
+	to.y *= img->unitHeight;
 	x = from.x;
 	y = from.y;
 	end = to.x;
@@ -103,7 +103,7 @@ void print_line(t_file *data, t_point from, t_point to, int color, t_image *img)
 			y = to.y;
 		}
 		x = from.x;
-		while (y < end && x < data->width && y < data->height)
+		while (y < end && x < img->width && y < img->height)
 		{
 			center.y = y;
 			x = ((y - from.y) / (to.y - from.y)) * (to.x - from.x) + from.x;
@@ -115,14 +115,15 @@ void print_line(t_file *data, t_point from, t_point to, int color, t_image *img)
 	}
 	else
 	{
-	
+		end = to.x;
+		x = from.x;
 		if (to.x < from.x)
 		{
 			end = from.x;
 			x = to.x;
 		}
 		y = from.y;
-		while (x < end && x < data->width && y < data->height)
+		while (x < end && x < img->width && y < img->height)
 		{
 			center.x = x;
 			y = ((x - from.x) / (to.x - from.x)) * (to.y - from.y) + from.y;
@@ -134,7 +135,27 @@ void print_line(t_file *data, t_point from, t_point to, int color, t_image *img)
 	}
 }
 
-void print_map(t_file *data, t_image *img)
+void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img)
+{
+	int i;
+	int j;
+
+	i = 0;
+	i = start;
+	j = end;
+	if (end < start)
+	{
+		i = end;
+		j = start;
+	}
+	while (i < j)
+	{
+		my_mlx_pixel_put(img, x, i, color);
+		i++;
+	}
+}
+
+void print_map(t_file *data, t_cont_img *img)
 {
 	int i;
 	int j;
@@ -142,19 +163,21 @@ void print_map(t_file *data, t_image *img)
 	int y;
 
 	i = 0;
-	while (i < data->height)
+	while (i < img->height)
 	{
 		j = 0;
-		while (j < data->width)
-		{        
-			y = i / data->gamer->unitHeight;
-			x = j / data->gamer->unitWidth;
-				if (data->table->table[y][x] == '1')
-					my_mlx_pixel_put(img, j, i, color_int(0, 0, 0));            
-				if (data->table->table[y][x] == '0' || data->table->table[y][x] == '*')
-					my_mlx_pixel_put(img, j, i, color_int(255, 255, 255)); 
+		while (j < img->width)
+		{   
+			//printf("prueba 2.1\n");
+			y = i / img->unitHeight;
+			x = j / img->unitWidth;
+			if (data->table->table[y][x] == '1')
+				my_mlx_pixel_put(img, j, i, color_int(0, 0, 0));      
+			if (data->table->table[y][x] == '0' || data->table->table[y][x] == '*')
+				my_mlx_pixel_put(img, j, i, color_int(255, 255, 255));
+			
 			j++;
-		}
+		}		
 		i++;
 	}
 }
@@ -164,10 +187,12 @@ int color_int(int red, int green, int blue)
 	return (red * 65536 + green * 256 + blue);
 }
 
-void my_mlx_pixel_put(t_image *data, int x, int y, int color)
+void my_mlx_pixel_put(t_cont_img *img, int x, int y, int color)
 {
 	char    *dst;
+	t_image *data;
 
+	data = &img->img;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
