@@ -12,24 +12,24 @@
 #define EVENT_EXIT 17
 
 //MAC
-/*
+
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
 #define K_DOWN 1
 #define K_ROT_L 123
 #define K_ROT_R 124
-*/
+
 
 //LINUX
-
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
 #define K_DOWN 115
 #define K_ROT_L 65361
 #define K_ROT_R 65363
-
+*/
 typedef struct s_color
 {
     unsigned char red;
@@ -65,14 +65,14 @@ typedef struct s_image
     int         endian;
 } t_image;
 
-typedef struct t_window
+typedef struct s_window
 {
     void *ptr;
     void *win;
     t_image img;
 } t_window;
 
-typedef struct t_gamer
+typedef struct s_gamer
 {
     t_point position;
     t_point direction;
@@ -91,7 +91,7 @@ typedef struct s_wall
     t_point *down_left;
 } t_wall;
 
-typedef struct t_view
+typedef struct s_view
 {
     double cameraX;
     t_point rayDir;
@@ -102,6 +102,12 @@ typedef struct t_view
     t_point step;
 } t_view;
 
+typedef struct s_opt
+{
+    double rot_speed;
+    double mov_speed;
+
+} t_opt;
 typedef struct s_file
 {
     int width;
@@ -118,6 +124,7 @@ typedef struct s_file
     t_color *floor;
     t_color *ceiling;
     t_table *table;
+    t_opt opt;
 } t_file;
 
 int load_file(char *file, t_file *data);
@@ -138,8 +145,8 @@ void print_map(t_file *data, t_image *img);
 int print_image(t_file *data);
 void paint_map_antiguo(t_file *data);
 int load_image(t_file *data);
-int in_space(t_file *data, double y, double x);
-int in_space_int(t_file *data, int y, int x);
+int in_space(t_file *data, double x, double y);
+int in_space_int(t_file *data, int x, int y);
 int move(t_file *data);
 int color_int(int red, int green, int blue);
 int event_exit(int keycode, t_gamer *gamer);

@@ -153,6 +153,8 @@ int load_file(char *file, t_file *data)
     int noend;
 
     noend = 1;
+    data->opt.mov_speed = 0.11;
+    data->opt.rot_speed = 0.11;
     if (!name_file_ok(file))
         ft_errors("Nombre de fichero inválido");
     fd = open(file, O_RDONLY);

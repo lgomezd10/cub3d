@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:18:02 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/24 17:43:26 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/01 14:47:32 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void load_gamer(t_file *data, int y, int x, char pos)
 		ft_errors("Error de memoria");
 	gamer->unitHeight = data->height / data->table->rows;
 	gamer->unitWidth = data->width / data->table->cols;
-	gamer->position.x = x * gamer->unitWidth + (gamer->unitWidth / 2);
-	gamer->position.y = y * gamer->unitHeight + (gamer->unitHeight / 2);
+	gamer->position.x = x + 0.5;
+	gamer->position.y = y + 0.5;
 	printf("llega a antes\n");
 	if (data->gamer_init == 'N')
     {

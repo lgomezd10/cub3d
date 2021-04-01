@@ -12,9 +12,9 @@ int move_up(t_file *data)
     t_point dir;
 
     dir = data->gamer->direction;
-    new_x = data->gamer->position.x + (dir.x);
-    new_y = data->gamer->position.y + (dir.y);
-    if (in_space(data, new_y, new_x))
+    new_x = data->gamer->position.x + (dir.x * data->opt.mov_speed);
+    new_y = data->gamer->position.y + (dir.y * data->opt.mov_speed);
+    if (in_space(data, new_x, new_y))
     {
         data->gamer->position.y = new_y;
         data->gamer->position.x = new_x;
@@ -30,9 +30,9 @@ int move_down(t_file *data)
     t_point dir;
 
     dir = data->gamer->direction;
-    new_x = data->gamer->position.x - (dir.x);
-    new_y = data->gamer->position.y - (dir.y);
-    if (in_space(data, new_y, new_x))
+    new_x = data->gamer->position.x - (dir.x * data->opt.mov_speed);
+    new_y = data->gamer->position.y - (dir.y * data->opt.mov_speed);
+    if (in_space(data, new_x, new_y))
     {
         data->gamer->position.y = new_y;
         data->gamer->position.x = new_x;
@@ -49,7 +49,7 @@ int move(t_file *data)
 	t_point dir;
     t_point plane;
 
-	rot = .11;
+	rot = data->opt.rot_speed;
 	rotate = data->gamer->rotate;
 	has_move = 0;
 	dir = data->gamer->direction;

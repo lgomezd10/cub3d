@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/25 17:21:19 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/01 15:20:35 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int load_image(t_file *data)
     t_point p2;
     int change;
     static int nofirts = 1;
+    t_point pos;
 
+    pos = data->gamer->position;
     img = &data->window.img;
     //TODO añadir comprobación por si no ha cambiado nada
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
@@ -31,14 +33,12 @@ int load_image(t_file *data)
     {
         nofirts = 0;
         print_map(data, img);    
-        draw_circle(data, img, data->gamer->position, 5, color_int(255, 0, 0));
-        dir.x = data->gamer->position.x + data->gamer->direction.x;
-        dir.y = data->gamer->position.y + data->gamer->direction.y;
+        draw_circle(data, img, pos, 5, color_int(255, 0, 0));
+        dir.x = pos.x + data->gamer->direction.x;
+        dir.y = pos.y + data->gamer->direction.y;
         draw_circle(data, img, dir, 5, color_int(0, 255, 0));
-        p1.x = 300;
-        p1.y = 300;
-        dir.x = data->gamer->position.x + (data->gamer->direction.x * 10);
-        dir.y = data->gamer->position.y + (data->gamer->direction.y * 10);
+        dir.x = pos.x + (data->gamer->direction.x * 10);
+        dir.y = pos.y + (data->gamer->direction.y * 10);
         //draw_circle(data, img, dir, 5, color_int(0, 255, 0));
         //print_line(data, data->gamer->position, dir, color_int(0, 0, 255), img);
         view_game(data);

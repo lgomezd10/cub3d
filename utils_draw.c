@@ -60,6 +60,8 @@ void draw_circle(t_file *data, t_image *img, t_point center, double radius, int 
 	int to_x;
 	double distancia;
 
+	center.x *= data->gamer->unitWidth;
+	center.y *= data->gamer->unitHeight;
 	i = center.y - radius;
 	to_y = i + (2 * radius);
 	while (i <= to_y)
@@ -84,6 +86,10 @@ void print_line(t_file *data, t_point from, t_point to, int color, t_image *img)
 	int end;
 	t_point center;
 
+	from.x *= data->gamer->unitWidth;
+	from.y *= data->gamer->unitHeight;
+	to.x *= data->gamer->unitWidth;
+	to.y *= data->gamer->unitHeight;
 	x = from.x;
 	y = from.y;
 	end = to.x;
