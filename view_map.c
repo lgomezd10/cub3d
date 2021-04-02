@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/01 20:18:20 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/02 18:03:48 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int load_image(t_file *data)
     t_image *map;
     int init;
 
+    // TODO: controlar que el mapa no sea menor de 300
     img = &data->window.img.img;
     mlx_destroy_image(data->window.ptr, img->img);
     img->img = mlx_new_image(data->window.ptr, data->width, data->height);
@@ -82,7 +83,7 @@ int load_image(t_file *data)
 int print_image(t_file *data)
 {    
     init_window(data);
-    
+    init_texture(data);    
     data->window.img.img.img = mlx_new_image(data->window.ptr, data->width, data->height);
     data->map.img.img = mlx_new_image(data->window.ptr, data->map.width, data->map.height);
     load_image(data);    

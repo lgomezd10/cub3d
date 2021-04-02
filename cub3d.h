@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mlx.h>
+#include "includes/mlx_png.h"
 #include "libft/libft.h"
 #include <math.h>
 
@@ -12,17 +13,18 @@
 #define EVENT_EXIT 17
 
 //MAC
-/*
+
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
 #define K_DOWN 1
 #define K_ROT_L 123
 #define K_ROT_R 124
-*/
+#define K_MAP 46
+
 
 //LINUX
-
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -30,6 +32,17 @@
 #define K_ROT_L 65361
 #define K_ROT_R 65363
 #define K_MAP 109
+*/
+
+enum DIR
+{
+    North,
+    South,
+    East,
+    West,
+    Sprite,
+    Size
+};
 
 typedef struct s_color
 {
@@ -126,6 +139,15 @@ typedef struct s_opt
     double mov_speed;
 
 } t_opt;
+
+typedef struct s_texture
+{
+    void *img;
+    int width;
+    int height;
+    int relative_path;
+} t_texture;
+
 typedef struct s_file
 {
     int width;
@@ -144,6 +166,7 @@ typedef struct s_file
     t_color *ceiling;
     t_table *table;
     t_opt opt;
+    t_texture *tex;
 } t_file;
 
 int load_file(char *file, t_file *data);
@@ -176,4 +199,5 @@ void set_point_int(t_point_int *point, int x, int y);
 char get_value(t_file *data, t_point pos, t_point dir);
 void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img);
 void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img);
+int init_texture(t_file *data);
 #endif
