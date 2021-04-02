@@ -12,7 +12,7 @@ void print_struct(t_file *data)
     if (data->floor)
         printf("FLOOR: %d %d %d\n", data->floor->red, data->floor->green, data->floor->blue);
     if (data->ceiling)
-        printf("CELING: %d %d %d\n", data->ceiling->red, data->ceiling->green, data->ceiling->blue);
+        printf("ceiling: %d %d %d\n", data->ceiling->red, data->ceiling->green, data->ceiling->blue);
     printf("SPRITE: %s\n", data->sprite);
     */
     if (data->table && data->table->table)

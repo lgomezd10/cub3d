@@ -11,6 +11,8 @@ int press_key(int keycode, t_gamer *gamer)
 		gamer->move = -1;
 	if (keycode == K_DOWN)
 		gamer->move = 1;
+	if (keycode == K_MAP)
+		gamer->act_map = !gamer->act_map;
 	return (0);
 }
 

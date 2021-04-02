@@ -137,22 +137,49 @@ void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *i
 
 void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img)
 {
+	
+	if (end < start)
+		ft_errors("start es mayor que end en print_line_real");
+	if (start < 0 || start >= data->height)
+		ft_errors("start esta fuera de los limites");
+	if (end < 0 || end >= data->height)
+		ft_errors("end esta fuera de los limites");
+	
+	while (start < end)
+	{
+		my_mlx_pixel_put(img, x, start, color);
+		start++;
+	}
+}
+
+void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img)
+{
 	int i;
 	int j;
 
 	i = 0;
-	i = start;
-	j = end;
-	if (end < start)
+	while (i < data->height / 2)
 	{
-		i = end;
-		j = start;
-	}
-	while (i < j)
-	{
-		my_mlx_pixel_put(img, x, i, color);
+		j = 0;
+		while (j < data->width)
+		{
+			my_mlx_pixel_put(img, j, i, ceiling);
+			j++;
+		}
 		i++;
 	}
+	i = data->height / 2;
+	while (i < data->height)
+	{
+		j = 0;
+		while (j < data->width)
+		{
+			my_mlx_pixel_put(img, j, i, floor);
+			j++;
+		}
+		i++;
+	}
+	
 }
 
 void print_map(t_file *data, t_cont_img *img)

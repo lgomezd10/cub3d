@@ -11,7 +11,6 @@ void add_line_map(t_file *data, int side)
 	pos = data->gamer->position;
 	if (side)
 	{
-		
 		dest.y = view->map.y - data->view.step.y;
 		if (view->rayDir.y > 0)
 			dest.y++;				
@@ -120,25 +119,24 @@ void load_view(t_file *data, int x)
 	//view->deltaDist.y = fabs(1 / view->rayDir.y);
 	calculate_dist(data);
 	side = find_hit(data);
-	//add_line_map(data, side);
+	if (data->gamer->act_map)
+		add_line_map(data, side);
 	if (side == 0)
 		perpWallDist = (view->map.x - pos.x + (1 - view->step.x) / 2) / view->rayDir.x;
 	else
 		perpWallDist = (view->map.y - pos.y + (1 - view->step.y) / 2) / view->rayDir.y;
 	lineHeight = (int)(data->height / perpWallDist);
-	drawStart = -lineHeight / 2 + data->height / 2;
+	drawStart = (-lineHeight / 2) + (data->height / 2);
 	if (drawStart < 0)
-		drawEnd = lineHeight / 2 + data->height / 2;
+		drawStart = 0;
+	drawEnd = lineHeight / 2 + data->height / 2;
 	if (drawEnd >= data->height)
 		drawEnd = data->height - 1;
 	if (side)
 		color = color_int(0, 255, 0);
 	else
 		color = color_int(255, 0, 0);
-	set_point(&begin, x, drawStart);
-	set_point(&end, x, drawEnd);
-	//printf("begin x: %f, y: %f\n", begin.x, begin.y);
-	//printf("end x: %f, y: %f\n", end.x, end.y);
+	//printf("altura: %d start: %d, end %d\n", data->height, drawStart, drawEnd);
 	
 	print_line_real(data, x, drawStart, drawEnd, color, &data->window.img);
 
@@ -149,7 +147,7 @@ int view_game(t_file *data)
 	int x;    
 	x = 0;
 	
-	//while (x < 3)
+	//while (x < 50)
 	while (x < data->width)
 	{
 		load_view(data, x);

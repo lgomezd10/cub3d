@@ -12,24 +12,25 @@
 #define EVENT_EXIT 17
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
 #define K_DOWN 1
 #define K_ROT_L 123
 #define K_ROT_R 124
-
+*/
 
 //LINUX
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
 #define K_DOWN 115
 #define K_ROT_L 65361
 #define K_ROT_R 65363
-*/
+#define K_MAP 109
+
 typedef struct s_color
 {
     unsigned char red;
@@ -97,6 +98,7 @@ typedef struct s_gamer
     int rotate;
     int unitWidth;
     int unitHeight;
+    int act_map;
 } t_gamer;
 
 typedef struct s_wall
@@ -173,4 +175,5 @@ void set_point(t_point *point, double x, double y);
 void set_point_int(t_point_int *point, int x, int y);
 char get_value(t_file *data, t_point pos, t_point dir);
 void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img);
+void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img);
 #endif

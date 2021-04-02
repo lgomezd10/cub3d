@@ -14,9 +14,15 @@
 
 int load_game(t_file *data)
 {
+    int ceiling;
+    int floor;
+
     t_image *img;
     img = &data->window.img.img;
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+    ceiling = color_int(data->ceiling->red, data->ceiling->green, data->ceiling->blue);
+    floor = color_int(data->floor->red, data->floor->green, data->floor->blue);
+    print_cel_floor(data, ceiling, floor, &data->window.img);
 
     return (0);
 }
@@ -62,11 +68,13 @@ int load_image(t_file *data)
     if (nofirts || change)
     {
         nofirts = 0;
-        load_map(data);
+        if (data->gamer->act_map)
+            load_map(data);
         load_game(data);
         view_game(data);
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
-        //mlx_put_image_to_window(data->window.ptr, data->window.win, map->img, data->map.init.x, data->map.init.y);
+        if (data->gamer->act_map)
+            mlx_put_image_to_window(data->window.ptr, data->window.win, map->img, data->map.init.x, data->map.init.y);
     }
     return (0);
 }
