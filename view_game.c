@@ -89,6 +89,25 @@ int find_hit(t_file *data)
 	return (side);
 }
 
+t_cont_img *select_text(t_file *data, int side)
+{
+	if (!side)
+	{
+		if (data->gamer->direction.x < 0)
+			return (&data->text[North]);
+		else
+			return (&data->text[South]);		
+	}
+	else
+	{
+		if (data->gamer->direction.y < 0)
+			return (&data->text[West]);
+		else
+			return (&data->text[East]);
+	}
+	
+}
+
 void load_view(t_file *data, int x)
 {
 	t_view *view;
@@ -104,6 +123,12 @@ void load_view(t_file *data, int x)
 	int color;
 	t_point begin;
 	t_point end;
+	double wallX;
+	t_point text;
+	double step;
+	double textPos;
+	int i;
+	t_cont_img *texture;
 	
 	pos = data->gamer->position;
 	dir = data->gamer->direction;
@@ -121,6 +146,8 @@ void load_view(t_file *data, int x)
 	side = find_hit(data);
 	if (data->gamer->act_map)
 		add_line_map(data, side);
+
+	
 	if (side == 0)
 		perpWallDist = (view->map.x - pos.x + (1 - view->step.x) / 2) / view->rayDir.x;
 	else
@@ -132,6 +159,31 @@ void load_view(t_file *data, int x)
 	drawEnd = lineHeight / 2 + data->height / 2;
 	if (drawEnd >= data->height)
 		drawEnd = data->height - 1;
+
+	texture = select_text(data, side);
+	if (side == 0)
+		wallX = pos.y + perpWallDist * view->rayDir.y;
+	else
+		wallX = pos.x + perpWallDist * view->rayDir.x;
+	wallX -= floor(wallX);
+	text.x = (int)(wallX * (double)texture->width);
+	if (!side && view->rayDir.x > 0)
+		text.x = texture->width - text.x - 1;
+	if (side && view->rayDir.x < 0)
+		text.x = texture->width - text.x - 1;
+	step = 1.0 * texture->height / lineHeight;
+	textPos = (drawStart - data->height / 2 + lineHeight / 2) * step;
+	i = drawStart;
+	while (i < drawEnd)
+	{
+		text.y = (int)textPos & (texture->height - 1);
+		textPos += step;
+		color = my_mlx_pixel_get(texture, text.x, text.y);
+		my_mlx_pixel_put(&data->window.img, x, i, color);
+		i++;
+	}
+
+	/* VERSION COLORES
 	if (side)
 		color = color_int(0, 255, 0);
 	else
@@ -139,7 +191,7 @@ void load_view(t_file *data, int x)
 	//printf("altura: %d start: %d, end %d\n", data->height, drawStart, drawEnd);
 	
 	print_line_real(data, x, drawStart, drawEnd, color, &data->window.img);
-
+	*/
 }
 
 int view_game(t_file *data)

@@ -32,18 +32,24 @@ int init_window(t_file *data)
     return (0); 
 }
 
-int load_img(t_file *data, t_cont_img *img)
+int load_img(t_file *data, t_cont_img *img, int dir)
 {
     void *ptr;
+    char *str;
 
-    printf("hola 1 \n");
+    if (dir == North)
+        str = data->t_NO;
+    if (dir == South)
+        str = data->t_SO;
+    if (dir == East)
+        str = data->t_EA;
+    if (dir == West)
+        str = data->t_WE;
+    if (dir == Sprite)
+        str = data->sprite;
     ptr = mlx_init();
-    img->img.img = mlx_png_file_to_image(data->window.ptr, data->t_NO, &img->width, &img->height);
-    //img->img.img = mlx_xpm_file_to_image(data->window.ptr, data->t_NO, &img->width, &img->height);
-    printf("hola 2\n");
-    //img->img.addr = mlx_get_data_addr(img->img.img, &img->img.bits_per_pixel, &img->img.line_length, &img->img.endian);
-    printf("hola 3\n");
-    printf("cod north: %d dimensiones texturas alto: %d, ancho %d\n", North, img->width, img->height);
+    img->img.img = mlx_xpm_file_to_image(data->window.ptr, str, &img->width, &img->height);
+    img->img.addr = mlx_get_data_addr(img->img.img, &img->img.bits_per_pixel, &img->img.line_length, &img->img.endian);
     return (0);
 }
 
@@ -57,6 +63,11 @@ int init_texture(t_file *data)
     fd = open(data->t_NO, O_RDONLY);
     printf("fichero abierto: %d\n", fd);
     close(fd);
-    load_img(data, &text[North]);
+    load_img(data, &text[North], North);
+    load_img(data, &text[South], South);
+    load_img(data, &text[East], East);
+    load_img(data, &text[West], West);
+    load_img(data, &text[Sprite], Sprite);
+    data->text = text;
     return (0);
 }

@@ -1,12 +1,11 @@
 R 900 900
-WE      prueba/WE
-EA Pru/EA
-
-S ppe
+NO textures/wall_1.xpm
+SO textures/wall_2.xpm
+WE textures/wall_3.xpm
+EA textures/wall_4.xpm
+S textures/pillar.xpm
 C 222 ,112,, 255
 F 123, 111, 0
-NO  prueba/NO
-SO prueba/SO
   1111   11111  
    1111      11111
 11111111111111111111111     

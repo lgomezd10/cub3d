@@ -76,6 +76,8 @@ int load_image(t_file *data)
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
         if (data->gamer->act_map)
             mlx_put_image_to_window(data->window.ptr, data->window.win, map->img, data->map.init.x, data->map.init.y);
+        copy_img(&data->text[North], &data->window.img);
+        //mlx_put_image_to_window(data->window.ptr, data->window.win, data->text[North].img.img, 0, 0);
     }
     return (0);
 }

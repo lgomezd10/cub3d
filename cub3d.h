@@ -13,7 +13,7 @@
 #define EVENT_EXIT 17
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -21,10 +21,10 @@
 #define K_ROT_L 123
 #define K_ROT_R 124
 #define K_MAP 46
-
+*/
 
 //LINUX
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -32,7 +32,6 @@
 #define K_ROT_L 65361
 #define K_ROT_R 65363
 #define K_MAP 109
-*/
 
 enum DIR
 {
@@ -166,7 +165,7 @@ typedef struct s_file
     t_color *ceiling;
     t_table *table;
     t_opt opt;
-    t_texture *tex;
+    t_cont_img *text;
 } t_file;
 
 int load_file(char *file, t_file *data);
@@ -200,4 +199,6 @@ char get_value(t_file *data, t_point pos, t_point dir);
 void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img);
 void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img);
 int init_texture(t_file *data);
+void copy_img(t_cont_img *img1, t_cont_img *img2);
+unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y);
 #endif

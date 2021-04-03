@@ -224,6 +224,35 @@ void my_mlx_pixel_put(t_cont_img *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y)
+{
+	char    *dst;
+	t_image *data;
+
+	data = &img->img;
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	return (*(unsigned int*)dst);
+}
+
+void copy_img(t_cont_img *img1, t_cont_img *img2)
+{
+	int i;
+	int j;
+	
+	i = 0;
+	while (i < img1->height)
+	{
+		j = 0;
+		while (j < img1->width)
+		{
+			my_mlx_pixel_put(img2, j, i, my_mlx_pixel_get(img1, j, i));
+			j++;
+		}
+		i++;
+	}
+	
+}
+
 char get_value(t_file *data, t_point pos, t_point dir)
 {
 	char c;
