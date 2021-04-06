@@ -30,9 +30,10 @@ int release_key(int keycode, t_gamer *gamer)
 	return (0);
 }
 
-int event_exit(int keycode, t_gamer *gamer)
+int event_exit(int keycode, t_file *data)
 {
-    exit(0);
+	data->closed = 1;
+	return (0);
 }
 
 int in_space(t_file *data, double x, double y)

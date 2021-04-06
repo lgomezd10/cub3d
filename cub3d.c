@@ -50,7 +50,7 @@ int main(int argc, char **argv)
         print_struct(&data);
         wall_connected(&data);
         print_struct(&data);
-        //print_image(&data);
+        printf("segunda impresión\n");
         print_image(&data);
         system("leaks cub3d");
     }

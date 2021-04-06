@@ -157,7 +157,7 @@ int load_file(char *file, t_file *data)
         ft_errors("Nombre de fichero inválido");
     fd = open(file, O_RDONLY);
     if (fd < 0)
-        ft_errors("No se puede abrir el archivo");
+        ft_errors("No se puede abrir el archivo pasado");
     line = 0;
     while (noend > 0 || (line && *line))
     {        

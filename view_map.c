@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/02 18:03:48 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/06 20:42:55 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,25 @@ int load_image(t_file *data)
     int init;
 
     // TODO: controlar que el mapa no sea menor de 300
+    if (data->closed)
+    {
+        /*
+        if (data->window.ptr && data->window.win)
+		    mlx_destroy_window(data->window.ptr, data->window.win);
+        */
+        exit(0);
+    }
     img = &data->window.img.img;
     mlx_destroy_image(data->window.ptr, img->img);
     img->img = mlx_new_image(data->window.ptr, data->width, data->height);
     map = &data->map.img;
-    change = move(data);
+    change = move(data);   
+    
     if (nofirts || change)
     {
+        printf("antes de ordenar\n");
+        short_sprites(data);
+        printf("despues de ordenar\n");
         nofirts = 0;
         if (data->gamer->act_map)
             load_map(data);
@@ -84,6 +96,7 @@ int load_image(t_file *data)
 
 int print_image(t_file *data)
 {    
+    printf("antes de empezar imagen\n");
     init_window(data);
     init_texture(data);    
     data->window.img.img.img = mlx_new_image(data->window.ptr, data->width, data->height);
@@ -91,8 +104,9 @@ int print_image(t_file *data)
     load_image(data);    
     mlx_hook(data->window.win, 2, 1L << 0, press_key, data->gamer);
     mlx_hook(data->window.win, 3, 1L << 1, release_key, data->gamer);
-    mlx_hook(data->window.win, EVENT_EXIT, 0, event_exit, data->gamer);
+    mlx_hook(data->window.win, EVENT_EXIT, 0, event_exit, data);
     mlx_loop_hook(data->window.ptr, load_image, data);
-    mlx_loop(data->window.ptr);    
+    mlx_loop(data->window.ptr);
+    printf("después de empezar imagen\n");
     return (0);
 }

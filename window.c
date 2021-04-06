@@ -29,7 +29,7 @@ int init_window(t_file *data)
     data->window.ptr = mlx_init();
     data->window.win = mlx_new_window(data->window.ptr, data->width, data->height, "CUB3D");
     printf("iniciada venta\n");
-    return (0); 
+    return (0);
 }
 
 int load_img(t_file *data, t_cont_img *img, int dir)

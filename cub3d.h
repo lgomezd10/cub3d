@@ -13,7 +13,7 @@
 #define EVENT_EXIT 17
 
 //MAC
-/*
+
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -21,10 +21,10 @@
 #define K_ROT_L 123
 #define K_ROT_R 124
 #define K_MAP 46
-*/
+
 
 //LINUX
-
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -32,7 +32,7 @@
 #define K_ROT_L 65361
 #define K_ROT_R 65363
 #define K_MAP 109
-
+*/
 enum DIR
 {
     North,
@@ -42,24 +42,6 @@ enum DIR
     Sprite,
     Size
 };
-
-typedef struct s_sprite
-{
-    t_point pos;
-    double dist;
-    int visible;
-    t_sprite *next;
-    t_sprite *pre;
-
-} t_sprite;
-
-typedef struct s_list_sp
-{
-    t_sprite *begin;
-    t_sprite *end;
-    int size;
-} t_list_sp;
-
 
 typedef struct s_color
 {
@@ -86,6 +68,23 @@ typedef struct s_point
     double x;
     double y;
 } t_point;
+
+typedef struct s_sprite
+{
+    t_point pos;
+    double dist;
+    int visible;
+    struct s_sprite *next;
+    struct s_sprite *pre;
+
+} t_sprite;
+
+typedef struct s_list_sp
+{
+    t_sprite *begin;
+    t_sprite *end;
+    int size;
+} t_list_sp;
 
 typedef struct s_image
 {
@@ -185,6 +184,7 @@ typedef struct s_file
     t_opt opt;
     t_cont_img *text;
     t_list_sp sprites;
+    int closed;
 } t_file;
 
 int load_file(char *file, t_file *data);
@@ -209,7 +209,7 @@ int in_space(t_file *data, double x, double y);
 int in_space_int(t_file *data, int x, int y);
 int move(t_file *data);
 int color_int(int red, int green, int blue);
-int event_exit(int keycode, t_gamer *gamer);
+int event_exit(int keycode, t_file *data);
 void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img);
 int view_game(t_file *data);
 void set_point(t_point *point, double x, double y);
@@ -221,4 +221,6 @@ int init_texture(t_file *data);
 void copy_img(t_cont_img *img1, t_cont_img *img2);
 unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y);
 t_sprite *add_new_sp_back(t_list_sp *list, int x, int y);
+void short_sprites(t_file *data);
+void print_list_sp(t_file *data);
 #endif
