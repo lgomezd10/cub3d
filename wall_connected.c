@@ -105,7 +105,8 @@ void check_conexions(t_file *data, int y, int x)
 	char **table;
 
 	table = data->table->table;
-
+	if (table[y][x] == '2')
+		add_new_sp_back(&data->sprites, x, y);
 	if (ft_strchr("NSEW", table[y][x]))
 	{
 		load_gamer(data, y, x, table[y][x]);

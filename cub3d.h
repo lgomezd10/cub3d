@@ -43,6 +43,24 @@ enum DIR
     Size
 };
 
+typedef struct s_sprite
+{
+    t_point pos;
+    double dist;
+    int visible;
+    t_sprite *next;
+    t_sprite *pre;
+
+} t_sprite;
+
+typedef struct s_list_sp
+{
+    t_sprite *begin;
+    t_sprite *end;
+    int size;
+} t_list_sp;
+
+
 typedef struct s_color
 {
     unsigned char red;
@@ -166,6 +184,7 @@ typedef struct s_file
     t_table *table;
     t_opt opt;
     t_cont_img *text;
+    t_list_sp sprites;
 } t_file;
 
 int load_file(char *file, t_file *data);
@@ -201,4 +220,5 @@ void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img);
 int init_texture(t_file *data);
 void copy_img(t_cont_img *img1, t_cont_img *img2);
 unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y);
+t_sprite *add_new_sp_back(t_list_sp *list, int x, int y);
 #endif

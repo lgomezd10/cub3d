@@ -93,14 +93,14 @@ t_cont_img *select_text(t_file *data, int side)
 {
 	if (!side)
 	{
-		if (data->gamer->direction.x < 0)
+		if (data->view.rayDir.x < 0)
 			return (&data->text[North]);
 		else
 			return (&data->text[South]);		
 	}
 	else
 	{
-		if (data->gamer->direction.y < 0)
+		if (data->view.rayDir.y < 0)
 			return (&data->text[West]);
 		else
 			return (&data->text[East]);
