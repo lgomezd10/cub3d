@@ -16,13 +16,13 @@ int move_up(t_file *data)
 	double new_y;
     t_point dir;
 
-    dir = data->gamer->direction;
-    new_x = data->gamer->position.x + (dir.x * data->opt.mov_speed);
-    new_y = data->gamer->position.y + (dir.y * data->opt.mov_speed);
+    dir = data->gamer->dir;
+    new_x = data->gamer->pos.x + (dir.x * data->opt.mov_speed);
+    new_y = data->gamer->pos.y + (dir.y * data->opt.mov_speed);
     if (in_space(data, new_x, new_y))
     {
-        data->gamer->position.y = new_y;
-        data->gamer->position.x = new_x;
+        data->gamer->pos.y = new_y;
+        data->gamer->pos.x = new_x;
         return (1);
     }
     return (0);
@@ -34,13 +34,13 @@ int move_down(t_file *data)
 	double new_y;
     t_point dir;
 
-    dir = data->gamer->direction;
-    new_x = data->gamer->position.x - (dir.x * data->opt.mov_speed);
-    new_y = data->gamer->position.y - (dir.y * data->opt.mov_speed);
+    dir = data->gamer->dir;
+    new_x = data->gamer->pos.x - (dir.x * data->opt.mov_speed);
+    new_y = data->gamer->pos.y - (dir.y * data->opt.mov_speed);
     if (in_space(data, new_x, new_y))
     {
-        data->gamer->position.y = new_y;
-        data->gamer->position.x = new_x;
+        data->gamer->pos.y = new_y;
+        data->gamer->pos.x = new_x;
         return (1);
     }
     return (0);
@@ -57,13 +57,13 @@ int move(t_file *data)
 	rot = data->opt.rot_speed;
 	rotate = data->gamer->rotate;
 	has_move = 0;
-	dir = data->gamer->direction;
+	dir = data->gamer->dir;
     plane = data->gamer->plane;
     
 	if (rotate)
 	{		
-		data->gamer->direction.x = dir.x * cos(rotate * rot) - dir.y * sin(rotate * rot);
-		data->gamer->direction.y = dir.x * sin(rotate * rot) + dir.y * cos(rotate * rot);
+		data->gamer->dir.x = dir.x * cos(rotate * rot) - dir.y * sin(rotate * rot);
+		data->gamer->dir.y = dir.x * sin(rotate * rot) + dir.y * cos(rotate * rot);
         data->gamer->plane.x = plane.x * cos(rotate * rot) - plane.y * sin(rotate * rot);
         data->gamer->plane.y = plane.x * sin(rotate * rot) + plane.y * cos(rotate * rot);
 		has_move = 1;

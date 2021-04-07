@@ -15,43 +15,47 @@ void print_struct(t_file *data)
         printf("ceiling: %d %d %d\n", data->ceiling->red, data->ceiling->green, data->ceiling->blue);
     printf("SPRITE: %s\n", data->sprite);
     */
-    if (data->table && data->table->table)
+    if (data->table.table)
     {
         i = 0;
-        printf("filas %d col %d\n", data->table->rows, data->table->cols);
-        while (i < data->table->rows)
+        printf("filas %d col %d\n", data->table.rows, data->table.cols);
+        while (i < data->table.rows)
         {
             j = 0;
-            while (j < data->table->cols)
+            while (j < data->table.cols)
             {
-               printf("%c ", data->table->table[i][j]);
+               printf("%c ", data->table.table[i][j]);
                j++;
             }
-            //free(data->table->table[i]);
+            //free(data->table.table[i]);
             printf("\n");
             i++;
         }
-        //free(data->table->table);
+        //free(data->table.table);
     }
 }
 
 int main(int argc, char **argv)
 {
     
-    t_file data;
+    t_file *data;
 
-    ft_bzero(&data, sizeof(t_file));
-    print_struct(&data);
+    data = 0;    
     if (argc < 2 || argc > 3)
         ft_errors("Solo se permiten dos argumentos");
     else
     {
-        load_file(argv[1], &data);
-        print_struct(&data);
-        wall_connected(&data);
-        print_struct(&data);
-        printf("segunda impresión\n");
-        print_image(&data);
-        system("leaks cub3d");
+        data = (t_file *)ft_calloc(sizeof(t_file), 1);
+        if (data)
+        {
+            print_struct(data);
+            load_file(argv[1], data);
+            print_struct(data);
+            wall_connected(data);
+            print_struct(data);
+            printf("segunda impresión\n");
+            print_image(data);
+            //system("leaks cub3D");
+        }
     }
 }

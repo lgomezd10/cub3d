@@ -63,7 +63,7 @@ void load_dist_sp(t_file *data)
 	t_point pos_sp;
 	t_sprite *sprite;
 
-	pos = data->gamer->position;
+	pos = data->gamer->pos;
 	sprite = data->sprites.begin;
 	// TODO quitar error por si no hay sprite
 	if (!sprite)

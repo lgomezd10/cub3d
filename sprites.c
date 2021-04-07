@@ -11,15 +11,15 @@ void print_sprites(t_file *data)
     int sp_screenx;
 
     sprite = data->sprites.begin;
-    pos = data->gamer->position;
+    pos = data->gamer->pos;
     gamer = data->gamer;
     while (sprite)
     {
         pos_sp.x = sprite->pos.x - pos.x;
         pos_sp.y = sprite->pos.y - pos.y;
-        invDet = 1.0 / (gamer->plane.x * gamer->direction.y - gamer->direction.x * gamer->plane.y);
+        invDet = 1.0 / (gamer->plane.x * gamer->dir.y - gamer->dir.x * gamer->plane.y);
 
-        trans.x = invDet * (gamer->direction.y * pos_sp.x - gamer->direction.x * pos_sp.y);
+        trans.x = invDet * (gamer->dir.y * pos_sp.x - gamer->dir.x * pos_sp.y);
         trans.y = invDet * (-gamer->plane.y * pos_sp.x - gamer->plane.x * pos_sp.y);
 
         sp_screenx = (data->width / 2) * (1 + trans.x / trans.y);

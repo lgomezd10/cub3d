@@ -120,8 +120,8 @@ typedef struct s_map
 
 typedef struct s_gamer
 {
-    t_point position;
-    t_point direction;
+    t_point pos;
+    t_point dir;
     t_point plane;
     int move;
     int rotate;
@@ -138,16 +138,7 @@ typedef struct s_wall
     t_point *down_left;
 } t_wall;
 
-typedef struct s_view
-{
-    double cameraX;
-    t_point rayDir;
-    t_point_int map;
-    t_point sideDist;
-    t_point deltaDist;
-    double perpWaDist;
-    t_point step;
-} t_view;
+
 
 typedef struct s_opt
 {
@@ -170,7 +161,6 @@ typedef struct s_file
     int height;
     char gamer_init;
     t_gamer *gamer;
-    t_view view;
     t_window window;
     t_cont_img map;
     char *t_NO;
@@ -180,7 +170,7 @@ typedef struct s_file
     char *sprite;
     t_color *floor;
     t_color *ceiling;
-    t_table *table;
+    t_table table;
     t_opt opt;
     t_cont_img *text;
     t_list_sp sprites;
@@ -210,7 +200,7 @@ int in_space(t_file *data, double x, double y);
 int in_space_int(t_file *data, int x, int y);
 int move(t_file *data);
 int color_int(int red, int green, int blue);
-int event_exit(int keycode, t_file *data);
+int event_exit(t_file *data);
 void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img);
 int view_game(t_file *data);
 void set_point(t_point *point, double x, double y);
@@ -224,4 +214,5 @@ unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y);
 t_sprite *add_new_sp_back(t_list_sp *list, int x, int y);
 void short_sprites(t_file *data);
 void print_list_sp(t_file *data);
+void free_components(t_file *data);
 #endif

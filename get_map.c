@@ -5,14 +5,14 @@ int follow_wall(t_file *data, int row, int col)
     char **table;
     int follow;
 
-    table = data->table->table;
+    table = data->table.table;
     follow = 0;
     if (row > 0)
     {
         follow = table[row - 1][col] == '1';
         if (col > 0)
             follow = follow || table[row - 1][col - 1] == '1';
-        if (col < data->table->cols - 1)
+        if (col < data->table.cols - 1)
             follow = follow || table[row - 1][col + 1] == '1';
     }
     else
@@ -26,18 +26,22 @@ int build_map(t_list *list, t_file *data)
     int i;
     char **table;
 
-    table = (char **)ft_calloc(sizeof(char *), data->table->rows);
+    table = (char **)ft_calloc(sizeof(char *), data->table.rows);
+    if (!table)
+        ft_errors("Error de memoria al crear la tabla");
     i = 0;
-    while (table && list && i < data->table->rows)
+    while (table && list && i < data->table.rows)
     {
-        table[i] = (char *)ft_calloc(sizeof(char), data->table->cols);
-        ft_memset(table[i], ' ', data->table->cols);
+        table[i] = (char *)ft_calloc(sizeof(char), data->table.cols);
+        if (!table[i])
+            ft_errors("Error de memoria al crear la tabla");
+        ft_memset(table[i], ' ', data->table.cols);
         line = (char *)list->content;
         ft_memcpy(table[i], line, ft_strlen(line));        
         list = list->next;
         i++;
     }
-    data->table->table = table;
+    data->table.table = table;
     return (1);
 }
 
@@ -105,8 +109,7 @@ int get_map(int fd, char *str, t_file *data)
 
     list = 0;
     noend = 1;
-    if (!data->table)
-        data->table = (t_table *)ft_calloc(sizeof(t_table), 1);
+    
     len = ft_strlen(str);
     str = ft_strdup(str);
     while (noend >= 0 && str[0] && len && correct_line_map(str, data))
@@ -114,9 +117,9 @@ int get_map(int fd, char *str, t_file *data)
         while (str[len - 1] == ' ')
             str[--len] = '\0';
         ft_lstadd_back(&list, ft_lstnew(str));
-        if (data->table->cols < len)
-            data->table->cols = len;
-        data->table->rows++;        
+        if (data->table.cols < len)
+            data->table.cols = len;
+        data->table.rows++;        
         noend = get_next_line(fd, &str);
         len = ft_strlen(str);
     }
