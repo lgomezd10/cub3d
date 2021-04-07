@@ -116,7 +116,6 @@ void load_view(t_file *data, int x)
 	t_point *plane;
 	int hit = 0;
 	int side;
-	double perpWallDist;
 	int lineHeight;
 	int drawStart;
 	int drawEnd;
@@ -149,10 +148,10 @@ void load_view(t_file *data, int x)
 
 	
 	if (side == 0)
-		perpWallDist = (view->map.x - pos.x + (1 - view->step.x) / 2) / view->rayDir.x;
+		data->wallDist[x] = (view->map.x - pos.x + (1 - view->step.x) / 2) / view->rayDir.x;
 	else
-		perpWallDist = (view->map.y - pos.y + (1 - view->step.y) / 2) / view->rayDir.y;
-	lineHeight = (int)(data->height / perpWallDist);
+		data->wallDist[x] = (view->map.y - pos.y + (1 - view->step.y) / 2) / view->rayDir.y;
+	lineHeight = (int)(data->height / data->wallDist[x]);
 	drawStart = (-lineHeight / 2) + (data->height / 2);
 	if (drawStart < 0)
 		drawStart = 0;
@@ -162,9 +161,9 @@ void load_view(t_file *data, int x)
 
 	texture = select_text(data, side);
 	if (side == 0)
-		wallX = pos.y + perpWallDist * view->rayDir.y;
+		wallX = pos.y + data->wallDist[x] * view->rayDir.y;
 	else
-		wallX = pos.x + perpWallDist * view->rayDir.x;
+		wallX = pos.x + data->wallDist[x] * view->rayDir.x;
 	wallX -= floor(wallX);
 	text.x = (int)(wallX * (double)texture->width);
 	if (!side && view->rayDir.x > 0)

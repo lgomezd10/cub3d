@@ -71,7 +71,7 @@ typedef struct s_point
 
 typedef struct s_sprite
 {
-    t_point pos;
+    t_point pos;    
     double dist;
     int visible;
     struct s_sprite *next;
@@ -185,6 +185,7 @@ typedef struct s_file
     t_cont_img *text;
     t_list_sp sprites;
     int closed;
+    double wallDist[1920];
 } t_file;
 
 int load_file(char *file, t_file *data);
