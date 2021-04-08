@@ -10,10 +10,10 @@
 
 #define ROTATE_SPEED .11
 #define MOVE_SPEED .11
-#define EVENT_EXIT 17
+
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -21,10 +21,11 @@
 #define K_ROT_L 123
 #define K_ROT_R 124
 #define K_MAP 46
-
+#define EVENT_EXIT 17
+*/
 
 //LINUX
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -32,7 +33,8 @@
 #define K_ROT_L 65361
 #define K_ROT_R 65363
 #define K_MAP 109
-*/
+#define EVENT_EXIT 33
+
 enum DIR
 {
     North,
@@ -144,6 +146,9 @@ typedef struct s_opt
 {
     double rot_speed;
     double mov_speed;
+    double u_div;
+    double v_div;
+    double v_move;
 
 } t_opt;
 
@@ -215,4 +220,5 @@ t_sprite *add_new_sp_back(t_list_sp *list, int x, int y);
 void short_sprites(t_file *data);
 void print_list_sp(t_file *data);
 void free_components(t_file *data);
+void print_sprites(t_file *data);
 #endif

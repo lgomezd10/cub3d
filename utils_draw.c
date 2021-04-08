@@ -168,8 +168,11 @@ void my_mlx_pixel_put(t_cont_img *img, int x, int y, int color)
 	t_image *data;
 
 	data = &img->img;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (data->img && x >= 0 && x < img->width && y >= 0 && y < img->height)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
 }
 
 unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y)
@@ -178,8 +181,12 @@ unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y)
 	t_image *data;
 
 	data = &img->img;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	return (*(unsigned int*)dst);
+	if (data->img && x >= 0 && x < img->width && y >= 0 && y < img->height)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		return (*(unsigned int*)dst);
+	}
+	return(0);
 }
 
 

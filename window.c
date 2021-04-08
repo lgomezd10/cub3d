@@ -13,7 +13,10 @@ int init_window(t_file *data)
     */
     
     data->opt.mov_speed = 0.11;
-    data->opt.rot_speed = 0.11;    
+    data->opt.rot_speed = 0.11;   
+    data->opt.u_div = 1;
+    data->opt.v_div = 1;
+    data->opt.v_move = 0.0; 
     data->map.width = (data->width / 3);    
     data->map.height = data->map.width * 9 / 16; 
     printf("resolucion ancho: %d alto %d", data->map.width, data->map.height);

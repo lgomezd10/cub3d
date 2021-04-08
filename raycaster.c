@@ -118,10 +118,9 @@ void calculate_line_to_draw(t_file *data, t_view *view, int x)
 	view->drawStart = (-view->lineHeight / 2) + (data->height / 2);
 	if (view->drawStart < 0)
 		view->drawStart = 0;
-	view->drawEnd = view->lineHeight / 2 + data->height / 2;
+	view->drawEnd = (view->lineHeight / 2) + (data->height / 2);
 	if (view->drawEnd >= data->height)
 		view->drawEnd = data->height - 1;
-	
 }
 
 void texture_to_image(t_file *data, t_view *view, int x)
@@ -145,9 +144,11 @@ void texture_to_image(t_file *data, t_view *view, int x)
 	i = view->drawStart;
 	while (i < view->drawEnd)
 	{
-		view->text.y = (int)view->textPos & (texture->height - 1);
+		view->text.y = (int)view->textPos/* & (texture->height - 1)*/;
 		view->textPos += view->step;
 		view->color = my_mlx_pixel_get(texture, view->text.x, view->text.y);
+		if (view->side)
+			view->color = (view->color >> 1) & 8355711;
 		my_mlx_pixel_put(&data->window.img, x, i, view->color);
 		i++;
 	}

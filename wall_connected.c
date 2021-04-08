@@ -105,10 +105,13 @@ void check_conexions(t_file *data, int y, int x)
 	char **table;
 
 	table = data->table.table;
-	/*
+	
 	if (table[y][x] == '2')
+	{
+		printf("va a cargtar el sprite\n");
 		add_new_sp_back(&data->sprites, x, y);
-	*/
+		printf("carga el sprite\n");
+	}		
 	if (ft_strchr("NSEW", table[y][x]))
 	{
 		load_gamer(data, y, x, table[y][x]);

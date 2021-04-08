@@ -83,11 +83,11 @@ int load_image(t_file *data)
                 //img->img = 0;
                 img->img = mlx_new_image(data->window.ptr, data->width, data->height);            
             }
-            /*
-            printf("Hay cambios\n");
-            short_sprites(data);
-            printf("despues de ordenar\n");
-            */
+            
+            //printf("Hay cambios\n");
+            //short_sprites(data);
+            //printf("despues de ordenar\n");
+            
             nofirts = 0;
             if (data->gamer->act_map)
                 load_map(data);
