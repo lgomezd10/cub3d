@@ -48,16 +48,14 @@ int load_color(char *line, t_file *data)
         if (*color)
             ft_errors("Linea repetida");
         *color = (t_color *)ft_calloc(sizeof(t_color), 1);
-        if (*color)
-        {
-            (*color)->red = get_color(split[0]);
-            (*color)->green = get_color(split[1]);
-            (*color)->blue = get_color(split[2]);
-            free_split(split);
-            free(split);
-            free(temp);
-            return (1);
-        }
+        has_been_created(*color);
+        (*color)->red = get_color(split[0]);
+        (*color)->green = get_color(split[1]);
+        (*color)->blue = get_color(split[2]);
+        free_split(split);
+        free(split);
+        free(temp);
+        return (1);
     }
     ft_errors("El formato para color es X xxx,xxx,xxx");
     return (0);

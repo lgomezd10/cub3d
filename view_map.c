@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/07 20:07:48 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/08 19:19:22 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,23 @@ int load_image(t_file *data)
             { 
                 mlx_destroy_image(data->window.ptr, img->img);
                 //img->img = 0;
-                img->img = mlx_new_image(data->window.ptr, data->width, data->height);            
+                img->img = mlx_new_image(data->window.ptr, data->width, data->height);
+                has_been_created(img->img);                          
             }
             
-            //printf("Hay cambios\n");
-            //short_sprites(data);
-            //printf("despues de ordenar\n");
+            short_sprites(data);
             
             nofirts = 0;
             if (data->gamer->act_map)
                 load_map(data);
             load_game(data);
-            view_game(data);
+            raycaster(data);
             
             //mlx_put_image_to_window(data->window.ptr, data->window.win, data->text[North].img.img, 0, 0);
         }
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
-            if (data->gamer->act_map)
-                mlx_put_image_to_window(data->window.ptr, data->window.win, map->img, data->map.init.x, data->map.init.y);
+        if (data->gamer->act_map)
+            mlx_put_image_to_window(data->window.ptr, data->window.win, map->img, data->map.init.x, data->map.init.y);
     }
     return (0);
 }
@@ -108,7 +107,9 @@ int print_image(t_file *data)
     init_window(data);
     init_texture(data);    
     data->window.img.img.img = mlx_new_image(data->window.ptr, data->width, data->height);
+    has_been_created(data->window.img.img.img);
     data->map.img.img = mlx_new_image(data->window.ptr, data->map.width, data->map.height);
+    has_been_created(data->window.img.img.img);
     load_image(data);    
     mlx_hook(data->window.win, 2, 1L << 0, press_key, data->gamer);
     mlx_hook(data->window.win, 3, 1L << 1, release_key, data->gamer);

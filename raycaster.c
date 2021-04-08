@@ -137,14 +137,14 @@ void texture_to_image(t_file *data, t_view *view, int x)
 	view->text.x = (int)(view->wallX * (double)texture->width);
 	if (!view->side && view->rayDir.x > 0)
 		view->text.x = texture->width - view->text.x - 1;
-	if (view->side && view->rayDir.x < 0)
+	if (view->side && view->rayDir.y < 0)
 		view->text.x = texture->width - view->text.x - 1;
 	view->step = 1.0 * texture->height / view->lineHeight;
 	view->textPos = (view->drawStart - data->height / 2 + view->lineHeight / 2) * view->step;
 	i = view->drawStart;
 	while (i < view->drawEnd)
 	{
-		view->text.y = (int)view->textPos/* & (texture->height - 1)*/;
+		view->text.y = (int)view->textPos & (texture->height - 1);
 		view->textPos += view->step;
 		view->color = my_mlx_pixel_get(texture, view->text.x, view->text.y);
 		if (view->side)
@@ -186,7 +186,7 @@ void load_view(t_file *data, t_view *view, int x)
 	*/
 }
 
-int view_game(t_file *data)
+int raycaster(t_file *data)
 {
 	int x;    
 	x = 0;
@@ -199,5 +199,6 @@ int view_game(t_file *data)
 		load_view(data, &view, x);
 		x++;
 	}
+	print_sprites(data);
 	return (0);
 }

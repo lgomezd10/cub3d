@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:39:09 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/03/17 16:08:26 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/08 16:53:38 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ char	*ft_delete_set(char **str, char *set)
 
 	temp = *str;
 	len = ft_strlen(temp);
-	copy = ft_calloc(sizeof(char), len + 1);
-	copy[len] = '\0';
+	copy = ft_calloc(sizeof(char), len + 1);	
 	if (copy)
 	{
+		copy[len] = '\0';
 		i = 0;
 		j = 0;
 		while (i < len && temp[i])

@@ -13,7 +13,7 @@
 
 
 //MAC
-/*
+
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -22,10 +22,10 @@
 #define K_ROT_R 124
 #define K_MAP 46
 #define EVENT_EXIT 17
-*/
+
 
 //LINUX
-
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -34,6 +34,7 @@
 #define K_ROT_R 65363
 #define K_MAP 109
 #define EVENT_EXIT 33
+*/
 
 enum DIR
 {
@@ -146,19 +147,10 @@ typedef struct s_opt
 {
     double rot_speed;
     double mov_speed;
-    double u_div;
-    double v_div;
+    int u_div;
+    int v_div;
     double v_move;
-
 } t_opt;
-
-typedef struct s_texture
-{
-    void *img;
-    int width;
-    int height;
-    int relative_path;
-} t_texture;
 
 typedef struct s_file
 {
@@ -207,7 +199,7 @@ int move(t_file *data);
 int color_int(int red, int green, int blue);
 int event_exit(t_file *data);
 void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img);
-int view_game(t_file *data);
+int raycaster(t_file *data);
 void set_point(t_point *point, double x, double y);
 void set_point_int(t_point_int *point, int x, int y);
 char get_value(t_file *data, t_point pos, t_point dir);
@@ -221,4 +213,5 @@ void short_sprites(t_file *data);
 void print_list_sp(t_file *data);
 void free_components(t_file *data);
 void print_sprites(t_file *data);
+void has_been_created(void *ptr);
 #endif

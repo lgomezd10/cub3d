@@ -40,22 +40,21 @@ int main(int argc, char **argv)
     
     t_file *data;
 
-    data = 0;    
+    data = 0;
+    system("leaks cub3D"); 
     if (argc < 2 || argc > 3)
         ft_errors("Solo se permiten dos argumentos");
     else
     {
         data = (t_file *)ft_calloc(sizeof(t_file), 1);
-        if (data)
-        {
-            print_struct(data);
-            load_file(argv[1], data);
-            print_struct(data);
-            wall_connected(data);
-            print_struct(data);
-            printf("segunda impresión\n");
-            print_image(data);
-            //system("leaks cub3D");
-        }
+        has_been_created(data);
+        print_struct(data);
+        load_file(argv[1], data);
+        print_struct(data);
+        wall_connected(data);
+        print_struct(data);
+        printf("segunda impresión\n");
+        print_image(data);
+        //system("leaks cub3D");
     }
 }

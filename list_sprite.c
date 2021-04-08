@@ -36,24 +36,20 @@ t_sprite *add_new_sp_back(t_list_sp *list, int x, int y)
 	t_sprite *new;
 
 	new = (t_sprite *)ft_calloc(sizeof(t_sprite), 1);
-	if (new)
+	has_been_created(new);
+	new->pos.x = x + 0.5;
+	new->pos.y = y + 0.5;
+	if (!list->begin)
 	{
-		new->pos.x = x + 0.5;
-		new->pos.y = y + 0.5;
-		if (!list->begin)
-		{
-			list->begin = new;
-			list->end = new;
-			list->size = 1;
-			return (new);
-		}
-		list->end->next = new;
-		new->pre = list->end;
+		list->begin = new;
 		list->end = new;
-		list->size++;
+		list->size = 1;
+		return (new);
 	}
-	else
-		ft_errors("Error al crear sprite");    
+	list->end->next = new;
+	new->pre = list->end;
+	list->end = new;
+	list->size++; 
 	return (new);
 }
 

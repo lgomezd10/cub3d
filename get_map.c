@@ -27,14 +27,12 @@ int build_map(t_list *list, t_file *data)
     char **table;
 
     table = (char **)ft_calloc(sizeof(char *), data->table.rows);
-    if (!table)
-        ft_errors("Error de memoria al crear la tabla");
+    has_been_created(table);
     i = 0;
     while (table && list && i < data->table.rows)
     {
         table[i] = (char *)ft_calloc(sizeof(char), data->table.cols);
-        if (!table[i])
-            ft_errors("Error de memoria al crear la tabla");
+        has_been_created(table[i]);
         ft_memset(table[i], ' ', data->table.cols);
         line = (char *)list->content;
         ft_memcpy(table[i], line, ft_strlen(line));        

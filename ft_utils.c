@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:18:02 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/07 21:01:19 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/08 18:54:58 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void load_gamer(t_file *data, int y, int x, char pos)
 	t_gamer *gamer;
 
 	gamer = (t_gamer *)ft_calloc(sizeof(t_gamer), 1);
-	if (!gamer)
-		ft_errors("Error de memoria");
+	has_been_created(gamer);
 	gamer->unitHeight = data->height / data->table.rows;
 	gamer->unitWidth = data->width / data->table.cols;
 	gamer->pos.x = x + 0.5;

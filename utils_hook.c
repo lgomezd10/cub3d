@@ -59,6 +59,6 @@ int in_space_int(t_file *data, int x, int y)
 
 	is_space = y >= 0 && y < data->height;
 	is_space = is_space && x >= 0 && x < data->width;
-	is_space = is_space && data->table.table[y][x] == '0';
+	is_space = is_space && data->table.table[y][x] != '1';
 	return (is_space);
 }
