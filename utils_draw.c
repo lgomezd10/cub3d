@@ -27,6 +27,8 @@ void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, i
 	}
 }
 
+
+
 void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img)
 {
 	double x;
@@ -130,6 +132,8 @@ void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img)
 	
 }
 
+
+
 void print_map(t_file *data, t_cont_img *img)
 {
 	int i;
@@ -147,9 +151,11 @@ void print_map(t_file *data, t_cont_img *img)
 			y = i / img->unitHeight;
 			x = j / img->unitWidth;
 			if (data->table.table[y][x] == '1')
-				my_mlx_pixel_put(img, j, i, color_int(0, 0, 0));      
+				my_mlx_pixel_put(img, j, i, color_int(0, 0, 25));
 			if (data->table.table[y][x] == '0' || data->table.table[y][x] == '*')
 				my_mlx_pixel_put(img, j, i, color_int(255, 255, 255));
+			if (data->table.table[y][x] == '2')
+				my_mlx_pixel_put(img, j, i, color_int(0, 255, 0));
 			
 			j++;
 		}		

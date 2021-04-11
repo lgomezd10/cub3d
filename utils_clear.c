@@ -36,11 +36,6 @@ void clear_window(t_file *data)
         mlx_destroy_image(data->window.ptr, data->window.img.img.img);
         data->window.img.img.img = 0;
     }
-    if (data->map.img.img)
-    {
-        mlx_destroy_image(data->window.ptr, data->map.img.img);
-        data->map.img.img = 0;
-    }
     if (data->window.ptr && data->window.win)
     {
         mlx_destroy_window(data->window.ptr, data->window.win);

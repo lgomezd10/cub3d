@@ -1,34 +1,5 @@
 #include "raycaster.h"
 
-void add_line_map(t_file *data,  t_view *view)
-{
-
-	t_point dest;
-	t_point pos;
-	double dist;
-	
-	pos = data->gamer->pos;
-	if (view->side)
-	{
-		dest.y = view->map.y - view->step_ray.y;
-		if (view->rayDir.y > 0)
-			dest.y++;				
-		dist = fabs((pos.y - dest.y) / view->rayDir.y);
-		dest.x = pos.x + (view->rayDir.x * dist);
-		
-	}
-	else
-	{
-		dest.x = view->map.x - view->step_ray.x;
-		if (view->rayDir.x > 0)
-			dest.x++;
-		dist = fabs((pos.x - dest.x) / view->rayDir.x);
-		dest.y = pos.y + (view->rayDir.y * dist);
-	}
-	if (dest.x >= 0 && dest.y >= 0 && dest.x < data->width && dest.y < data->height)
-	   print_line(data, pos, dest, color_int(0, 0, 255), &data->map);
-}
-
 void calculate_dist(t_file *data, t_view *view)
 {
 	t_point pos;
@@ -107,9 +78,8 @@ void calculate_line_to_draw(t_file *data, t_view *view, int x)
 	t_point pos;
 
 	pos = data->gamer->pos;
-	view->side = find_hit(data, view);
-	if (data->gamer->act_map)
-		add_line_map(data, view);	
+	view->side = find_hit(data, view);	
+	//add_line_map(data, view);
 	if (view->side == 0)
 		data->wallDist[x] = (view->map.x - pos.x + (1 - view->step_ray.x) / 2) / view->rayDir.x;
 	else
@@ -162,7 +132,7 @@ void load_view(t_file *data, t_view *view, int x)
 	int i;
 	
 	pos = data->gamer->pos;
-	dir = data->gamer->dir;
+	dir = data->gamer->dir;	
 	plane = &data->gamer->plane;
 	view->cameraX = 2 * x / (double)data->width - 1;
 	view->rayDir.x = dir.x + plane->x * view->cameraX;

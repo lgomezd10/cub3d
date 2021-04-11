@@ -119,7 +119,7 @@ void short_sprites(t_file *data)
 	t_list_sp *list;
 	t_sprite *highest;
 	t_sprite *act;
-	
+
 	load_dist_sp(data);
 	list = &data->sprites;
 	act = list->begin;

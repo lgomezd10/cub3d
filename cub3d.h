@@ -13,28 +13,28 @@
 
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
 #define K_DOWN 1
-#define K_ROT_L 123
-#define K_ROT_R 124
+#define K_TURN_L 123
+#define K_TURN_R 124
 #define K_MAP 46
 #define EVENT_EXIT 17
-
+*/
 
 //LINUX
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
 #define K_DOWN 115
-#define K_ROT_L 65361
-#define K_ROT_R 65363
+#define K_TURN_L 65361
+#define K_TURN_R 65363
 #define K_MAP 109
 #define EVENT_EXIT 33
-*/
+
 
 enum DIR
 {
@@ -116,18 +116,20 @@ typedef struct s_window
     t_cont_img img;
 } t_window;
 
-typedef struct s_map
-{
-    
-} t_map;
 
 typedef struct s_gamer
 {
     t_point pos;
     t_point dir;
     t_point plane;
+    t_point dir_real;
+    t_point plane_real;
+    t_point dir_turn;
+    t_point plane_turn;
     int move;
     int rotate;
+    int turn;
+    int is_turning;
     int unitWidth;
     int unitHeight;
     int act_map;
@@ -152,6 +154,20 @@ typedef struct s_opt
     double v_move;
 } t_opt;
 
+typedef struct s_minimap
+{
+    t_point_int init;
+    int width;
+    int height;
+    int unit_width;
+    int unit_height;
+    int color_walls;
+    int color_player;
+    int color_sprites;
+    int color_space;
+} t_minimap;
+
+
 typedef struct s_file
 {
     int width;
@@ -159,7 +175,7 @@ typedef struct s_file
     char gamer_init;
     t_gamer *gamer;
     t_window window;
-    t_cont_img map;
+    t_minimap minimap;
     char *t_NO;
     char *t_SO;
     char *t_WE;
@@ -172,6 +188,7 @@ typedef struct s_file
     t_cont_img *text;
     t_list_sp sprites;
     int closed;
+    int has_moved;
     double wallDist[1920];
 } t_file;
 
@@ -185,8 +202,8 @@ void print_struct(t_file *data);
 void wall_connected(t_file *data);
 void paint_map(t_file *data);
 void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, int color);
-int press_key(int keycode, t_gamer *gamer);
-int release_key(int keycode, t_gamer *gamer);
+int press_key(int keycode, t_file *data);
+int release_key(int keycode, t_file *data);
 void my_mlx_pixel_put(t_cont_img *data, int x, int y, int color);
 int init_window(t_file *data);
 void print_map(t_file *data, t_cont_img *img);
@@ -201,6 +218,7 @@ int event_exit(t_file *data);
 void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img);
 int raycaster(t_file *data);
 void set_point(t_point *point, double x, double y);
+void copy_point(t_point *dest, t_point src);
 void set_point_int(t_point_int *point, int x, int y);
 char get_value(t_file *data, t_point pos, t_point dir);
 void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img);
@@ -214,4 +232,6 @@ void print_list_sp(t_file *data);
 void free_components(t_file *data);
 void print_sprites(t_file *data);
 void has_been_created(void *ptr);
+void print_minimap(t_file *data);
+void init_minimap(t_file *data);
 #endif

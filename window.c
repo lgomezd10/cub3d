@@ -6,24 +6,18 @@ int init_window(t_file *data)
     /*
     data->opt.mov_speed = 0.11;
     data->opt.rot_speed = 0.11;
-    data->map.height = data->height / 3 - 10;
-    data->map.width = data->width - 10;
-    data->map.unitHeight = data->map.height / data->table.rows;
-    data->map.unitWidth = data->map.width / data->table.cols;
+    data->mini_map.height = data->height / 3 - 10;
+    data->mini_map.width = data->width - 10;
+    data->mini_map.unitHeight = data->mini_map.height / data->table.rows;
+    data->mini_map.unitWidth = data->mini_map.width / data->table.cols;
     */
     
     data->opt.mov_speed = 0.11;
     data->opt.rot_speed = 0.11;   
     data->opt.u_div = 1;
     data->opt.v_div = 1;
-    data->opt.v_move = 0.0; 
-    data->map.width = (data->width / 3);    
-    data->map.height = data->map.width * 9 / 16; 
-    printf("resolucion ancho: %d alto %d", data->map.width, data->map.height);
-    data->map.unitHeight = data->map.height / data->table.rows;
-    data->map.unitWidth = data->map.width / data->table.cols;
-    init = ((data->width / 3) * 2) - 1;    
-    set_point_int(&data->map.init, init, 0);
+    data->opt.v_move = 0.0;
+    init_minimap(data);
     data->window.img.height = data->height;
     data->window.img.width = data->width;
     data->window.img.unitHeight = data->window.img.height / data->table.rows;

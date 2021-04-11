@@ -10,7 +10,7 @@ NAME = cub3D
 
 SRC = cub3d.c load_file.c ft_errors.c add_tolibft.c get_map.c \
 ft_utils.c wall_connected.c view_map.c utils_draw.c move_gamer.c window.c \
-move.c utils_hook.c raycaster.c list_sprite.c utils_clear.c sprites.c
+move.c utils_hook.c raycaster.c list_sprite.c utils_clear.c sprites.c minimap.c
 
 OBJS = ${SRC:.c=.o}
 
@@ -18,7 +18,7 @@ ${LIBFT} :
 		${MAKE} bonus -C ${DIR}
 
 linux : ${LIBFT} ${OBJS}
-	clang -Wall -Wextra -Werror -lm -o ${NAME} ${OBJS} ${LIBFT} ${MLX} -lbsd -lmlx -lXext -lX11
+	clang -g -Wall -Wextra -Werror -lm -o ${NAME} ${OBJS} ${LIBFT} ${MLX} -lbsd -lmlx -lXext -lX11
 
 mac : ${LIBFT} ${OBJS}
 	gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit -o ${NAME} ${OBJS} ${LIBFT}

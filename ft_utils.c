@@ -33,23 +33,23 @@ void load_gamer(t_file *data, int y, int x, char pos)
 	printf("llega a antes\n");
 	if (data->gamer_init == 'N')
     {
-        set_point(&gamer->dir, 0, -1);
-        set_point(&gamer->plane, 0.66, 0.0);
+        set_point(&gamer->dir_real, 0, -1);
+        set_point(&gamer->plane_real, 0.66, 0.0);
     }
     if (data->gamer_init == 'S')
     {
-        set_point(&gamer->dir, 0, 1);
-        set_point(&gamer->plane, -0.66, 0.0);
+        set_point(&gamer->dir_real, 0, 1);
+        set_point(&gamer->plane_real, -0.66, 0.0);
     }
     if (data->gamer_init == 'W')
     {
-        set_point(&gamer->dir, -1, 0);
-        set_point(&gamer->plane, 0, -0.66);
+        set_point(&gamer->dir_real, -1, 0);
+        set_point(&gamer->plane_real, 0, -0.66);
     }
     if (data->gamer_init == 'E')
     {
-        set_point(&gamer->dir, 1, 0);
-        set_point(&gamer->plane, 0, 0.66);
+        set_point(&gamer->dir_real, 1, 0);
+        set_point(&gamer->plane_real, 0, 0.66);
     }
 	data->gamer = gamer;	
 }
