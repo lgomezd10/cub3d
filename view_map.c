@@ -6,11 +6,11 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/08 19:19:22 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/12 20:55:31 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "run_game.h"
 
 int load_game(t_file *data)
 {
@@ -34,32 +34,13 @@ int load_image(t_file *data)
     t_image *map;
     int init;
 
-    // TODO: controlar que el mapa no sea menor de 300
-    /*
-    if (data->closed)
-    {
-        printf("Se van a borrar los datos");
-        clear_window(data);
-        printf("Se han borrado los datos");
-        exit(0);
-    }
-    */
     if (data->window.win)
     {
         move(data);
         img = &data->window.img.img; 
         if (firts_time || data->has_moved)
         {
-            data->has_moved = 0;
-            /*
-            if (!firts_time && img->img)
-            { 
-                mlx_destroy_image(data->window.ptr, img->img);
-                //img->img = 0;
-                img->img = mlx_new_image(data->window.ptr, data->width, data->height);
-                has_been_created(img->img);                          
-            }
-            */
+            data->has_moved = 0;            
             short_sprites(data);
             firts_time = 0;            
             load_game(data);
@@ -71,14 +52,12 @@ int load_image(t_file *data)
         }
         
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
-       // if (data->gamer->act_map)
-        //    mlx_put_image_to_window(data->window.ptr, data->window.win, map->img, data->mini_map.init.x, data->mini_map.init.y);
 
     }
     return (0);
 }
 
-int print_image(t_file *data)
+int run_game(t_file *data)
 {
     init_window(data);
     init_texture(data);    

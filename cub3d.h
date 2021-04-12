@@ -194,6 +194,7 @@ typedef struct s_file
 
 int load_file(char *file, t_file *data);
 void ft_errors(char *msg);
+void has_been_created(void *ptr);
 int correct_line_map(char *str, t_file *data);
 int data_loaded(t_file *data);
 void load_gamer(t_file *data, int y, int x, char pos);
@@ -201,13 +202,8 @@ int get_map(int fd, char *str, t_file *data);
 void print_struct(t_file *data);
 void wall_connected(t_file *data);
 void paint_map(t_file *data);
-void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, int color);
-int press_key(int keycode, t_file *data);
-int release_key(int keycode, t_file *data);
-void my_mlx_pixel_put(t_cont_img *data, int x, int y, int color);
-int init_window(t_file *data);
-void print_map(t_file *data, t_cont_img *img);
-int print_image(t_file *data);
+
+int run_game(t_file *data);
 void paint_map_antiguo(t_file *data);
 int load_image(t_file *data);
 int in_space(t_file *data, double x, double y);
@@ -215,23 +211,12 @@ int in_space_int(t_file *data, int x, int y);
 int move(t_file *data);
 int color_int(int red, int green, int blue);
 int event_exit(t_file *data);
-void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img);
-int raycaster(t_file *data);
 void set_point(t_point *point, double x, double y);
 void copy_point(t_point *dest, t_point src);
 void set_point_int(t_point_int *point, int x, int y);
 char get_value(t_file *data, t_point pos, t_point dir);
-void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img);
-void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img);
-int init_texture(t_file *data);
-void copy_img(t_cont_img *img1, t_cont_img *img2);
 unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y);
 t_sprite *add_new_sp_back(t_list_sp *list, int x, int y);
-void short_sprites(t_file *data);
-void print_list_sp(t_file *data);
 void free_components(t_file *data);
-void print_sprites(t_file *data);
-void has_been_created(void *ptr);
-void print_minimap(t_file *data);
-void init_minimap(t_file *data);
+
 #endif

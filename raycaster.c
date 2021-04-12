@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/12 19:48:40 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/04/12 20:32:53 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "raycaster.h"
 
-void calculate_dist(t_file *data, t_view *view)
+void	calculate_dist(t_file *data, t_view *view)
 {
-	t_point pos;
+	t_point	pos;
 
 	pos = data->gamer->pos;
-	view->deltaDist.x = sqrt(1 + (view->rayDir.y * view->rayDir.y) / (view->rayDir.x * view->rayDir.x));
-	view->deltaDist.y = sqrt(1 + (view->rayDir.x * view->rayDir.x) / (view->rayDir.y * view->rayDir.y));
+	view->deltaDist.x = fabs(1 / view->rayDir.x);
+	view->deltaDist.y = fabs(1 / view->rayDir.y);
 	if (view->rayDir.x < 0)
 	{
 		view->step_ray.x = -1;
@@ -29,61 +41,22 @@ void calculate_dist(t_file *data, t_view *view)
 	}
 }
 
-int find_hit(t_file *data, t_view *view)
-{	
-	int hit;
-
-	hit = 0;
-	while (!hit)
-	{
-		if (view->sideDist.x < view->sideDist.y)
-		{			
-			view->sideDist.x += view->deltaDist.x;
-			view->map.x += view->step_ray.x;
-			view->side = 0;
-		}
-		else
-		{
-			view->sideDist.y += view->deltaDist.y;
-			view->map.y += view->step_ray.y;
-			view->side = 1;
-		}
-		if (!in_space_int(data, view->map.x, view->map.y))
-			hit = 1;
-	}
-	return (view->side);
-}
-
-t_cont_img *select_text(t_file *data, t_view *view)
+void	calculate_line_to_draw(t_file *data, t_view *view, int x)
 {
-	if (!view->side)
-	{
-		if (view->rayDir.x < 0)
-			return (&data->text[North]);
-		else
-			return (&data->text[South]);		
-	}
-	else
-	{
-		if (view->rayDir.y < 0)
-			return (&data->text[West]);
-		else
-			return (&data->text[East]);
-	}
-	
-}
-
-void calculate_line_to_draw(t_file *data, t_view *view, int x)
-{
-	t_point pos;
+	t_point	pos;
 
 	pos = data->gamer->pos;
-	view->side = find_hit(data, view);	
-	//add_line_map(data, view);
+	view->side = find_hit(data, view);
 	if (view->side == 0)
-		data->wallDist[x] = (view->map.x - pos.x + (1 - view->step_ray.x) / 2) / view->rayDir.x;
+	{
+		data->wallDist[x] = (view->map.x - pos.x + (1 - view->step_ray.x) / 2);
+		data->wallDist[x] /= view->rayDir.x;
+	}
 	else
-		data->wallDist[x] = (view->map.y - pos.y + (1 - view->step_ray.y) / 2) / view->rayDir.y;
+	{
+		data->wallDist[x] = (view->map.y - pos.y + (1 - view->step_ray.y) / 2);
+		data->wallDist[x] /= view->rayDir.y;
+	}
 	view->lineHeight = (int)(data->height / data->wallDist[x]);
 	view->drawStart = (-view->lineHeight / 2) + (data->height / 2);
 	if (view->drawStart < 0)
@@ -91,18 +64,18 @@ void calculate_line_to_draw(t_file *data, t_view *view, int x)
 	view->drawEnd = (view->lineHeight / 2) + (data->height / 2);
 	if (view->drawEnd >= data->height)
 		view->drawEnd = data->height - 1;
-}
-
-void texture_to_image(t_file *data, t_view *view, int x)
-{
-	t_cont_img *texture;
-	int i;
-
-	texture = select_text(data, view);
 	if (view->side == 0)
 		view->wallX = data->gamer->pos.y + data->wallDist[x] * view->rayDir.y;
 	else
 		view->wallX = data->gamer->pos.x + data->wallDist[x] * view->rayDir.x;
+}
+
+void	texture_to_image(t_file *data, t_view *view, int x)
+{
+	t_cont_img	*texture;
+	int			i;
+
+	texture = select_text(data, view);
 	view->wallX -= floor(view->wallX);
 	view->text.x = (int)(view->wallX * (double)texture->width);
 	if (!view->side && view->rayDir.x > 0)
@@ -110,7 +83,8 @@ void texture_to_image(t_file *data, t_view *view, int x)
 	if (view->side && view->rayDir.y < 0)
 		view->text.x = texture->width - view->text.x - 1;
 	view->step = 1.0 * texture->height / view->lineHeight;
-	view->textPos = (view->drawStart - data->height / 2 + view->lineHeight / 2) * view->step;
+	view->textPos = (view->drawStart - data->height / 2 + view->lineHeight / 2);
+	view->textPos *= view->step;
 	i = view->drawStart;
 	while (i < view->drawEnd)
 	{
@@ -124,45 +98,32 @@ void texture_to_image(t_file *data, t_view *view, int x)
 	}
 }
 
-void load_view(t_file *data, t_view *view, int x)
+void	load_view(t_file *data, t_view *view, int x)
 {	
-	t_point dir;
-	t_point pos;
-	t_point *plane;
-	int i;
-	
+	t_point	dir;
+	t_point	pos;
+	t_point	*plane;
+	int		i;
+
 	pos = data->gamer->pos;
-	dir = data->gamer->dir;	
+	dir = data->gamer->dir;
 	plane = &data->gamer->plane;
 	view->cameraX = 2 * x / (double)data->width - 1;
 	view->rayDir.x = dir.x + plane->x * view->cameraX;
 	view->rayDir.y = dir.y + plane->y * view->cameraX;
 	view->map.x = (int)pos.x;
 	view->map.y = (int)pos.y;
-	//view->deltaDist.x = fabs(1 / view->rayDir.x);
-	//view->deltaDist.y = fabs(1 / view->rayDir.y);
 	calculate_dist(data, view);
 	calculate_line_to_draw(data, view, x);
 	texture_to_image(data, view, x);
-
-	/* VERSION COLORES
-	if (side)
-		color = color_int(0, 255, 0);
-	else
-		color = color_int(255, 0, 0);
-	//printf("altura: %d start: %d, end %d\n", data->height, drawStart, drawEnd);
-	
-	print_line_real(data, x, drawStart, drawEnd, color, &data->window.img);
-	*/
 }
 
-int raycaster(t_file *data)
+int	raycaster(t_file *data)
 {
-	int x;    
+	int		x;
+	t_view	view;
+
 	x = 0;
-	t_view view;
-	
-	//while (x < 50)
 	ft_bzero(&view, sizeof(t_view));
 	while (x < data->width)
 	{

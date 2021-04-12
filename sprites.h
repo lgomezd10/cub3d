@@ -1,12 +1,12 @@
 #ifndef SPRITES_H
 # define SPRITES_H
-# include "cub3d.h"
+# include "run_game.h"
 
 typedef struct s_rc_sprites
 {
     t_sprite *sprite;
 	t_point pos_sp;
-    t_point trans;
+    t_point transf;
     double inv_det;
     int sp_screen_x;
     int v_mv_screen;

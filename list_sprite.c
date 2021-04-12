@@ -1,39 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_sprite.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/12 20:42:30 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/04/12 20:46:18 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void print_list_sp(t_file *data)
+t_sprite	*add_new_sp_back(t_list_sp *list, int x, int y)
 {
-	t_sprite *list;
-	int i;
-
-	i = 0;
-	list = data->sprites.begin;
-	printf("lista: \n");
-	while (list)
-	{
-		printf("node %d, x: %f, y: %f dist: %f\n", i, list->pos.x, list->pos.y, list->dist);
-		list = list->next;
-		i++;
-	}
-}
-
-void print_list_sp_otro(t_sprite *list)
-{
-	
-	int i;
-
-	i = 0;
-	printf("lista: \n");
-	while (list)
-	{
-		printf("node %d, x: %f, y: %f dist: %f\n", i, list->pos.x, list->pos.y, list->dist);
-		list = list->next;
-		i++;
-	}
-}
-
-t_sprite *add_new_sp_back(t_list_sp *list, int x, int y)
-{
-	t_sprite *new;
+	t_sprite	*new;
 
 	new = (t_sprite *)ft_calloc(sizeof(t_sprite), 1);
 	has_been_created(new);
@@ -49,31 +30,28 @@ t_sprite *add_new_sp_back(t_list_sp *list, int x, int y)
 	list->end->next = new;
 	new->pre = list->end;
 	list->end = new;
-	list->size++; 
+	list->size++;
 	return (new);
 }
 
-void load_dist_sp(t_file *data)
+void	load_dist_sp(t_file *data)
 {
-	t_point pos;
-	t_point pos_sp;
-	t_sprite *sprite;
+	t_point		pos;
+	t_point		pos_sp;
+	t_sprite	*sprite;
 
 	pos = data->gamer->pos;
 	sprite = data->sprites.begin;
-	// TODO quitar error por si no hay sprite
-	if (!sprite)
-		ft_errors("No se han cargado los sprites");
 	while (sprite)
 	{
 		pos_sp = sprite->pos;
-		sprite->dist = (pos.x - pos_sp.x) * (pos.x - pos_sp.x) + (pos.y - pos_sp.y) * (pos.y - pos_sp.y);
+		sprite->dist = (pos.x - pos_sp.x) * (pos.x - pos_sp.x);
+		sprite->dist += (pos.y - pos_sp.y) * (pos.y - pos_sp.y);
 		sprite = sprite->next;
-		//printf("dist de x: %f y: %f es %f\n", )        
 	}
 }
 
-void move_to_prev(t_list_sp *list, t_sprite *to_move, t_sprite *next)
+void	move_to_prev(t_list_sp *list, t_sprite *to_move, t_sprite *next)
 {
 	if (to_move != next)
 	{
@@ -100,9 +78,9 @@ void move_to_prev(t_list_sp *list, t_sprite *to_move, t_sprite *next)
 	}
 }
 
-t_sprite *find_highest(t_sprite *list)
+t_sprite	*find_highest(t_sprite *list)
 {
-	t_sprite *highest;
+	t_sprite	*highest;
 
 	highest = list;
 	while (list)
@@ -114,18 +92,18 @@ t_sprite *find_highest(t_sprite *list)
 	return (highest);
 }
 
-void short_sprites(t_file *data)
+void	short_sprites(t_file *data)
 {
-	t_list_sp *list;
-	t_sprite *highest;
-	t_sprite *act;
+	t_list_sp	*list;
+	t_sprite	*highest;
+	t_sprite	*act;
 
 	load_dist_sp(data);
 	list = &data->sprites;
 	act = list->begin;
 	while (act && act->next)
 	{
-		highest = find_highest(act);        
+		highest = find_highest(act);
 		if (highest != act)
 			move_to_prev(list, highest, act);
 		else

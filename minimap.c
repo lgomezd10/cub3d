@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "run_game.h"
 
 void draw_circle_map(t_file *data, t_point center, double radius, int color)
 {

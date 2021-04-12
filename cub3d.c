@@ -54,7 +54,7 @@ int main(int argc, char **argv)
         wall_connected(data);
         print_struct(data);
         printf("segunda impresión\n");
-        print_image(data);
+        run_game(data);
         //system("leaks cub3D");
     }
 }

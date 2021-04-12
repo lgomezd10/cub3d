@@ -1,6 +1,6 @@
 #ifndef SHOW_H
 #define SHOW_H
-#include "cub3d.h"
+#include "run_game.h"
 
 typedef struct s_view
 {
@@ -24,4 +24,6 @@ typedef struct s_view
     int color;
 } t_view;
 
+int	find_hit(t_file *data, t_view *view);
+t_cont_img	*select_text(t_file *data, t_view *view);
 #endif
