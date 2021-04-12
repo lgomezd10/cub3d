@@ -1,77 +1,103 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sprites.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/12 18:32:05 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/04/12 19:02:25 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sprites.h"
+
+void	calculate_sprite_screem(t_file *data, t_rc_sprites *ray_c)
+{
+	double	inv_det;
+	t_point	pos_sp;
+	t_point	pos;
+	t_gamer	*gamer;
+
+	pos = data->gamer->pos;
+	gamer = data->gamer;
+	ray_c->pos_sp.x = ray_c->sprite->pos.x - pos.x;
+	ray_c->pos_sp.y = ray_c->sprite->pos.y - pos.y;
+	pos_sp = ray_c->pos_sp;
+	inv_det = (gamer->plane.x * gamer->dir.y - gamer->dir.x * gamer->plane.y);
+	inv_det = 1.0 / inv_det;
+	ray_c->trans.x = (gamer->dir.y * pos_sp.x - gamer->dir.x * pos_sp.y);
+	ray_c->trans.x *= inv_det;
+	ray_c->trans.y = (-gamer->plane.y * pos_sp.x + gamer->plane.x * pos_sp.y);
+	ray_c->trans.y *= inv_det;
+	ray_c->sp_screen_x = (int)((data->width / 2) * (1 + ray_c->trans.x / ray_c->trans.y));
+	ray_c->sp_screen_x = (int)((data->width / 2) * (1 + ray_c->trans.x / ray_c->trans.y));
+	ray_c->v_mv_screen = (int)(data->opt.v_move / ray_c->trans.y);
+	
+}
+
+void	calculate_init_end_draw(t_file *data, t_rc_sprites *ray_c)
+{
+	ray_c->sp_height = abs((int)(data->height / (ray_c->trans.y))) / data->opt.v_div;
+	ray_c->draw_start.y = -ray_c->sp_height / 2 + data->height / 2 + ray_c->v_mv_screen;
+	if (ray_c->draw_start.y < 0)
+		ray_c->draw_start.y = 0;
+	ray_c->draw_end.y = ray_c->sp_height / 2 + data->height / 2 + ray_c->v_mv_screen;
+	if (ray_c->draw_end.y >= data->height)
+		ray_c->draw_end.y = data->height - 1;
+
+	ray_c->sp_width = abs((int)(data->height / (ray_c->trans.y))) / data->opt.u_div;
+	ray_c->draw_start.x = -ray_c->sp_width / 2 + ray_c->sp_screen_x;
+	if (ray_c->draw_start.x < 0)
+		ray_c->draw_start.x = 0;
+	ray_c->draw_end.x = ray_c->sp_width / 2 + ray_c->sp_screen_x;
+	if (ray_c->draw_end.x >= data->width)
+		ray_c->draw_end.x = data->width - 1;
+}
+
+void	draw_line_with_texture(t_file *data, t_rc_sprites *ray_c)
+{
+	int	stripe;
+	int	row;
+	t_point	text;
+	t_cont_img 	*texture;
+	int	color;
+
+	texture = &data->text[Sprite];
+	stripe = ray_c->draw_start.x;
+	while (stripe < ray_c->draw_end.x)
+	{
+		text.x = (int)(256 * (stripe - (-ray_c->sp_width / 2 + ray_c->sp_screen_x)) *  texture->width / ray_c->sp_width) / 256;
+		if (ray_c->trans.y > 0 && stripe > 0 && stripe < data->width && ray_c->trans.y < data->wallDist[stripe])
+		{
+			row = ray_c->draw_start.y;
+			while (row < ray_c->draw_end.y)
+			{
+				int d = (row - ray_c->v_mv_screen) * 256 - data->height * 128 + ray_c->sp_height * 128;
+				text.y = ((d * texture->height) / ray_c->sp_height) / 256;
+				color = my_mlx_pixel_get(texture, text.x, text.y);
+				if ((color & 0x00FFFFFF) != 0)
+					my_mlx_pixel_put(&data->window.img, stripe, row, color);
+				row++;
+			}
+		}
+		stripe++;
+	}
+}
 
 void print_sprites(t_file *data)
 {
+	t_rc_sprites ray_c;
 	t_sprite *sprite;
-	t_point pos_sp;
-	t_point pos;
-	double invDet;
-	t_gamer *gamer;
-	t_point trans;
-	int sp_screenx;
-	int vMoveScreen;
-	int sp_height;
-	int sp_width;
-	t_point_int draw_start;
-	t_point_int draw_end;
-	t_point_int text;
-	int sp;
-	t_cont_img *texture;
-	int color;
-
-	texture = &data->text[Sprite];
+	
 	sprite = data->sprites.begin;
-	pos = data->gamer->pos;
-	gamer = data->gamer;
 	while (sprite)
 	{
-		pos_sp.x = sprite->pos.x - pos.x;
-		pos_sp.y = sprite->pos.y - pos.y;
-
-		invDet = 1.0 / (gamer->plane.x * gamer->dir.y - gamer->dir.x * gamer->plane.y);
-
-		trans.x = invDet * (gamer->dir.y * pos_sp.x - gamer->dir.x * pos_sp.y);
-		trans.y = invDet * (-gamer->plane.y * pos_sp.x + gamer->plane.x * pos_sp.y);
-
-		sp_screenx = (int)((data->width / 2) * (1 + trans.x / trans.y));
-
-		vMoveScreen = (int)(data->opt.v_move / trans.y);
-
-		sp_height = abs((int)(data->height / (trans.y))) / data->opt.v_div;
-		draw_start.y = -sp_height / 2 + data->height / 2 + vMoveScreen;
-		if (draw_start.y < 0)
-			draw_start.y = 0;
-		draw_end.y = sp_height / 2 + data->height / 2 + vMoveScreen;
-		if (draw_end.y >= data->height)
-			draw_end.y = data->height - 1;
-
-		sp_width = abs((int)(data->height / (trans.y))) / data->opt.u_div;
-		draw_start.x = -sp_width / 2 + sp_screenx;
-		if (draw_start.x < 0)
-			draw_start.x = 0;
-		draw_end.x = sp_width / 2 + sp_screenx;
-		if (draw_end.x >= data->width)
-			draw_end.x = data->width - 1;
-
-		sp = draw_start.x;
-		while (sp < draw_end.x)
-		{
-			text.x = (int)(256 * (sp - (-sp_width / 2 + sp_screenx)) *  texture->width / sp_width) / 256;
-			if (trans.y > 0 && sp > 0 && sp < data->width && trans.y < data->wallDist[sp])
-			{
-				int y = draw_start.y;
-				while (y < draw_end.y)
-				{
-					int d = (y - vMoveScreen) * 256 - data->height * 128 + sp_height * 128;
-					text.y = ((d * texture->height) / sp_height) / 256;
-					color = my_mlx_pixel_get(texture, text.x, text.y);
-					if ((color & 0x00FFFFFF) != 0)
-						my_mlx_pixel_put(&data->window.img, sp, y, color);
-					y++;
-				}
-			}
-			sp++;
-		}
+		ft_bzero(&ray_c, sizeof(ray_c));
+		ray_c.sprite = sprite;
+		calculate_sprite_screem(data, &ray_c);
+		calculate_init_end_draw(data, &ray_c);
+		draw_line_with_texture(data, &ray_c);		
 		sprite = sprite->next;
 	}
 }
