@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <mlx.h>
+#include "mlx/mlx.h"
 #include "includes/mlx_png.h"
 #include "libft/libft.h"
 #include <math.h>
@@ -13,7 +13,7 @@
 
 
 //MAC
-/*
+
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -21,11 +21,14 @@
 #define K_TURN_L 123
 #define K_TURN_R 124
 #define K_MAP 46
+#define K_ESC 65307
 #define EVENT_EXIT 17
-*/
+
+
 
 //LINUX
 
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -35,7 +38,7 @@
 #define K_MAP 109
 #define K_ESC 65307
 #define EVENT_EXIT 33
-
+*/
 
 enum DIR
 {
@@ -118,7 +121,7 @@ typedef struct s_window
 } t_window;
 
 
-typedef struct s_gamer
+typedef struct s_player
 {
     t_point pos;
     t_point dir;
@@ -134,7 +137,7 @@ typedef struct s_gamer
     int unitWidth;
     int unitHeight;
     int act_map;
-} t_gamer;
+} t_player;
 
 typedef struct s_wall
 {
@@ -169,12 +172,12 @@ typedef struct s_minimap
 } t_minimap;
 
 
-typedef struct s_file
+typedef struct s_game
 {
     int width;
     int height;
-    char gamer_init;
-    t_gamer *gamer;
+    char player_init;
+    t_player *player;
     t_window window;
     t_minimap minimap;
     char *t_NO;
@@ -191,33 +194,20 @@ typedef struct s_file
     int closed;
     int has_moved;
     double wallDist[1920];
-} t_file;
+} t_game;
 
-int load_file(char *file, t_file *data);
+int load_file(char *file, t_game *data);
 void ft_errors(char *msg);
 void has_been_created(void *ptr);
-int correct_line_map(char *str, t_file *data);
-int data_loaded(t_file *data);
-void load_gamer(t_file *data, int y, int x, char pos);
-int get_map(int fd, char *str, t_file *data);
-void print_struct(t_file *data);
-void wall_connected(t_file *data);
-void paint_map(t_file *data);
-
-int run_game(t_file *data);
-void paint_map_antiguo(t_file *data);
-int load_image(t_file *data);
-int in_space(t_file *data, double x, double y);
-int in_space_int(t_file *data, int x, int y);
-int move(t_file *data);
-int color_int(int red, int green, int blue);
-int event_exit(t_file *data);
+void print_struct(t_game *data);
+int run_game(t_game *data);
+int event_exit(t_game *data);
 void set_point(t_point *point, double x, double y);
 void copy_point(t_point *dest, t_point src);
 void set_point_int(t_point_int *point, int x, int y);
-char get_value(t_file *data, t_point pos, t_point dir);
-unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y);
 t_sprite *add_new_sp_back(t_list_sp *list, int x, int y);
-void free_components(t_file *data);
+void free_components(t_game *data);
+void check_wall_closed(t_game *data);
+void load_player(t_game *data, int y, int x);
 
 #endif

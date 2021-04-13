@@ -1,13 +1,25 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_errors.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/13 18:24:25 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/04/13 19:14:15 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void ft_errors(char *msg)
+#include "includes/cub3d.h"
+
+void	ft_errors(char *msg)
 {
-    perror(msg);
-    exit(0);
+	perror(msg);
+	exit(0);
 }
 
-void has_been_created(void *ptr)
+void	has_been_created(void *ptr)
 {
-    if (!ptr)
-        ft_errors("Error al reservar");
+	if (!ptr)
+		ft_errors("Malloc return error");
 }

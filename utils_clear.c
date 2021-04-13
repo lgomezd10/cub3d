@@ -1,6 +1,6 @@
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
-void free_table(t_file *data)
+void free_table(t_game *data)
 {
     int i;
 
@@ -17,7 +17,7 @@ void free_table(t_file *data)
 
 
 
-void clear_window(t_file *data)
+void clear_window(t_game *data)
 {
     int i;
 
@@ -44,7 +44,7 @@ void clear_window(t_file *data)
     }
 }
 
-void clear_sprites(t_file *data)
+void clear_sprites(t_game *data)
 {
     t_sprite *sprite;
     t_sprite *temp;
@@ -58,7 +58,7 @@ void clear_sprites(t_file *data)
     }
 }
 
-void free_components(t_file *data)
+void free_components(t_game *data)
 {
     free_table(data);
     free(data->t_NO);
@@ -75,8 +75,8 @@ void free_components(t_file *data)
     data->ceiling = 0;
     free(data->floor);
     data->floor = 0;
-    free(data->gamer);    
-    data->gamer = 0;
+    free(data->player);    
+    data->player = 0;
     clear_window(data);
     free(data);
 }

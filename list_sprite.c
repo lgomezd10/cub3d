@@ -6,11 +6,11 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 20:42:30 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/12 20:46:18 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/13 19:16:04 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
 t_sprite	*add_new_sp_back(t_list_sp *list, int x, int y)
 {
@@ -34,13 +34,13 @@ t_sprite	*add_new_sp_back(t_list_sp *list, int x, int y)
 	return (new);
 }
 
-void	load_dist_sp(t_file *data)
+void	load_dist_sp(t_game *data)
 {
 	t_point		pos;
 	t_point		pos_sp;
 	t_sprite	*sprite;
 
-	pos = data->gamer->pos;
+	pos = data->player->pos;
 	sprite = data->sprites.begin;
 	while (sprite)
 	{
@@ -92,7 +92,7 @@ t_sprite	*find_highest(t_sprite *list)
 	return (highest);
 }
 
-void	short_sprites(t_file *data)
+void	short_sprites(t_game *data)
 {
 	t_list_sp	*list;
 	t_sprite	*highest;

@@ -24,6 +24,6 @@ typedef struct s_view
     int color;
 } t_view;
 
-int	find_hit(t_file *data, t_view *view);
-t_cont_img	*select_text(t_file *data, t_view *view);
+int	find_hit(t_game *data, t_view *view);
+t_cont_img	*select_text(t_game *data, t_view *view);
 #endif

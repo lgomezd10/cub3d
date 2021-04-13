@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_map.c                                         :+:      :+:    :+:   */
+/*   run_game.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/12 20:55:31 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/13 19:16:04 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "run_game.h"
+#include "includes/run_game.h"
 
-int load_game(t_file *data)
+int load_game(t_game *data)
 {
     int ceiling;
     int floor;
-
     t_image *img;
+
     img = &data->window.img.img;
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
     ceiling = color_int(data->ceiling->red, data->ceiling->green, data->ceiling->blue);
@@ -27,15 +27,14 @@ int load_game(t_file *data)
     return (0);
 }
 
-int load_image(t_file *data)
+int load_image(t_game *data)
 {
     static int firts_time = 1;
     t_image *img;
-    t_image *map;
-    int init;
 
     if (data->window.win)
     {
+        mlx_sync(MLX_SYNC_IMAGE_WRITABLE, data->window.img.img.img);
         move(data);
         img = &data->window.img.img; 
         if (firts_time || data->has_moved)
@@ -45,19 +44,17 @@ int load_image(t_file *data)
             firts_time = 0;            
             load_game(data);
             raycaster(data);
-            if (data->gamer->act_map)
-            {
+            if (data->player->act_map)
                 print_minimap(data);
-            }
-        }
-        
+            mlx_do_sync(data->window.ptr);
+        }        
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
-
+        mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, data->window.win);
     }
     return (0);
 }
 
-int run_game(t_file *data)
+int run_game(t_game *data)
 {
     init_window(data);
     init_texture(data);    

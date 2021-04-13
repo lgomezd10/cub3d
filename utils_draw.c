@@ -1,13 +1,11 @@
-#include "run_game.h"
+#include "includes/run_game.h"
 
-
-void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, int color)
+void draw_circle(t_cont_img *img, t_point center, double radius, int color)
 {
 	int i;
 	int j;
 	int to_y;
 	int to_x;
-	double distance;
 	t_point point;
 
 	center.x *= img->unitWidth;
@@ -19,11 +17,7 @@ void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, i
 		j = center.x - radius;
 		to_x = j + (2 * radius);
 		while (j <= to_x)
-		{
-			/*
-			distance = (j - center.x) * (j - center.x) + (i - center.y) * (i - center.y);
-			if (sqrt(distance) <= radius)
-			*/
+		{			
 			point.x = j;
 			point.y = i;
 			if (is_in_radius(point, center, radius))
@@ -34,9 +28,7 @@ void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, i
 	}
 }
 
-
-
-void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *img)
+void print_line(t_point from, t_point to, int color, t_cont_img *img)
 {
 	double x;
 	double y;
@@ -92,7 +84,7 @@ void print_line(t_file *data, t_point from, t_point to, int color, t_cont_img *i
 	}
 }
 
-void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_img *img)
+void print_line_real(t_game *data, int x, int start, int end, int color, t_cont_img *img)
 {
 	
 	if (end < start)
@@ -109,7 +101,7 @@ void print_line_real(t_file *data, int x, int start, int end, int color, t_cont_
 	}
 }
 
-void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img)
+void print_cel_floor(t_game *data, int ceiling, int floor, t_cont_img *img)
 {
 	int i;
 	int j;
@@ -141,7 +133,7 @@ void print_cel_floor(t_file *data, int ceiling, int floor, t_cont_img *img)
 
 
 
-void print_map(t_file *data, t_cont_img *img)
+void print_map(t_game *data, t_cont_img *img)
 {
 	int i;
 	int j;
@@ -200,25 +192,4 @@ unsigned int my_mlx_pixel_get(t_cont_img *img, int x, int y)
 		return (*(unsigned int*)dst);
 	}
 	return(0);
-}
-
-
-char get_value(t_file *data, t_point pos, t_point dir)
-{
-	char c;
-	int x;
-	int y;
-
-	c = 0;
-	x = pos.x / data->gamer->unitWidth;
-	y = pos.y / data->gamer->unitHeight;
-
-	if (x > 0 && dir.x < 0)
-		x--;
-	if (y > 0 && dir.y < 0)
-		y--;
-
-	if (x >= 0 && x < data->table.cols && y >=0 && y < data->table.rows)
-		c = data->table.table[y][x];
-	return (c);
 }

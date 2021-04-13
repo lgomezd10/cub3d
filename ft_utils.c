@@ -6,11 +6,11 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:18:02 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/08 18:54:58 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/13 19:34:58 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
 void	ft_free_str(void *str)
 {
@@ -20,36 +20,38 @@ void	ft_free_str(void *str)
 	free(str);
 }
 
-void load_gamer(t_file *data, int y, int x, char pos)
+void	load_dir_and_plane(t_game *data, t_player *player)
 {
-	t_gamer *gamer;
+	if (data->player_init == 'N')
+	{
+		set_point(&player->dir_real, 0, -1);
+		set_point(&player->plane_real, 0.66, 0.0);
+	}
+	if (data->player_init == 'S')
+	{
+		set_point(&player->dir_real, 0, 1);
+		set_point(&player->plane_real, -0.66, 0.0);
+	}
+	if (data->player_init == 'W')
+	{
+		set_point(&player->dir_real, -1, 0);
+		set_point(&player->plane_real, 0, -0.66);
+	}
+	if (data->player_init == 'E')
+	{
+		set_point(&player->dir_real, 1, 0);
+		set_point(&player->plane_real, 0, 0.66);
+	}
+}
 
-	gamer = (t_gamer *)ft_calloc(sizeof(t_gamer), 1);
-	has_been_created(gamer);
-	gamer->unitHeight = data->height / data->table.rows;
-	gamer->unitWidth = data->width / data->table.cols;
-	gamer->pos.x = x + 0.5;
-	gamer->pos.y = y + 0.5;
-	printf("llega a antes\n");
-	if (data->gamer_init == 'N')
-    {
-        set_point(&gamer->dir_real, 0, -1);
-        set_point(&gamer->plane_real, 0.66, 0.0);
-    }
-    if (data->gamer_init == 'S')
-    {
-        set_point(&gamer->dir_real, 0, 1);
-        set_point(&gamer->plane_real, -0.66, 0.0);
-    }
-    if (data->gamer_init == 'W')
-    {
-        set_point(&gamer->dir_real, -1, 0);
-        set_point(&gamer->plane_real, 0, -0.66);
-    }
-    if (data->gamer_init == 'E')
-    {
-        set_point(&gamer->dir_real, 1, 0);
-        set_point(&gamer->plane_real, 0, 0.66);
-    }
-	data->gamer = gamer;	
+void	load_player(t_game *data, int x, int y)
+{
+	t_player	*player;
+
+	player = (t_player *)ft_calloc(sizeof(t_player), 1);
+	has_been_created(player);
+	player->pos.x = x + 0.5;
+	player->pos.y = y + 0.5;
+	load_dir_and_plane(data, player);
+	data->player = player;
 }

@@ -6,17 +6,17 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:48:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/12 20:32:53 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/13 19:16:04 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycaster.h"
+#include "includes/raycaster.h"
 
-void	calculate_dist(t_file *data, t_view *view)
+void	calculate_dist(t_game *data, t_view *view)
 {
 	t_point	pos;
 
-	pos = data->gamer->pos;
+	pos = data->player->pos;
 	view->deltaDist.x = fabs(1 / view->rayDir.x);
 	view->deltaDist.y = fabs(1 / view->rayDir.y);
 	if (view->rayDir.x < 0)
@@ -41,11 +41,11 @@ void	calculate_dist(t_file *data, t_view *view)
 	}
 }
 
-void	calculate_line_to_draw(t_file *data, t_view *view, int x)
+void	calculate_line_to_draw(t_game *data, t_view *view, int x)
 {
 	t_point	pos;
 
-	pos = data->gamer->pos;
+	pos = data->player->pos;
 	view->side = find_hit(data, view);
 	if (view->side == 0)
 	{
@@ -65,12 +65,12 @@ void	calculate_line_to_draw(t_file *data, t_view *view, int x)
 	if (view->drawEnd >= data->height)
 		view->drawEnd = data->height - 1;
 	if (view->side == 0)
-		view->wallX = data->gamer->pos.y + data->wallDist[x] * view->rayDir.y;
+		view->wallX = data->player->pos.y + data->wallDist[x] * view->rayDir.y;
 	else
-		view->wallX = data->gamer->pos.x + data->wallDist[x] * view->rayDir.x;
+		view->wallX = data->player->pos.x + data->wallDist[x] * view->rayDir.x;
 }
 
-void	texture_to_image(t_file *data, t_view *view, int x)
+void	texture_to_image(t_game *data, t_view *view, int x)
 {
 	t_cont_img	*texture;
 	int			i;
@@ -98,16 +98,15 @@ void	texture_to_image(t_file *data, t_view *view, int x)
 	}
 }
 
-void	load_view(t_file *data, t_view *view, int x)
+void	load_view(t_game *data, t_view *view, int x)
 {	
 	t_point	dir;
 	t_point	pos;
 	t_point	*plane;
-	int		i;
 
-	pos = data->gamer->pos;
-	dir = data->gamer->dir;
-	plane = &data->gamer->plane;
+	pos = data->player->pos;
+	dir = data->player->dir;
+	plane = &data->player->plane;
 	view->cameraX = 2 * x / (double)data->width - 1;
 	view->rayDir.x = dir.x + plane->x * view->cameraX;
 	view->rayDir.y = dir.y + plane->y * view->cameraX;
@@ -118,7 +117,7 @@ void	load_view(t_file *data, t_view *view, int x)
 	texture_to_image(data, view, x);
 }
 
-int	raycaster(t_file *data)
+int	raycaster(t_game *data)
 {
 	int		x;
 	t_view	view;

@@ -1,4 +1,4 @@
-#include "run_game.h"
+#include "includes/run_game.h"
 
 // 54 + 4 * width * height
 
@@ -10,7 +10,7 @@ void save_as_char(unsigned char *str, int nbr)
 	str[3] = (unsigned char)(nbr >> 24);
 }
 
-void write_header(t_file *data, int fd)
+void write_header(t_game *data, int fd)
 {
     unsigned char *header;
     int *temp;
@@ -34,12 +34,12 @@ void write_header(t_file *data, int fd)
     header = 0;
 }
 
-void write_image(t_file *data)
+void write_image(t_game *data)
 {
     
 }
 
-int save_bmp(t_file *data)
+int save_bmp(t_game *data)
 {
     int fd;
 

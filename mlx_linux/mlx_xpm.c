@@ -286,7 +286,7 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 }
 
 
-int	mlx_int_file_get_rid_comment(char *ptr, int size)
+int	mlx_int_game_get_rid_comment(char *ptr, int size)
 {
 		int	com_begin;
 		int	com_end;
@@ -320,7 +320,7 @@ void	*mlx_xpm_file_to_image(t_xvar *xvar,char *file,int *width,int *height)
 						close(fd);
 				return ((void *)0);
 		}
-		mlx_int_file_get_rid_comment(ptr, size);
+		mlx_int_game_get_rid_comment(ptr, size);
 		if (img = mlx_int_parse_xpm(xvar,ptr,size,mlx_int_get_line))
 		{
 				*width = img->width;

@@ -1,6 +1,6 @@
-#include "run_game.h"
+#include "includes/run_game.h"
 
-void load_window(t_file *data)
+void load_window(t_game *data)
 {    
     t_point_int size;
 
@@ -22,10 +22,8 @@ void load_window(t_file *data)
     printf("iniciada venta\n");
 }
 
-int init_window(t_file *data)
+int init_window(t_game *data)
 {
-    int init;
-
     data->opt.mov_speed = 0.11;
     data->opt.rot_speed = 0.11;   
     data->opt.u_div = 1;
@@ -36,7 +34,7 @@ int init_window(t_file *data)
     return (0);
 }
 
-int load_img(t_file *data, t_cont_img *img, int dir)
+int load_img(t_game *data, t_cont_img *img, int dir)
 {
     void *ptr;
     char *str;
@@ -57,7 +55,7 @@ int load_img(t_file *data, t_cont_img *img, int dir)
     return (0);
 }
 
-int init_texture(t_file *data)
+int init_texture(t_game *data)
 {
     t_cont_img *text;
     int fd;

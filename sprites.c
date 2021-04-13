@@ -6,30 +6,30 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 18:32:05 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/12 20:24:59 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/13 19:16:04 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sprites.h"
+#include "includes/sprites.h"
 
-void	calculate_sprite_screem(t_file *data, t_rc_sprites *ray_c)
+void	calculate_sprite_screem(t_game *data, t_rc_sprites *ray_c)
 {
 	double	inv_det;
 	t_point	pos_sp;
 	t_point	pos;
 	t_point	transf;
-	t_gamer	*gamer;
+	t_player	*player;
 
-	pos = data->gamer->pos;
-	gamer = data->gamer;
+	pos = data->player->pos;
+	player = data->player;
 	ray_c->pos_sp.x = ray_c->sprite->pos.x - pos.x;
 	ray_c->pos_sp.y = ray_c->sprite->pos.y - pos.y;
 	pos_sp = ray_c->pos_sp;
-	inv_det = (gamer->plane.x * gamer->dir.y - gamer->dir.x * gamer->plane.y);
+	inv_det = (player->plane.x * player->dir.y - player->dir.x * player->plane.y);
 	inv_det = 1.0 / inv_det;
-	ray_c->transf.x = (gamer->dir.y * pos_sp.x - gamer->dir.x * pos_sp.y);
+	ray_c->transf.x = (player->dir.y * pos_sp.x - player->dir.x * pos_sp.y);
 	ray_c->transf.x *= inv_det;
-	ray_c->transf.y = (-gamer->plane.y * pos_sp.x + gamer->plane.x * pos_sp.y);
+	ray_c->transf.y = (-player->plane.y * pos_sp.x + player->plane.x * pos_sp.y);
 	ray_c->transf.y *= inv_det;
 	transf = ray_c->transf;
 	ray_c->sp_screen_x = (int)((data->width / 2) * (1 + transf.x / transf.y));
@@ -37,7 +37,7 @@ void	calculate_sprite_screem(t_file *data, t_rc_sprites *ray_c)
 	ray_c->v_mv_screen = (int)(data->opt.v_move / transf.y);
 }
 
-void	calculate_init_end_draw(t_file *data, t_rc_sprites *ray_c)
+void	calculate_init_end_draw(t_game *data, t_rc_sprites *ray_c)
 {
 	t_point	transf;
 	int		sp_height;
@@ -65,7 +65,7 @@ void	calculate_init_end_draw(t_file *data, t_rc_sprites *ray_c)
 		ray_c->draw_end.x = data->width - 1;
 }
 
-void	copy_texture_to_point(t_file *data, t_rc_sprites *ray_c, int stripe)
+void	copy_texture_to_point(t_game *data, t_rc_sprites *ray_c, int stripe)
 {
 	t_point		p_text;
 	t_cont_img	*text;
@@ -93,7 +93,7 @@ void	copy_texture_to_point(t_file *data, t_rc_sprites *ray_c, int stripe)
 	}
 }
 
-void	draw_line_with_texture(t_file *data, t_rc_sprites *ray_c)
+void	draw_line_with_texture(t_game *data, t_rc_sprites *ray_c)
 {
 	int	stripe;
 
@@ -105,7 +105,7 @@ void	draw_line_with_texture(t_file *data, t_rc_sprites *ray_c)
 	}
 }
 
-void	print_sprites(t_file *data)
+void	print_sprites(t_game *data)
 {
 	t_rc_sprites	ray_c;
 	t_sprite		*sprite;

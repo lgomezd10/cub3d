@@ -1,6 +1,6 @@
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
-int is_connected(t_file *data, int y, int x, int up)
+int is_connected(t_game *data, int y, int x, int up)
 {
 	char **table;
 	int connected;
@@ -25,7 +25,7 @@ int is_connected(t_file *data, int y, int x, int up)
 	return (connected);
 }
 
-int check_connected(t_file *data, int y, int x, int right)
+int check_connected(t_game *data, int y, int x, int right)
 {
 	char **table;
 	int conn_up;
@@ -56,7 +56,7 @@ int check_connected(t_file *data, int y, int x, int right)
 	return (i);
 }
 
-int check_space(t_file *data, int y, int x)
+int check_space(t_game *data, int y, int x)
 {
 	int up;
 	int right;
@@ -77,7 +77,7 @@ int check_space(t_file *data, int y, int x)
 	return (1);
 }
 
-int through_space(t_file *data, int y, int x)
+int through_space(t_game *data, int y, int x)
 {
 	char **table;
 
@@ -100,7 +100,7 @@ int through_space(t_file *data, int y, int x)
 	return (-1);
 }
 
-void check_conexions(t_file *data, int y, int x)
+void check_conexions(t_game *data, int y, int x)
 {
 	char **table;
 
@@ -114,7 +114,7 @@ void check_conexions(t_file *data, int y, int x)
 	}
 	if (ft_strchr("NSEW", table[y][x]))
 	{
-		load_gamer(data, y, x, table[y][x]);
+		load_player(data, x, y);
 		table[y][x] = '0';
 	}
 	if (x == 0 && table[y][x] == '1')
@@ -125,7 +125,7 @@ void check_conexions(t_file *data, int y, int x)
 		check_connected(data, y, x - 1, 0);
 }
 
-void wall_connected(t_file *data)
+void check_wall_closed(t_game *data)
 {
 	char **table;
 	int i;

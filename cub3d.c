@@ -1,6 +1,6 @@
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
-void print_struct(t_file *data)
+void print_struct(t_game *data)
 {
     int i;
     int j;
@@ -38,7 +38,7 @@ void print_struct(t_file *data)
 int main(int argc, char **argv)
 {
     
-    t_file *data;
+    t_game *data;
 
     data = 0;
     system("leaks cub3D"); 
@@ -46,12 +46,12 @@ int main(int argc, char **argv)
         ft_errors("Solo se permiten dos argumentos");
     else
     {
-        data = (t_file *)ft_calloc(sizeof(t_file), 1);
+        data = (t_game *)ft_calloc(sizeof(t_game), 1);
         has_been_created(data);
         print_struct(data);
         load_file(argv[1], data);
         print_struct(data);
-        wall_connected(data);
+        check_wall_closed(data);
         print_struct(data);
         printf("segunda impresión\n");
         run_game(data);

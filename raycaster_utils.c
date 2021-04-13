@@ -6,13 +6,13 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 20:34:00 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/12 20:34:03 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/13 19:16:04 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycaster.h"
+#include "includes/raycaster.h"
 
-int	find_hit(t_file *data, t_view *view)
+int	find_hit(t_game *data, t_view *view)
 {	
 	int	hit;
 
@@ -37,7 +37,7 @@ int	find_hit(t_file *data, t_view *view)
 	return (view->side);
 }
 
-t_cont_img	*select_text(t_file *data, t_view *view)
+t_cont_img	*select_text(t_game *data, t_view *view)
 {
 	if (!view->side)
 	{

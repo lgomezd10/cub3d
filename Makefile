@@ -1,30 +1,43 @@
 DIR = ./libft
 
+DIRMLX = mlx
+
 MLX = mlx_linux/libmlx.a
 
 LIBFT = ${DIR}/libft.a
+
+LIBMLX = libmlx.dylib
 
 FLAGS = -c -Wall -Wextra - Werror
 
 NAME = cub3D
 
-SRC = cub3d.c load_file.c ft_errors.c add_tolibft.c get_map.c \
-ft_utils.c wall_connected.c view_map.c utils_draw.c move_gamer.c window.c \
+SRC = cub3d.c load_file.c ft_errors.c get_map.c utils_points.c\
+ft_utils.c check_wall_closed.c run_game.c utils_draw.c window.c \
 move.c utils_hook.c raycaster.c raycaster_utils.c list_sprite.c utils_clear.c sprites.c \
 minimap.c game_utils.c
 
-OBJS = ${SRC:.c=.o}
+CFLAGS = -O3 -Wall -Wextra -Werror -I.
 
-${LIBFT} :
-		${MAKE} bonus -C ${DIR}
+FLAGSLIB = -Lmlx -lmlx -framework Metal -framework AppKit -lm
+
+OBJS = ${SRC:.c=.o}
 
 linux : ${LIBFT} ${OBJS}
 	clang -g -Wall -Wextra -Werror -lm -o ${NAME} ${OBJS} ${LIBFT} ${MLX} -lbsd -lmlx -lXext -lX11
 
-mac : ${LIBFT} ${OBJS}
-	gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit -o ${NAME} ${OBJS} ${LIBFT}
+mac : ${LIBMLX} ${LIBFT} ${OBJS}
+	gcc -g ${CFLAGS} -o ${NAME} ${OBJS} ${LIBFT} ${FLAGSLIB}
 
 all : ${NAME}
 
+${LIBFT} :
+		${MAKE} bonus -C ${DIR}
+${LIBMLX} :
+		${MAKE} -C mlx
+		@cp ${DIRMLX}/${LIBMLX} .
+
 clean:
-	rm ${NAME} *.o
+	rm -rf ${NAME} *.o
+	rm -rf ${DIR_MLX}/*.o
+	rm -rf ${LIBMLX}

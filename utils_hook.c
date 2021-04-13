@@ -1,26 +1,26 @@
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
-int press_key(int keycode, t_file *data)
+int press_key(int keycode, t_game *data)
 {
-	t_gamer *gamer;
+	t_player *player;
 
-	gamer = data->gamer;
+	player = data->player;
 	printf("press key: %d\n", keycode);
 	if (keycode == K_LEFT)
-		gamer->rotate = -1;
+		player->rotate = -1;
 	if (keycode == K_RIGHT)
-		gamer->rotate = 1;
+		player->rotate = 1;
 	if (keycode == K_UP)
-		gamer->move = -1;
+		player->move = -1;
 	if (keycode == K_DOWN)
-		gamer->move = 1;
+		player->move = 1;
 	if (keycode == K_TURN_L)
-		gamer->turn = -1;
+		player->turn = -1;
 	if (keycode == K_TURN_R)
-		gamer->turn = 1;
+		player->turn = 1;
 	if (keycode == K_MAP)
 	{
-		gamer->act_map = !gamer->act_map;
+		player->act_map = !player->act_map;
 		data->has_moved = 1;
 	}
 	if (keycode == K_ESC)
@@ -28,28 +28,28 @@ int press_key(int keycode, t_file *data)
 	return (0);
 }
 
-int release_key(int keycode, t_file *data)
+int release_key(int keycode, t_game *data)
 {
-	t_gamer *gamer;
+	t_player *player;
 
-	gamer = data->gamer;
+	player = data->player;
 	printf("release key: %d\n", keycode);
 	if (keycode == K_LEFT)
-		gamer->rotate = 0;
+		player->rotate = 0;
 	if (keycode == K_RIGHT)
-		gamer->rotate = 0;
+		player->rotate = 0;
 	if (keycode == K_UP)
-		gamer->move = 0;
+		player->move = 0;
 	if (keycode == K_DOWN)
-		gamer->move = 0;
+		player->move = 0;
 	if (keycode == K_TURN_L)
-		gamer->turn = 0;
+		player->turn = 0;
 	if (keycode == K_TURN_R)
-		gamer->turn = 0;
+		player->turn = 0;
 	return (0);
 }
 
-int event_exit(t_file *data)
+int event_exit(t_game *data)
 {
 	data->closed = 1;
 	printf("VA A BORRAR COMPONENTES\n");

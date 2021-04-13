@@ -1,59 +1,42 @@
-#include "cub3d.h"
+#include "includes/run_game.h"
 
-void set_point(t_point *point, double x, double y)
-{
-    point->x = x;
-    point->y = y;
-}
-
-void copy_point(t_point *dest, t_point src)
-{
-    dest->x = src.x;
-    dest->y = src.y;
-}
-
-void set_point_int(t_point_int *point, int x, int y)
-{
-    point->x = x;
-    point->y = y;
-}
-int move_up(t_file *data)
+int move_up(t_game *data)
 {
     double new_x;
 	double new_y;
     t_point dir;
 
-    dir = data->gamer->dir_real;
-    new_x = data->gamer->pos.x + (dir.x * data->opt.mov_speed);
-    new_y = data->gamer->pos.y + (dir.y * data->opt.mov_speed);
+    dir = data->player->dir_real;
+    new_x = data->player->pos.x + (dir.x * data->opt.mov_speed);
+    new_y = data->player->pos.y + (dir.y * data->opt.mov_speed);
     if (in_space(data, new_x, new_y))
     {
-        data->gamer->pos.y = new_y;
-        data->gamer->pos.x = new_x;
+        data->player->pos.y = new_y;
+        data->player->pos.x = new_x;
         return (1);
     }
     return (0);
 }
 
-int move_down(t_file *data)
+int move_down(t_game *data)
 {
     double new_x;
 	double new_y;
     t_point dir;
 
-    dir = data->gamer->dir_real;
-    new_x = data->gamer->pos.x - (dir.x * data->opt.mov_speed);
-    new_y = data->gamer->pos.y - (dir.y * data->opt.mov_speed);
+    dir = data->player->dir_real;
+    new_x = data->player->pos.x - (dir.x * data->opt.mov_speed);
+    new_y = data->player->pos.y - (dir.y * data->opt.mov_speed);
     if (in_space(data, new_x, new_y))
     {
-        data->gamer->pos.y = new_y;
-        data->gamer->pos.x = new_x;
+        data->player->pos.y = new_y;
+        data->player->pos.x = new_x;
         return (1);
     }
     return (0);
 }
 
-void rotate_dir(t_file *data, t_point *dir, t_point *plane, int rot)
+void rotate_dir(t_game *data, t_point *dir, t_point *plane, int rot)
 {
     t_point dir_old;
     t_point plane_old;
@@ -67,48 +50,48 @@ void rotate_dir(t_file *data, t_point *dir, t_point *plane, int rot)
     dir->y = dir_old.x * sin(rot * speed) + dir_old.y * cos(rot * speed);
     plane->x = plane_old.x * cos(rot * speed) - plane_old.y * sin(rot * speed);
     plane->y = plane_old.x * sin(rot * speed) + plane_old.y * cos(rot * speed);
-    copy_point(&data->gamer->dir, *dir);
-    copy_point(&data->gamer->plane, *plane);
+    copy_point(&data->player->dir, *dir);
+    copy_point(&data->player->plane, *plane);
 }
 
-int turn_view(t_file *data)
+int turn_view(t_game *data)
 {
-    t_gamer *gamer;
+    t_player *player;
 
     data->has_moved = 1;
-    gamer = data->gamer;
-    if (!gamer->is_turning)
+    player = data->player;
+    if (!player->is_turning)
     {
-        gamer->is_turning = 1;
-        copy_point(&gamer->dir_turn, gamer->dir_real);
-        copy_point(&gamer->plane_turn, gamer->plane_real);
+        player->is_turning = 1;
+        copy_point(&player->dir_turn, player->dir_real);
+        copy_point(&player->plane_turn, player->plane_real);
     }
-    rotate_dir(data, &gamer->dir_turn, &gamer->plane_turn, gamer->turn);
+    rotate_dir(data, &player->dir_turn, &player->plane_turn, player->turn);
     return (1);
 }
 
-int move(t_file *data)
+int move(t_game *data)
 {
 	double speed;
-    t_gamer *gamer;
+    t_player *player;
 
-    gamer = data->gamer;
+    player = data->player;
 	speed = data->opt.rot_speed;
-    copy_point(&gamer->dir, gamer->dir_real);
-    copy_point(&gamer->plane, gamer->plane_real);
-    if (gamer->rotate || data->gamer->move)
-        data->gamer->is_turning = 0;
-	if (gamer->rotate)
-		rotate_dir(data, &gamer->dir_real, &gamer->plane_real, gamer->rotate);
-	if (data->gamer->move)
+    copy_point(&player->dir, player->dir_real);
+    copy_point(&player->plane, player->plane_real);
+    if (player->rotate || data->player->move)
+        data->player->is_turning = 0;
+	if (player->rotate)
+		rotate_dir(data, &player->dir_real, &player->plane_real, player->rotate);
+	if (data->player->move)
 	{
         data->has_moved = 1;
-		if (data->gamer->move == -1)
+		if (data->player->move == -1)
             move_up(data);
-		if (data->gamer->move == 1)
+		if (data->player->move == 1)
             move_down(data);
 	}
-    if (data->gamer->turn)
+    if (data->player->turn)
         turn_view(data);
 	return (data->has_moved);
 }
