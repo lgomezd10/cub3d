@@ -1,31 +1,38 @@
 #include "run_game.h"
 
+void load_window(t_file *data)
+{    
+    t_point_int size;
+
+    set_point_int(&data->window.img.init, 0, 0);
+    data->window.ptr = mlx_init();
+    mlx_get_screen_size(data->window.ptr, &size.x, &size.y);
+    if (data->width > size.x || data->height > size.y)
+    {
+        data->width = size.x;
+        data->height = size.y;
+    }
+    data->window.img.width = data->width;
+    data->window.img.height = data->height;
+    
+    data->window.img.unitHeight = data->window.img.height / data->table.rows;
+    data->window.img.unitWidth = data->window.img.width / data->table.cols;
+    printf("El tamaño de la pantalla es ancho: %d, alto: %d\n", size.x, size.y);
+    data->window.win = mlx_new_window(data->window.ptr, data->width, data->height, "CUB3D");
+    printf("iniciada venta\n");
+}
+
 int init_window(t_file *data)
 {
     int init;
-    /*
-    data->opt.mov_speed = 0.11;
-    data->opt.rot_speed = 0.11;
-    data->mini_map.height = data->height / 3 - 10;
-    data->mini_map.width = data->width - 10;
-    data->mini_map.unitHeight = data->mini_map.height / data->table.rows;
-    data->mini_map.unitWidth = data->mini_map.width / data->table.cols;
-    */
-    
+
     data->opt.mov_speed = 0.11;
     data->opt.rot_speed = 0.11;   
     data->opt.u_div = 1;
     data->opt.v_div = 1;
     data->opt.v_move = 0.0;
+    load_window(data);
     init_minimap(data);
-    data->window.img.height = data->height;
-    data->window.img.width = data->width;
-    data->window.img.unitHeight = data->window.img.height / data->table.rows;
-    data->window.img.unitWidth = data->window.img.width / data->table.cols;
-    set_point_int(&data->window.img.init, 0, 0);
-    data->window.ptr = mlx_init();
-    data->window.win = mlx_new_window(data->window.ptr, data->width, data->height, "CUB3D");
-    printf("iniciada venta\n");
     return (0);
 }
 

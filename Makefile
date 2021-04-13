@@ -10,7 +10,8 @@ NAME = cub3D
 
 SRC = cub3d.c load_file.c ft_errors.c add_tolibft.c get_map.c \
 ft_utils.c wall_connected.c view_map.c utils_draw.c move_gamer.c window.c \
-move.c utils_hook.c raycaster.c raycaster_utils.c list_sprite.c utils_clear.c sprites.c minimap.c
+move.c utils_hook.c raycaster.c raycaster_utils.c list_sprite.c utils_clear.c sprites.c \
+minimap.c game_utils.c
 
 OBJS = ${SRC:.c=.o}
 

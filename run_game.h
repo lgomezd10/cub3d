@@ -18,5 +18,6 @@ void my_mlx_pixel_put(t_cont_img *data, int x, int y, int color);
 int init_window(t_file *data);
 void print_map(t_file *data, t_cont_img *img);
 void	print_sprites(t_file *data);
+int is_in_radius(t_point point, t_point center, double radius);
 
 #endif

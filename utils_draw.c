@@ -1,12 +1,14 @@
 #include "run_game.h"
 
+
 void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, int color)
 {
 	int i;
 	int j;
 	int to_y;
 	int to_x;
-	double distancia;
+	double distance;
+	t_point point;
 
 	center.x *= img->unitWidth;
 	center.y *= img->unitHeight;
@@ -18,8 +20,13 @@ void draw_circle(t_file *data, t_cont_img *img, t_point center, double radius, i
 		to_x = j + (2 * radius);
 		while (j <= to_x)
 		{
-			distancia = (j - center.x) * (j - center.x) + (i - center.y) * (i - center.y);
-			if (sqrt(distancia) <= radius)
+			/*
+			distance = (j - center.x) * (j - center.x) + (i - center.y) * (i - center.y);
+			if (sqrt(distance) <= radius)
+			*/
+			point.x = j;
+			point.y = i;
+			if (is_in_radius(point, center, radius))
 				my_mlx_pixel_put(img, j, i, color);
 			j++;
 		}

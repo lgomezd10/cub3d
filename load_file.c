@@ -89,10 +89,12 @@ int load_texture(char **split, t_file *data)
 
 int load_resolution(char **split, t_file *data)
 {
+    void *ptr;
+
     if (data->height && data->width)
         ft_errors("Resolución repetida");
     if (ft_array_len((void **)split) == 3)
-    {
+    {        
         if (ft_str_is_nbr(split[1]) && ft_str_is_nbr(split[2]))
             data->width = ft_atoi(split[1]);
             data->height = ft_atoi(split[2]);
