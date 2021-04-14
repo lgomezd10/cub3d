@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/13 19:16:04 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/14 15:25:15 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int load_image(t_game *data)
 
     if (data->window.win)
     {
-        //mlx_sync(MLX_SYNC_IMAGE_WRITABLE, data->window.img.img.img);
+        mlx_sync(MLX_SYNC_IMAGE_WRITABLE, data->window.img.img.img);
         move(data);
         img = &data->window.img.img; 
         if (firts_time || data->has_moved)
@@ -48,11 +48,10 @@ int load_image(t_game *data)
                 print_minimap(data);
             if (data->to_save)
                 save_bmp(data);
-            //mlx_do_sync(data->window.ptr);
+            mlx_do_sync(data->window.ptr);
         }
-        printf("No debería llegar aquí\n");
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
-        //mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, data->window.win);
+        mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, data->window.win);
     }
     return (0);
 }
@@ -67,7 +66,6 @@ int run_game(t_game *data)
     load_image(data);
     if (!data->to_save)
     {
-        printf("No debería llegar a los hooks\n");
         mlx_hook(data->window.win, 2, 1L << 0, press_key, data);
         mlx_hook(data->window.win, 3, 1L << 1, release_key, data);
         mlx_hook(data->window.win, EVENT_EXIT, 1L << 17, event_exit, data);
