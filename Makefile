@@ -15,7 +15,7 @@ NAME = cub3D
 SRC = cub3d.c load_file.c ft_errors.c get_map.c utils_points.c\
 ft_utils.c check_wall_closed.c run_game.c utils_draw.c window.c \
 move.c utils_hook.c raycaster.c raycaster_utils.c list_sprite.c utils_clear.c sprites.c \
-minimap.c game_utils.c
+minimap.c game_utils.c save_bmp.c
 
 CFLAGS = -O3 -Wall -Wextra -Werror -I.
 

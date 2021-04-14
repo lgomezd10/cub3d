@@ -92,12 +92,14 @@ int load_resolution(char **split, t_game *data)
 	if (data->height && data->width)
 		ft_errors("Resolución repetida");
 	if (ft_array_len((void **)split) == 3)
-	{        
+	{
 		if (ft_str_is_nbr(split[1]) && ft_str_is_nbr(split[2]))
+		{
 			data->width = ft_atoi(split[1]);
 			data->height = ft_atoi(split[2]);
 			if (data->height && data->width)
 				return (1);
+		}
 	}
 	ft_errors("Formato para resoltion R nbr1 nbr2");
 	return (0);

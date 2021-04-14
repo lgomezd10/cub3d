@@ -36,9 +36,9 @@ int init_window(t_game *data)
 
 int load_img(t_game *data, t_cont_img *img, int dir)
 {
-    void *ptr;
     char *str;
 
+    str = 0;
     if (dir == North)
         str = data->t_NO;
     if (dir == South)
@@ -49,7 +49,6 @@ int load_img(t_game *data, t_cont_img *img, int dir)
         str = data->t_WE;
     if (dir == Sprite)
         str = data->sprite;
-    ptr = mlx_init();
     img->img.img = mlx_xpm_file_to_image(data->window.ptr, str, &img->width, &img->height);
     img->img.addr = mlx_get_data_addr(img->img.img, &img->img.bits_per_pixel, &img->img.line_length, &img->img.endian);
     return (0);

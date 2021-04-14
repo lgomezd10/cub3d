@@ -25,6 +25,7 @@ int in_space_int(t_game *data, int x, int y);
 int load_image(t_game *data);
 int move(t_game *data);
 int color_int(int red, int green, int blue);
+void save_bmp(t_game *data);
 
 
 #endif

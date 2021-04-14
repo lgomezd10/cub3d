@@ -72,26 +72,28 @@ int turn_view(t_game *data)
 
 int move(t_game *data)
 {
-	double speed;
     t_player *player;
 
     player = data->player;
-	speed = data->opt.rot_speed;
     copy_point(&player->dir, player->dir_real);
     copy_point(&player->plane, player->plane_real);
     if (player->rotate || data->player->move)
-        data->player->is_turning = 0;
-	if (player->rotate)
-		rotate_dir(data, &player->dir_real, &player->plane_real, player->rotate);
-	if (data->player->move)
-	{
-        data->has_moved = 1;
-		if (data->player->move == -1)
-            move_up(data);
-		if (data->player->move == 1)
-            move_down(data);
-	}
+    {
+        data->player->is_turning = 0;    
+        if (player->rotate)
+            rotate_dir(data, &player->dir_real, &player->plane_real, player->rotate);
+        if (data->player->move)
+        {
+            data->has_moved = 1;
+            if (data->player->move == -1)
+                move_up(data);
+            if (data->player->move == 1)
+                move_down(data);
+        }
+    }
     if (data->player->turn)
+    {
         turn_view(data);
+    }
 	return (data->has_moved);
 }

@@ -33,7 +33,6 @@ void print_line(t_point from, t_point to, int color, t_cont_img *img)
 	double x;
 	double y;
 	int end;
-	t_point center;
 
 	from.x *= img->unitWidth;
 	from.y *= img->unitHeight;
@@ -54,10 +53,7 @@ void print_line(t_point from, t_point to, int color, t_cont_img *img)
 		x = from.x;
 		while (y < end && x < img->width && y < img->height)
 		{
-			center.y = y;
 			x = ((y - from.y) / (to.y - from.y)) * (to.x - from.x) + from.x;
-			center.y = y;
-			//draw_circle(data, img, center, 3, color);
 			my_mlx_pixel_put(img, x, y, color);
 			y++;
 		}
@@ -74,10 +70,7 @@ void print_line(t_point from, t_point to, int color, t_cont_img *img)
 		y = from.y;
 		while (x < end && x < img->width && y < img->height)
 		{
-			center.x = x;
 			y = ((x - from.x) / (to.x - from.x)) * (to.y - from.y) + from.y;
-			center.y = y;
-			//draw_circle(data, img, center, 3, color);
 			my_mlx_pixel_put(img, x, y, color);
 			x++;
 		}

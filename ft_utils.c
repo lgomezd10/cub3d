@@ -12,14 +12,6 @@
 
 #include "includes/cub3d.h"
 
-void	ft_free_str(void *str)
-{
-	char	*temp;
-
-	temp = (char *)str;
-	free(str);
-}
-
 void	load_dir_and_plane(t_game *data, t_player *player)
 {
 	if (data->player_init == 'N')
