@@ -110,12 +110,15 @@ int load_line(int fd, char *line, t_game *data)
 	char **split;
 
 	split = ft_split_set(line, " \t");
-	if (ft_strlen(split[0]) > 2)
+	if (ft_strlen(split[0]) > 2 || !ft_strncmp(split[0], "1", 1))
 	{
 		if (data_loaded(data))
 			get_map_of_file(fd, line, data);
 		else
+		{
+			printf("El sprit es: %s\n", split[0]);
 			ft_errors("Linea no válida");
+		}
 	}
 	else if (ft_strlen(split[0]) == 1)
 	{
@@ -158,7 +161,7 @@ int load_file(char *file, t_game *data)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		ft_errors("No se puede abrir el archivo pasado");	
-	while (noend > 0 || (line && *line))
+	while (noend > 0)
 	{
 		line = 0;
 		noend = get_next_line(fd, &line);

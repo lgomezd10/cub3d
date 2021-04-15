@@ -46,7 +46,6 @@ int main(int argc, char **argv)
         ft_errors("Solo se permiten dos argumentos");
     else
     {
-        printf("El número de argumentos es %d\n", argc);
         data = (t_game *)ft_calloc(sizeof(t_game), 1);
         has_been_created(data);
         if (argc == 3)
@@ -55,12 +54,12 @@ int main(int argc, char **argv)
                 ft_errors("If there are second argument it must be --save");
             data->to_save = 1;
         }
-        print_struct(data);
+        //print_struct(data);
         load_file(argv[1], data);
-        print_struct(data);
+        //print_struct(data);
         check_wall_closed(data);
-        print_struct(data);
-        printf("segunda impresión\n");
+        //print_struct(data);
+        //printf("segunda impresión\n");
         run_game(data);
         //system("leaks cub3D");
     }

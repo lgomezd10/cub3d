@@ -77,11 +77,13 @@ int	data_loaded(t_game *data)
 void	clear_list(t_list **list)
 {
 	t_list	*temp;
+	char	*str;
 
 	while (*list)
 	{
 		temp = *list;
-		free((char *)temp->content);
+		str = temp->content;
+		free(str);
 		temp->content = 0;
 		*list = temp->next;
 		free(temp);
@@ -98,7 +100,11 @@ int	get_map_of_file(int fd, char *str, t_game *data)
 	list = 0;
 	noend = 1;
 	len = ft_strlen(str);
-	str = ft_strdup(str);
+	if (len > 1)
+	{
+		str = ft_strdup(str);
+		has_been_created(str);
+	}
 	while (noend >= 0 && str[0] && len && correct_line_map(str, data))
 	{
 		while (str[len - 1] == ' ')
@@ -107,9 +113,11 @@ int	get_map_of_file(int fd, char *str, t_game *data)
 		if (data->table.cols < len)
 			data->table.cols = len;
 		data->table.rows++;
+		str = 0;
 		noend = get_next_line(fd, &str);
 		len = ft_strlen(str);
 	}
+	free(str);
 	if (!noend && data->player_init)
 		build_map(list, data);
 	else

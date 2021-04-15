@@ -50,7 +50,7 @@ int check_connected(t_game *data, int y, int x, int right)
 	}	
 	if (!conn_up || !conn_down)
 	{
-		printf("muros no conectados en fila %d\n", y);
+		printf("muros no conectados en fila %d conn_up: %d conn_down: %d\n", y, conn_up, conn_down);
 		ft_errors("muros no conectados");
 	}
 	return (i);
@@ -86,7 +86,7 @@ int through_space(t_game *data, int y, int x)
 	{
 		if (x == data->table.cols - 1 || ft_strchr(" 1", table[y][x + 1]))
 		{
-			while (table[y][x] == ' ' && check_space(data, y, x))
+			while (x < data->table.cols && table[y][x] == ' ' && check_space(data, y, x))
 				table[y][x++] = '*';
 			if (x < data->table.cols && table[y][x] != '1')
 				ft_errors("el mapa tiene el muro abierto");
@@ -107,11 +107,7 @@ void check_conexions(t_game *data, int y, int x)
 	table = data->table.table;
 	
 	if (table[y][x] == '2')
-	{
-		printf("va a cargtar el sprite\n");
 		add_new_sp_back(&data->sprites, x, y);
-		printf("carga el sprite\n");
-	}
 	if (ft_strchr("NSEW", table[y][x]))
 	{
 		load_player(data, x, y);

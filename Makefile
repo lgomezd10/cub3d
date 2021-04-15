@@ -41,7 +41,7 @@ SRCBONUS = ${addsuffix .c, ${addprefix src/, ${FBONUS}}}
 
 SRC = ${MAIN} ${SRCFILES} ${SRCBONUS}
 
-CFLAGS = -O3 -Wall -Wextra -Werror -I.
+CFLAGS = -O3 -g -Wall -Wextra -Werror -I.
 
 FLAGSLIB = -Lmlx -lmlx -framework Metal -framework AppKit -lm
 

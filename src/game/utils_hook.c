@@ -54,7 +54,7 @@ int event_exit(t_game *data)
 	data->closed = 1;
 	printf("VA A BORRAR COMPONENTES\n");
 	free_components(data);
-	system("leaks cub3D");
+	//system("leaks cub3D");
 	exit(0);
 	return (0);
 }

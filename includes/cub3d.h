@@ -13,7 +13,7 @@
 
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -23,11 +23,11 @@
 #define K_MAP 46
 #define K_ESC 65307
 #define EVENT_EXIT 17
-
+*/
 
 //LINUX
 
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -37,7 +37,7 @@
 #define K_MAP 109
 #define K_ESC 65307
 #define EVENT_EXIT 33
-*/
+
 
 enum DIR
 {
@@ -77,7 +77,7 @@ typedef struct s_point
 
 typedef struct s_sprite
 {
-    t_point pos;    
+    t_point pos;
     double dist;
     int visible;
     struct s_sprite *next;

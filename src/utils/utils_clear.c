@@ -43,8 +43,9 @@ void clear_window(t_game *data)
         {
             mlx_destroy_window(data->window.ptr, data->window.win);
             data->window.win = 0;
-            data->window.ptr = 0;
         }
+        free(data->window.ptr);
+        data->window.ptr = 0;
     }
 }
 
@@ -52,7 +53,6 @@ void clear_sprites(t_game *data)
 {
     t_sprite *sprite;
     t_sprite *temp;
-
     if (data)
     {
         sprite = data->sprites.begin;
@@ -62,7 +62,11 @@ void clear_sprites(t_game *data)
             sprite = sprite->next;
             free(temp);
         }
+        data->sprites.begin = 0;
+        data->sprites.end = 0;
+        data->sprites.size = 0;
     }
+    
 }
 
 void free_components(t_game *data)
@@ -87,6 +91,8 @@ void free_components(t_game *data)
         free(data->player);    
         data->player = 0;
         clear_window(data);
+        clear_sprites(data);
+        free(data->text);
         free(data);
     }
 }
