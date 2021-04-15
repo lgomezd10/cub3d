@@ -13,7 +13,7 @@
 
 
 //MAC
-/*
+
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -21,13 +21,13 @@
 #define K_TURN_L 123
 #define K_TURN_R 124
 #define K_MAP 46
-#define K_ESC 65307
+#define K_ESC 53
 #define EVENT_EXIT 17
-*/
+
 
 //LINUX
 
-
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -37,7 +37,7 @@
 #define K_MAP 109
 #define K_ESC 65307
 #define EVENT_EXIT 33
-
+*/
 
 enum DIR
 {
@@ -193,7 +193,7 @@ typedef struct s_game
     t_list_sp sprites;
     int closed;
     int has_moved;
-    double wallDist[1920];
+    double *wallDist;
 } t_game;
 
 int load_file(char *file, t_game *data);

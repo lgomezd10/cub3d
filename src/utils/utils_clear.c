@@ -44,8 +44,6 @@ void clear_window(t_game *data)
             mlx_destroy_window(data->window.ptr, data->window.win);
             data->window.win = 0;
         }
-        free(data->window.ptr);
-        data->window.ptr = 0;
     }
 }
 
@@ -89,10 +87,11 @@ void free_components(t_game *data)
         free(data->floor);
         data->floor = 0;
         free(data->player);    
-        data->player = 0;
+        data->player = 0;        
         clear_window(data);
         clear_sprites(data);
         free(data->text);
+        free(data->wallDist);
         free(data);
     }
 }

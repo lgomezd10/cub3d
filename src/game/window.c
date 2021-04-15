@@ -7,19 +7,21 @@ void load_window(t_game *data)
     set_point_int(&data->window.img.init, 0, 0);
     data->window.ptr = mlx_init();
     mlx_get_screen_size(data->window.ptr, &size.x, &size.y);
-    if (data->width > size.x || data->height > size.y)
-    {
+    if (data->width > size.x)
         data->width = size.x;
-        data->height = size.y;
-    }
+    if (data->height > size.y)
+        data->height = size.y - 23;
+    if (data->width < 500)
+        data->width = 500;
+    if (data->height < 300)
+        data->height = 300;
+    data->wallDist = ft_calloc(sizeof(double), data->width);
+    has_been_created(data->wallDist);
     data->window.img.width = data->width;
     data->window.img.height = data->height;
-    
     data->window.img.unitHeight = data->window.img.height / data->table.rows;
-    data->window.img.unitWidth = data->window.img.width / data->table.cols;
-    printf("El tamaño de la pantalla es ancho: %d, alto: %d\n", size.x, size.y);
+    data->window.img.unitWidth = data->window.img.width / data->table.cols;    
     data->window.win = mlx_new_window(data->window.ptr, data->width, data->height, "CUB3D");
-    printf("iniciada venta\n");
 }
 
 int init_window(t_game *data)
