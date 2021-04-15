@@ -95,5 +95,6 @@ int move(t_game *data)
     {
         turn_view(data);
     }
+    move_minimap(data);
 	return (data->has_moved);
 }

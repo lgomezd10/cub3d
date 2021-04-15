@@ -160,10 +160,12 @@ typedef struct s_opt
 typedef struct s_minimap
 {
     t_point_int init;
+    t_point_int init_table;
+    t_point_int end_table;
     int width;
     int height;
     int unit_width;
-    int unit_height;
+    int unit_height;    
     int color_walls;
     int color_player;
     int color_sprites;
@@ -204,10 +206,12 @@ int run_game(t_game *data);
 int event_exit(t_game *data);
 void set_point(t_point *point, double x, double y);
 void copy_point(t_point *dest, t_point src);
+int	valid_point(t_game *data, int x, int y);
 void set_point_int(t_point_int *point, int x, int y);
 t_sprite *add_new_sp_back(t_list_sp *list, int x, int y);
 void free_components(t_game *data);
 void check_wall_closed(t_game *data);
 void load_player(t_game *data, int y, int x);
+void draw_circle_map(t_game *data, t_point center, double radius, int color);
 
 #endif
