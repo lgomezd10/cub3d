@@ -13,7 +13,7 @@ void draw_sprites(t_game *data)
 }
 
 char move_minimap(t_game *data)
-{	
+{
 	t_point_int p_table;
 	t_minimap *map;
 
@@ -63,7 +63,6 @@ char get_value_table(t_game *data, int x, int y)
 void print_minimap(t_game *data)
 {
 	t_point_int scream;
-	t_point_int end;
 	t_point_int p_table;
 	t_cont_img *img;
 	t_minimap *map;
@@ -76,11 +75,10 @@ void print_minimap(t_game *data)
 		scream.x = map->init.x;
 		while (scream.x < data->width - map->unit_width)
 		{
-			
+			p_table.y = (scream.y - map->init.y) / map->unit_height;
+			p_table.x = (scream.x - map->init.x) / map->unit_width;
 			if (valid_point(data, p_table.x, p_table.y))
 			{
-				p_table.y = (scream.y - map->init.y) / map->unit_height;
-				p_table.x = (scream.x - map->init.x) / map->unit_width;
 				if (get_value_table(data, scream.x,  scream.y) == '1')
 					my_mlx_pixel_put(img, scream.x, scream.y, map->color_walls);
 				else
@@ -97,9 +95,7 @@ void print_minimap(t_game *data)
 void init_minimap(t_game *data)
 {
 	t_minimap *map;
-	int size_submap;
 
-	size_submap = 20;
 	map = &data->minimap;
 	map->width = data->width / 3;
 	map->height = data->height / 3;

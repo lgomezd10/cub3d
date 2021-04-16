@@ -16,23 +16,27 @@ void	load_dir_and_plane(t_game *data, t_player *player)
 {
 	if (data->player_init == 'N')
 	{
-		set_point(&player->dir_real, 0, -1);
-		set_point(&player->plane_real, 0.66, 0.0);
+		set_point(&player->dir, 0, -1);
+		set_point(&player->dir_side, 1, 0);
+		set_point(&player->plane, 0.66, 0.0);
 	}
 	if (data->player_init == 'S')
 	{
-		set_point(&player->dir_real, 0, 1);
-		set_point(&player->plane_real, -0.66, 0.0);
+		set_point(&player->dir, 0, 1);
+		set_point(&player->dir_side, -1, 0);
+		set_point(&player->plane, -0.66, 0.0);
 	}
 	if (data->player_init == 'W')
 	{
-		set_point(&player->dir_real, -1, 0);
-		set_point(&player->plane_real, 0, -0.66);
+		set_point(&player->dir, -1, 0);
+		set_point(&player->dir_side, 0, -1);
+		set_point(&player->plane, 0, -0.66);
 	}
 	if (data->player_init == 'E')
 	{
-		set_point(&player->dir_real, 1, 0);
-		set_point(&player->plane_real, 0, 0.66);
+		set_point(&player->dir, 1, 0);
+		set_point(&player->dir_side, 0, 1);
+		set_point(&player->plane, 0, 0.66);
 	}
 }
 

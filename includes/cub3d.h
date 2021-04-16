@@ -13,7 +13,7 @@
 
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -23,11 +23,11 @@
 #define K_MAP 46
 #define K_ESC 53
 #define EVENT_EXIT 17
-
+*/
 
 //LINUX
 
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -37,7 +37,7 @@
 #define K_MAP 109
 #define K_ESC 65307
 #define EVENT_EXIT 33
-*/
+
 
 enum DIR
 {
@@ -124,15 +124,11 @@ typedef struct s_player
 {
     t_point pos;
     t_point dir;
+    t_point dir_side;
     t_point plane;
-    t_point dir_real;
-    t_point plane_real;
-    t_point dir_turn;
-    t_point plane_turn;
-    int move;
+    int move_in_dir;
+    int move_in_side;
     int rotate;
-    int turn;
-    int is_turning;
     int unitWidth;
     int unitHeight;
     int act_map;

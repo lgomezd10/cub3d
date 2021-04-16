@@ -6,18 +6,18 @@ int press_key(int keycode, t_game *data)
 
 	player = data->player;
 	printf("press key: %d\n", keycode);
-	if (keycode == K_LEFT)
-		player->rotate = -1;
 	if (keycode == K_RIGHT)
-		player->rotate = 1;
+		player->move_in_side = -1;
+	if (keycode == K_LEFT)
+		player->move_in_side = 1;
 	if (keycode == K_UP)
-		player->move = -1;
+		player->move_in_dir = -1;
 	if (keycode == K_DOWN)
-		player->move = 1;
+		player->move_in_dir = 1;
 	if (keycode == K_TURN_L)
-		player->turn = -1;
+		player->rotate = -1;
 	if (keycode == K_TURN_R)
-		player->turn = 1;
+		player->rotate = 1;
 	if (keycode == K_MAP)
 	{
 		player->act_map = !player->act_map;
@@ -35,17 +35,17 @@ int release_key(int keycode, t_game *data)
 	player = data->player;
 	printf("release key: %d\n", keycode);
 	if (keycode == K_LEFT)
-		player->rotate = 0;
+		player->move_in_side = 0;
 	if (keycode == K_RIGHT)
-		player->rotate = 0;
+		player->move_in_side = 0;
 	if (keycode == K_UP)
-		player->move = 0;
+		player->move_in_dir = 0;
 	if (keycode == K_DOWN)
-		player->move = 0;
+		player->move_in_dir = 0;
 	if (keycode == K_TURN_L)
-		player->turn = 0;
+		player->rotate = 0;
 	if (keycode == K_TURN_R)
-		player->turn = 0;
+		player->rotate = 0;
 	return (0);
 }
 

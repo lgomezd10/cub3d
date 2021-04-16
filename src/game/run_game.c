@@ -34,7 +34,7 @@ int load_image(t_game *data)
 
     if (data->window.win)
     {
-        mlx_sync(1, data->window.img.img.img);
+        //mlx_sync(1, data->window.img.img.img);
         move(data);
         img = &data->window.img.img; 
         if (firts_time || data->has_moved)
@@ -46,12 +46,12 @@ int load_image(t_game *data)
             raycaster(data);
             if (data->player->act_map)
                 print_minimap(data);
-            mlx_do_sync(data->window.ptr);
+           // mlx_do_sync(data->window.ptr);
         }
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
         if (data->to_save)
             save_bmp(data);        
-        mlx_sync(2, data->window.win);
+        //mlx_sync(2, data->window.win);
     }    
     return (0);
 }
@@ -68,7 +68,6 @@ int run_game(t_game *data)
     mlx_hook(data->window.win, 3, 1L << 1, release_key, data);
     mlx_hook(data->window.win, EVENT_EXIT, 1L << 17, event_exit, data);
     mlx_loop_hook(data->window.ptr, load_image, data);
-    mlx_loop(data->window.ptr);
-    
+    mlx_loop(data->window.ptr);    
     return (0);
 }
