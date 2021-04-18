@@ -5,7 +5,7 @@ int press_key(int keycode, t_game *data)
 	t_player *player;
 
 	player = data->player;
-	printf("press key: %d\n", keycode);
+	//printf("press key: %d\n", keycode);
 	if (keycode == K_RIGHT)
 		player->move_in_side = -1;
 	if (keycode == K_LEFT)
@@ -33,7 +33,7 @@ int release_key(int keycode, t_game *data)
 	t_player *player;
 
 	player = data->player;
-	printf("release key: %d\n", keycode);
+	//printf("release key: %d\n", keycode);
 	if (keycode == K_LEFT)
 		player->move_in_side = 0;
 	if (keycode == K_RIGHT)

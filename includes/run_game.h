@@ -22,7 +22,8 @@ int load_image(t_game *data);
 int move(t_game *data);
 int color_int(int red, int green, int blue);
 void save_bmp(t_game *data);
-char move_minimap(t_game *data);
+void move_minimap(t_game *data);
+void draw_triangle(t_game *data, int size, int color);
 
 
 #endif

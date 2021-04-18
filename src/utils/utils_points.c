@@ -41,3 +41,13 @@ int	valid_point(t_game *data, int x, int y)
 	valid = valid && y >= 0 && y < table.rows;
 	return (valid);
 }
+
+int in_limits(t_point_int pos, t_point_int start, t_point_int end)
+{
+	int valid;
+
+	valid = 0;
+	valid = pos.x >= start.x && pos.x < end.x;
+	valid = valid && pos.y >= start.y && pos.y < end.y;
+	return valid;
+}

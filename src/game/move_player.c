@@ -76,6 +76,9 @@ int move(t_game *data)
         if (player->move_in_dir == 1)
             move_other_side(data, player->dir);
     }
-    //move_minimap(data);
+    if (data->minimap.size_map)
+    {
+        move_minimap(data);
+    }
 	return (data->has_moved);
 }

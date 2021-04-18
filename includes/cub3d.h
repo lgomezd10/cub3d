@@ -158,6 +158,7 @@ typedef struct s_minimap
     t_point_int init;
     t_point_int init_table;
     t_point_int end_table;
+    int size_map;
     int width;
     int height;
     int unit_width;
@@ -209,5 +210,6 @@ void free_components(t_game *data);
 void check_wall_closed(t_game *data);
 void load_player(t_game *data, int y, int x);
 void draw_circle_map(t_game *data, t_point center, double radius, int color);
+int in_limits(t_point_int pos, t_point_int start, t_point_int end);
 
 #endif

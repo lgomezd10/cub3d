@@ -1,5 +1,35 @@
 #include "../../includes/run_game.h"
 
+void draw_triangle(t_game *data, int size, int color)
+{
+	t_player *player;
+	t_point pos;
+	t_point_int draw;
+	t_point_int add;
+	int sizey;
+
+	player = data->player;
+	pos.x = data->minimap.init.x + ((player->pos.x - data->minimap.init_table.x) * data->minimap.unit_width);
+	pos.y = data->minimap.init.y + ((player->pos.y - data->minimap.init_table.y) * data->minimap.unit_height);
+	add.x = 0;
+	sizey = size;
+	while (add.x < size)
+	{
+		add.y = -sizey;
+		while (add.y <= sizey)
+		{
+			draw.x = pos.x + (add.y * player->dir_side.x);
+			draw.y = pos.y + (add.y * player->dir_side.y);
+			my_mlx_pixel_put(&data->window.img, draw.x, draw.y, color);
+			add.y++;
+		}
+		sizey--;
+		add.x++;
+		pos.x = pos.x + (add.x * player->dir.x);
+		pos.y = pos.y + (add.x * player->dir.y);		
+	}
+}
+
 void draw_circle_map(t_game *data, t_point center, double radius, int color)
 {
 	int i;
@@ -8,8 +38,8 @@ void draw_circle_map(t_game *data, t_point center, double radius, int color)
 	int to_x;
 	t_point point;
 
-	center.x = data->minimap.init.x + (center.x * data->minimap.unit_width);
-	center.y = data->minimap.init.y + (center.y * data->minimap.unit_height);
+	center.x = data->minimap.init.x + ((center.x -data->minimap.init_table.x) * data->minimap.unit_width);
+	center.y = data->minimap.init.y + ((center.y - data->minimap.init_table.y) * data->minimap.unit_height);
 	i = center.y - radius;
 	to_y = i + (2 * radius);
 	while (i <= to_y)
