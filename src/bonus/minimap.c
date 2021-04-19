@@ -13,7 +13,7 @@ void draw_sprites(t_game *data)
 		pos.x = list->pos.x;
 		pos.y = list->pos.y;
 		if (!data->minimap.size_map || (in_limits(pos, map.init_table, map.end_table)))
-			draw_circle_map(data, list->pos, 6, data->minimap.color_sprites);
+			draw_circle_map(data, list->pos, 8, data->minimap.color_sprites);
 		list = list->next;
 	}
 }
@@ -102,7 +102,7 @@ void print_minimap(t_game *data)
 	}
 	draw_sprites(data);
 	draw_circle_map(data, data->player->pos, 4, map->color_player);
-	draw_triangle(data, 10, map->color_player);
+	draw_triangle(data, 8, map->color_player);
 }
 
 void init_minimap(t_game *data)

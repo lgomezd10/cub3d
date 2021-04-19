@@ -13,7 +13,7 @@ void draw_triangle(t_game *data, int size, int color)
 	pos.y = data->minimap.init.y + ((player->pos.y - data->minimap.init_table.y) * data->minimap.unit_height);
 	add.x = 0;
 	sizey = size;
-	while (add.x < size)
+	while (sizey > 0)
 	{
 		add.y = -sizey;
 		while (add.y <= sizey)
@@ -25,8 +25,8 @@ void draw_triangle(t_game *data, int size, int color)
 		}
 		sizey--;
 		add.x++;
-		pos.x = pos.x + (add.x * player->dir.x);
-		pos.y = pos.y + (add.x * player->dir.y);		
+		pos.x = pos.x + (player->dir.x);
+		pos.y = pos.y + (player->dir.y);		
 	}
 }
 
