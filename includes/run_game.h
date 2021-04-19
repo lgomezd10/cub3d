@@ -4,7 +4,7 @@
 
 
 void short_sprites(t_game *data);
-void print_minimap(t_game *data);
+void draw_minimap(t_game *data);
 void init_minimap(t_game *data);
 int init_texture(t_game *data);
 void print_cel_floor(t_game *data, int ceiling, int floor, t_cont_img *img);

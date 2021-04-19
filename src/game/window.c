@@ -59,14 +59,10 @@ int load_img(t_game *data, t_cont_img *img, int dir)
 int init_texture(t_game *data)
 {
     t_cont_img *text;
-    int fd;
 
     printf("valor de size %d\n", Size);
     text = (t_cont_img *)ft_calloc(sizeof(t_cont_img), Size);
-    has_been_created(text);
-    fd = open(data->t_NO, O_RDONLY);
-    printf("fichero abierto: %d\n", fd);
-    close(fd);
+    has_been_created(text);    
     load_img(data, &text[North], North);
     load_img(data, &text[South], South);
     load_img(data, &text[East], East);

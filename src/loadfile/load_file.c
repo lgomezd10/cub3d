@@ -1,74 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_file.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/19 17:08:59 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/04/19 17:32:03 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/load_file.h"
 
-void free_split(char **split)
+void	load_color(char *line, t_game *data)
 {
-	int i;
-
-	i = 0;
-	if (split)
-	{
-		while (split[i])
-		{
-			free(split[i]);
-			split[i] = 0;
-			i++;
-		}
-	}
-}
-
-int get_color(char *color)
-{
-	int nbr;
-	if (ft_str_is_nbr(color))
-	{
-		nbr = ft_atoi(color);
-		if (nbr >= 0 && nbr <= 255)
-			return (nbr);
-	}
-	ft_errors("Color must be between 0 y 255");
-	return (-1);
-}
-
-int load_color(char *line, t_game *data)
-{
-	char **split;
-	t_color **color;
-	char *temp;
+	char	**split;
+	t_color	**color;
+	char	*temp;
 
 	color = 0;
 	temp = ft_strdup(line);
 	temp = ft_delete_set(&temp, " \t");
 	split = ft_split_set(&temp[1], ",");
-	if (ft_array_len((void **)split) == 3)
+	if (!ft_strnstr(temp, ",,", ft_strlen(temp))
+		&& ft_array_len((void **)split) == 3)
 	{
 		if (temp[0] == 'F')
 			color = &data->floor;
 		if (temp[0] == 'C')
 			color = &data->ceiling;
 		if (*color)
-			ft_errors("Linea repetida");
-		*color = (t_color *)ft_calloc(sizeof(t_color), 1);
-		has_been_created(*color);
-		(*color)->red = get_color(split[0]);
-		(*color)->green = get_color(split[1]);
-		(*color)->blue = get_color(split[2]);
+			ft_errors("Repeated configuration");
+		save_color(color, split);
 		free_split(split);
 		free(split);
 		free(temp);
-		return (1);
 	}
-	ft_errors("El formato para color es X xxx,xxx,xxx");
-	return (0);
+	else
+		ft_errors("Format to color must be X xxx,xxx,xxx");
 }
 
-int load_texture(char **split, t_game *data)
+int	load_texture(char **split, t_game *data)
 {
-	char *texture;
-	char **opt;
+	char	*texture;
+	char	**opt;
 
+	if (!split[1] || split[2])
+		ft_errors("Invalid line for textures");
 	texture = ft_strdup(split[1]);
+	check_file(texture);
 	opt = 0;
-	//TODO intentar abrir el fichero
 	if (!ft_strncmp(split[0], "NO", 3))
 		opt = &data->t_NO;
 	else if (!ft_strncmp(split[0], "SO", 3))
@@ -80,17 +61,17 @@ int load_texture(char **split, t_game *data)
 	else if (!ft_strncmp(split[0], "S", 3))
 		opt = &data->sprite;
 	else
-		ft_errors("Opción no valida");
+		ft_errors("Invalid line");
 	if (*opt)
-		ft_errors("Opcion repetida");
+		ft_errors("Repeated texture configuration line");
 	*opt = texture;
 	return (1);
 }
 
-int load_resolution(char **split, t_game *data)
+int	load_resolution(char **split, t_game *data)
 {
 	if (data->height && data->width)
-		ft_errors("Resolución repetida");
+		ft_errors("Repeated resolution configuration line");
 	if (ft_array_len((void **)split) == 3)
 	{
 		if (ft_str_is_nbr(split[1]) && ft_str_is_nbr(split[2]))
@@ -101,13 +82,13 @@ int load_resolution(char **split, t_game *data)
 				return (1);
 		}
 	}
-	ft_errors("Formato para resoltion R nbr1 nbr2");
+	ft_errors("Format to resolution R nbr1 nbr2");
 	return (0);
 }
 
-int load_line(int fd, char *line, t_game *data)
+int	load_line(int fd, char *line, t_game *data)
 {
-	char **split;
+	char	**split;
 
 	split = ft_split_set(line, " \t");
 	if (ft_strlen(split[0]) > 2 || !ft_strncmp(split[0], "1", 1))
@@ -115,10 +96,7 @@ int load_line(int fd, char *line, t_game *data)
 		if (data_loaded(data))
 			get_map_of_file(fd, line, data);
 		else
-		{
-			printf("El sprit es: %s\n", split[0]);
-			ft_errors("Linea no válida");
-		}
+			ft_errors("Invalid line");
 	}
 	else if (ft_strlen(split[0]) == 1)
 	{
@@ -137,30 +115,18 @@ int load_line(int fd, char *line, t_game *data)
 	return (0);
 }
 
-int name_file_ok(char *file)
+int	load_file(char *file, t_game *data)
 {
-	int len;
-	int i;
-
-	len = ft_strlen(file);
-	i = len - 4;
-	if (!ft_strncmp(&file[i], ".cub", 4))
-		return (1);
-	return (0);
-}
-
-int load_file(char *file, t_game *data)
-{
-	int fd;
-	char *line;
-	int noend;
+	int		fd;
+	char	*line;
+	int		noend;
 
 	noend = 1;
 	if (!name_file_ok(file))
-		ft_errors("Nombre de fichero inválido");
+		ft_errors("Invalid file name");
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		ft_errors("No se puede abrir el archivo pasado");	
+		ft_errors("Configuration file not found");
 	while (noend > 0)
 	{
 		line = 0;

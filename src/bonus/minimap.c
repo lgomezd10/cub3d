@@ -1,22 +1,6 @@
-#include "../../includes/run_game.h"
+#include "../../includes/bonus.h"
 
-void draw_sprites(t_game *data)
-{
-	t_sprite *list;
-	t_minimap map;
-	t_point_int pos;
 
-	map = data->minimap;
-	list = data->sprites.begin;
-	while (list)
-	{
-		pos.x = list->pos.x;
-		pos.y = list->pos.y;
-		if (!data->minimap.size_map || (in_limits(pos, map.init_table, map.end_table)))
-			draw_circle_map(data, list->pos, 8, data->minimap.color_sprites);
-		list = list->next;
-	}
-}
 
 void move_minimap(t_game *data)
 {
@@ -78,7 +62,7 @@ char get_value_table(t_game *data, int x, int y)
 	return (table[p_table.y][p_table.x]);
 }
 
-void print_minimap(t_game *data)
+void draw_minimap(t_game *data)
 {
 	t_point_int scream;
 	t_cont_img *img;
@@ -112,7 +96,7 @@ void init_minimap(t_game *data)
 	map = &data->minimap;
 	map->width = data->width / 3;
 	map->height = data->height / 3;
-	map->size_map = 10;
+	map->size_map = 20;
 	if (data->table.cols <= map->size_map || data->table.rows <= map->size_map)
 		map->size_map = 0;
 	if (map->size_map)

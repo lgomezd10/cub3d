@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/15 19:31:29 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/19 19:02:57 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int load_image(t_game *data)
 
     if (data->window.win)
     {
-        //mlx_sync(1, data->window.img.img.img);
+        mlx_sync(1, data->window.img.img.img);
         move(data);
         img = &data->window.img.img; 
         if (firts_time || data->has_moved)
@@ -45,13 +45,13 @@ int load_image(t_game *data)
             load_game(data);
             raycaster(data);
             if (data->player->act_map)
-                print_minimap(data);
-           // mlx_do_sync(data->window.ptr);
+                draw_minimap(data);
+            mlx_do_sync(data->window.ptr);
         }
         mlx_put_image_to_window(data->window.ptr, data->window.win, img->img, 0, 0);
         if (data->to_save)
             save_bmp(data);        
-        //mlx_sync(2, data->window.win);
+        mlx_sync(2, data->window.win);
     }    
     return (0);
 }

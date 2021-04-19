@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 19:49:52 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/15 20:08:25 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/19 18:29:26 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	set_point_int(t_point_int *point, int x, int y)
 
 int	valid_point(t_game *data, int x, int y)
 {
-	int valid;
-	t_table table;
+	int		valid;
+	t_table	table;
 
 	table = data->table;
 	valid = 0;
@@ -42,12 +42,12 @@ int	valid_point(t_game *data, int x, int y)
 	return (valid);
 }
 
-int in_limits(t_point_int pos, t_point_int start, t_point_int end)
+int	in_limits(t_point_int pos, t_point_int start, t_point_int end)
 {
-	int valid;
+	int	valid;
 
 	valid = 0;
 	valid = pos.x >= start.x && pos.x < end.x;
 	valid = valid && pos.y >= start.y && pos.y < end.y;
-	return valid;
+	return (valid);
 }

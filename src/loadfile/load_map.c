@@ -6,33 +6,38 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 18:47:48 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/14 20:12:51 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/19 18:25:37 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	build_map(t_list *list, t_game *data)
+int	build_map(t_list *list, t_game *data, int noend)
 {
 	char	*line;
 	int		i;
 	char	**table;
 
-	table = (char **)ft_calloc(sizeof(char *), data->table.rows);
-	has_been_created(table);
-	i = 0;
-	while (table && list && i < data->table.rows)
+	if (!noend && data->player_init)
 	{
-		table[i] = (char *)ft_calloc(sizeof(char), data->table.cols);
-		has_been_created(table[i]);
-		ft_memset(table[i], ' ', data->table.cols);
-		line = (char *)list->content;
-		ft_memcpy(table[i], line, ft_strlen(line));
-		list = list->next;
-		i++;
+		table = (char **)ft_calloc(sizeof(char *), data->table.rows);
+		has_been_created(table);
+		i = 0;
+		while (table && list && i < data->table.rows)
+		{
+			table[i] = (char *)ft_calloc(sizeof(char), data->table.cols);
+			has_been_created(table[i]);
+			ft_memset(table[i], ' ', data->table.cols);
+			line = (char *)list->content;
+			ft_memcpy(table[i], line, ft_strlen(line));
+			list = list->next;
+			i++;
+		}
+		data->table.table = table;
+		return (1);
 	}
-	data->table.table = table;
-	return (1);
+	ft_errors("Map is not correct");
+	return (0);
 }
 
 int	correct_line_map(char *str, t_game *data)
@@ -100,11 +105,8 @@ int	get_map_of_file(int fd, char *str, t_game *data)
 	list = 0;
 	noend = 1;
 	len = ft_strlen(str);
-	if (len > 1)
-	{
-		str = ft_strdup(str);
-		has_been_created(str);
-	}
+	str = ft_strdup(str);
+	has_been_created(str);
 	while (noend >= 0 && str[0] && len && correct_line_map(str, data))
 	{
 		while (str[len - 1] == ' ')
@@ -118,10 +120,7 @@ int	get_map_of_file(int fd, char *str, t_game *data)
 		len = ft_strlen(str);
 	}
 	free(str);
-	if (!noend && data->player_init)
-		build_map(list, data);
-	else
-		ft_errors("Map is not correct");
+	build_map(list, data, noend);
 	clear_list(&list);
 	return (1);
 }

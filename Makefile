@@ -21,8 +21,10 @@ FILES = utils/errors \
 	utils/utils_points \
 	loadfile/load_map \
 	loadfile/load_file \
+	loadfile/load_file_utils \
 	loadfile/load_player \
 	loadfile/check_wall_closed \
+	loadfile/check_wall_utils \
 	game/game_utils \
 	game/move_player \
 	game/run_game \
@@ -33,7 +35,8 @@ FILES = utils/errors \
 	sprites/list_sprite \
 	sprites/sprites \
 
-FBONUS = bonus/minimap
+FBONUS = bonus/minimap \
+	bonus/draw_minimap
 
 SRCFILES = ${addsuffix .c, ${addprefix src/, ${FILES}}}
 

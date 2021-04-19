@@ -1,11 +1,11 @@
-R 900 800
-NO textures/wood.xpm
+R 1920 1080
+NO textures/eagle.xpm
 SO textures/redbrick.xpm
 WE textures/purplestone.xpm
 EA textures/greystone.xpm
 S textures/barrel.xpm
 F 255,255,255
-C 0,126,233
+C 0, 126,233
 
 11111111111111111111
 11111000111010111111
