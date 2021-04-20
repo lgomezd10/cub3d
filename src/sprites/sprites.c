@@ -14,22 +14,22 @@
 
 void	calculate_sprite_screem(t_game *data, t_rc_sprites *ray_c)
 {
-	double	inv_det;
-	t_point	pos_sp;
-	t_point	pos;
-	t_point	transf;
-	t_player	*player;
+	double		inv_det;
+	t_point		pos_sp;
+	t_point		pos;
+	t_point		transf;
+	t_player	*play;
 
 	pos = data->player->pos;
-	player = data->player;
+	play = data->player;
 	ray_c->pos_sp.x = ray_c->sprite->pos.x - pos.x;
 	ray_c->pos_sp.y = ray_c->sprite->pos.y - pos.y;
 	pos_sp = ray_c->pos_sp;
-	inv_det = (player->plane.x * player->dir.y - player->dir.x * player->plane.y);
+	inv_det = (play->plane.x * play->dir.y - play->dir.x * play->plane.y);
 	inv_det = 1.0 / inv_det;
-	ray_c->transf.x = (player->dir.y * pos_sp.x - player->dir.x * pos_sp.y);
+	ray_c->transf.x = (play->dir.y * pos_sp.x - play->dir.x * pos_sp.y);
 	ray_c->transf.x *= inv_det;
-	ray_c->transf.y = (-player->plane.y * pos_sp.x + player->plane.x * pos_sp.y);
+	ray_c->transf.y = (-play->plane.y * pos_sp.x + play->plane.x * pos_sp.y);
 	ray_c->transf.y *= inv_det;
 	transf = ray_c->transf;
 	ray_c->sp_screen_x = (int)((data->width / 2) * (1 + transf.x / transf.y));

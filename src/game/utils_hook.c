@@ -1,11 +1,10 @@
 #include "../../includes/cub3d.h"
 
-int press_key(int keycode, t_game *data)
+int	press_key(int keycode, t_game *data)
 {
-	t_player *player;
+	t_player	*player;
 
 	player = data->player;
-	//printf("press key: %d\n", keycode);
 	if (keycode == K_RIGHT)
 		player->move_in_side = -1;
 	if (keycode == K_LEFT)
@@ -28,12 +27,11 @@ int press_key(int keycode, t_game *data)
 	return (0);
 }
 
-int release_key(int keycode, t_game *data)
+int	release_key(int keycode, t_game *data)
 {
-	t_player *player;
+	t_player	*player;
 
 	player = data->player;
-	//printf("release key: %d\n", keycode);
 	if (keycode == K_LEFT)
 		player->move_in_side = 0;
 	if (keycode == K_RIGHT)
@@ -49,13 +47,11 @@ int release_key(int keycode, t_game *data)
 	return (0);
 }
 
-int event_exit(t_game *data)
+int	event_exit(t_game *data)
 {
 	data->closed = 1;
-	printf("VA A BORRAR COMPONENTES\n");
+	printf("See you late!\n");
 	free_components(data);
-	//system("leaks cub3D");
 	exit(0);
 	return (0);
 }
-

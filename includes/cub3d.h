@@ -13,7 +13,7 @@
 
 
 //MAC
-
+/*
 #define K_LEFT 0
 #define K_RIGHT 2
 #define K_UP 13
@@ -23,11 +23,11 @@
 #define K_MAP 46
 #define K_ESC 53
 #define EVENT_EXIT 17
-
+*/
 
 //LINUX
 
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -37,7 +37,7 @@
 #define K_MAP 109
 #define K_ESC 65307
 #define EVENT_EXIT 33
-*/
+
 
 enum DIR
 {
@@ -96,7 +96,7 @@ typedef struct s_image
 {
     void        *img;
     char        *addr;
-    int         bits_per_pixel;
+    int         bpp;
     int         line_length;
     int         endian;
 } t_image;
@@ -211,5 +211,6 @@ void check_wall_closed(t_game *data);
 void load_player(t_game *data, int y, int x);
 void draw_circle_map(t_game *data, t_point center, double radius, int color);
 int in_limits(t_point_int pos, t_point_int start, t_point_int end);
+void	load_bmp(t_game *data);
 
 #endif

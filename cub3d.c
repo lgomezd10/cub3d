@@ -53,14 +53,22 @@ int main(int argc, char **argv)
             if (ft_strncmp(argv[2], "--save", 6))
                 ft_errors("If there are second argument it must be --save");
             data->to_save = 1;
+            load_file(argv[1], data);
+            check_wall_closed(data);
+            printf("Se va a cargar la imagen\n");
+            print_struct(data);
+            load_bmp(data);
         }
-        //print_struct(data);
-        load_file(argv[1], data);
-        //print_struct(data);
-        check_wall_closed(data);
-        //print_struct(data);
-        //printf("segunda impresión\n");
-        run_game(data);
-        //system("leaks cub3D");
+        else
+        {
+            //print_struct(data);
+            load_file(argv[1], data);
+            //print_struct(data);
+            check_wall_closed(data);
+            //print_struct(data);
+            //printf("segunda impresión\n");
+            run_game(data);
+            //system("leaks cub3D");
+        }
     }
 }

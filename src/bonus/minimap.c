@@ -1,10 +1,8 @@
 #include "../../includes/bonus.h"
 
-
-
-void move_minimap(t_game *data)
+void	move_minimap(t_game *data)
 {
-	t_minimap *map;
+	t_minimap	*map;
 
 	map = &data->minimap;
 	map->init_table.x = data->player->pos.x - map->size_map / 2;
@@ -33,11 +31,11 @@ void move_minimap(t_game *data)
 	}
 }
 
-char get_value_table(t_game *data, int x, int y)
+char	get_value_table(t_game *data, int x, int y)
 {
-	t_point_int p_table;
-	t_minimap *map;
-	char **table;
+	t_point_int	p_table;
+	t_minimap	*map;
+	char		**table;
 
 	map = &data->minimap;
 	table = data->table.table;
@@ -62,11 +60,11 @@ char get_value_table(t_game *data, int x, int y)
 	return (table[p_table.y][p_table.x]);
 }
 
-void draw_minimap(t_game *data)
+void	draw_minimap(t_game *data)
 {
-	t_point_int scream;
-	t_cont_img *img;
-	t_minimap *map;
+	t_point_int	scream;
+	t_cont_img	*img;
+	t_minimap	*map;
 
 	img = &data->window.img;
 	map = &data->minimap;
@@ -91,7 +89,7 @@ void draw_minimap(t_game *data)
 
 void init_minimap(t_game *data)
 {
-	t_minimap *map;
+	t_minimap	*map;
 
 	map = &data->minimap;
 	map->width = data->width / 3;

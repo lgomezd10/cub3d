@@ -28,12 +28,12 @@ void	write_header(t_game *data, int fd, int file_size)
 	header[0] = (unsigned char)('B');
 	header[1] = (unsigned char)('M');
 	save_as_char(&header[2], file_size);
-	header[10] = (unsigned char)54;
-	header[14] = (unsigned char)40;
+	header[10] = (unsigned char) 54;
+	header[14] = (unsigned char) 40;
 	save_as_char(&header[18], data->width);
 	save_as_char(&header[22], data->height);
-	header[26] = (unsigned char)1;
-	header[28] = (unsigned char)24;
+	header[26] = (unsigned char) 1;
+	header[28] = (unsigned char) 24;
 	if (write(fd, &header, 54) < 0)
 		ft_errors("Error to write screenshop.bmp");
 }
@@ -77,4 +77,14 @@ void	save_bmp(t_game *data)
 	close(fd);
 	printf("screamshot.bmp has been created in this directory\n");
 	event_exit(data);
+}
+
+void	load_bmp(t_game *data)
+{
+	init_window(data);
+	init_texture(data);
+	data->window.img.img.img = mlx_new_image(data->window.ptr, \
+	data->width, data->height);
+	has_been_created(data->window.img.img.img);
+	load_image(data);
 }
