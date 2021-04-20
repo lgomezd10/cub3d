@@ -37,7 +37,6 @@ void print_struct(t_game *data)
 
 int main(int argc, char **argv)
 {
-    
     t_game *data;
 
     data = 0;
