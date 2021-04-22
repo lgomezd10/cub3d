@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 17:25:22 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/19 17:32:03 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 11:23:22 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	through_space(t_game *data, int y, int x)
 				&& check_space(data, y, x))
 				table[y][x++] = '*';
 			if (x < data->table.cols && table[y][x] != '1')
-				ft_errors("The wall is open");
+				handle_error(data, "The wall is open");
 			else if (x < data->table.cols && table[y][x] == '1')
 				x = check_connected(data, y, x, 1);
 			return (x);
 		}
 	}
-	ft_errors("The wall is not closed");
+	handle_error(data, "The wall is not closed");
 	return (-1);
 }
 
@@ -41,7 +41,7 @@ void	check_conexions(t_game *data, int y, int x)
 
 	table = data->table.table;
 	if (table[y][x] == '2')
-		add_new_sp_back(&data->sprites, x, y);
+		add_new_sp_back(data, &data->sprites, x, y);
 	if (ft_strchr("NSEW", table[y][x]))
 	{
 		load_player(data, x, y);
@@ -75,7 +75,7 @@ void	check_wall_closed(t_game *data)
 			{
 				if (table[i][j] != '1' && (i == 0 || j == 0
 					|| i == data->table.rows - 1 || j == data->table.cols - 1))
-					ft_errors("The wall is not closed");
+					handle_error(data, "The wall is not closed");
 				j++;
 			}
 		}

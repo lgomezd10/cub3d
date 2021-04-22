@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:15:39 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/20 16:18:04 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 14:18:02 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	get_value_table(t_game *data, int x, int y)
 		printf("Y el inicio en tabla x: %d, y: %d\n", map->init_table.x, map->init_table.y);
 		printf("Con la posicion del jugador x: %f, y: %f\n", data->player->pos.x, data->player->pos.y);
 		printf("hay %d cols y % d rows\n", data->table.cols, data->table.rows);
-		ft_errors("Error en minimap");
+		handle_error(data, "Error en minimap");
 	}
 	return (table[p_table.y][p_table.x]);
 }

@@ -1,20 +1,23 @@
-DIR = ./libft
+DIRLIBFT = libft
 
 DIRMLX = mlx
 
 MLX = mlx_linux/libmlx.a
 
-LIBFT = ${DIR}/libft.a
+LIBFT = ${DIRLIBFT}/libft.a
 
 LIBMLX = libmlx.dylib
 
-FLAGS = -c -Wall -Wextra - Werror
+RM = rm -rf
+
+CFLAGS = -O3 -g -Wall -Wextra -Werror -I.
+
+FLAGSLIB = -Lmlx -lmlx -framework Metal -framework AppKit -lm
 
 NAME = cub3D
 
-MAIN = cub3d.c
-
-FILES = utils/errors \
+FILES = cub3d \
+	utils/errors \
 	utils/save_bmp \
 	utils/utils_clear \
 	utils/utils_draw \
@@ -35,37 +38,46 @@ FILES = utils/errors \
 	sprites/list_sprite \
 	sprites/sprites \
 
-FBONUS = bonus/minimap \
-	bonus/draw_minimap
+BONUS = bonus/minimap \
+	bonus/draw_minimap \
+	bonus/life \
+	bonus/utils_life
 
-SRCFILES = ${addsuffix .c, ${addprefix src/, ${FILES}}}
+FBONUS = ${FILES} ${BONUS}
 
-SRCBONUS = ${addsuffix .c, ${addprefix src/, ${FBONUS}}}
+SRC = ${addsuffix .c, ${addprefix src/, ${FILES}}}
 
-SRC = ${MAIN} ${SRCFILES} ${SRCBONUS}
-
-CFLAGS = -O3 -g -Wall -Wextra -Werror -I.
-
-FLAGSLIB = -Lmlx -lmlx -framework Metal -framework AppKit -lm
+SRCBONUS = ${addsuffix .c, ${addprefix src_bonus/, ${FBONUS}}}
 
 OBJS = ${SRC:.c=.o}
 
-linux : ${LIBFT} ${OBJS} 
-	clang -g -Wall -Wextra -Werror -lm -o ${NAME} ${OBJS}  ${LIBFT} ${MLX} -lbsd -lmlx -lXext -lX11
+OBJSBONUS = ${SRCBONUS:.c=.o}
 
-mac : ${LIBMLX} ${LIBFT} ${OBJS}
-	gcc -g ${CFLAGS} -o ${NAME} ${OBJS} ${LIBFT} ${FLAGSLIB}
+${NAME} : ${LIBFT} ${LIBMLX} ${OBJS}
+	gcc -g ${CFLAGS} -o ${NAME} ${OBJS} ${LIBFT} ${LIBMLX} ${FLAGSLIB}
+
+bonus : ${LIBFT} ${LIBMLX} ${OBJSBONUS}
+	gcc -g ${CFLAGS} -o ${NAME} ${OBJSBONUS} ${LIBFT} ${LIBMLX} ${FLAGSLIB}
 
 all : ${NAME}
 
+linux : ${LIBFT} ${OBJS} 
+	clang -g -Wall -Wextra -Werror -lm -o ${NAME} ${OBJSBONUS}  ${LIBFT} ${MLX} -lbsd -lmlx -lXext -lX11
+
 ${LIBFT} :
-		${MAKE} bonus -C ${DIR}
-${LIBMLX} :
+		${MAKE} bonus -C ${DIRLIBFT}
+${LIBMLX} : 
 		${MAKE} -C mlx
 		@cp ${DIRMLX}/${LIBMLX} .
 
 clean:
-	rm -rf ${OBJS}
-	rm -rf ${NAME} *.o
-	rm -rf ${DIR_MLX}/*.o
-	rm -rf ${LIBMLX}
+	${RM} ${OBJS}
+	${RM} ${OBJSBONUS}
+	${MAKE} clean -C ${DIRMLX}
+	${MAKE} fclean -C ${DIRLIBFT}
+
+fclean:	clean
+	${RM} ${NAME}
+	${RM} ${LIBMLX}
+
+re: fclean all

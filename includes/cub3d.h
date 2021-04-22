@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:13:50 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/20 16:18:04 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 18:11:12 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ enum e_dir
 	East,
 	West,
 	Sprite,
+	GameOver,
 	Size
 };
 
@@ -162,6 +163,15 @@ typedef struct s_minimap
 	int			color_space;
 }	t_minimap;
 
+typedef struct s_life
+{
+	int points;
+	int lives;
+	int len_bar;
+	int unit_bar;
+	int dead;
+}	t_life;
+
 typedef struct s_game
 {
 	int			to_save;
@@ -171,6 +181,7 @@ typedef struct s_game
 	t_player	*player;
 	t_window	window;
 	t_minimap	minimap;
+	t_life		life;
 	char		*t_NO;
 	char		*t_SO;
 	char		*t_WE;
@@ -187,9 +198,9 @@ typedef struct s_game
 	double		*wallDist;
 }	t_game;
 
-int			load_file(char *file, t_game *data);
-void		ft_errors(char *msg);
-void		has_been_created(void *ptr);
+int			load_file(t_game *data, char *file);
+void		handle_error(t_game *data, char *msg);
+void		has_been_created(t_game *data, void *ptr);
 void		print_struct(t_game *data);
 int			run_game(t_game *data);
 int			event_exit(t_game *data);
@@ -197,7 +208,7 @@ void		set_point(t_point *point, double x, double y);
 void		copy_point(t_point *dest, t_point src);
 int			valid_point(t_game *data, int x, int y);
 void		set_point_int(t_point_int *point, int x, int y);
-t_sprite	*add_new_sp_back(t_list_sp *list, int x, int y);
+t_sprite	*add_new_sp_back(t_game *data, t_list_sp *list, int x, int y);
 void		free_components(t_game *data);
 void		check_wall_closed(t_game *data);
 void		load_player(t_game *data, int y, int x);

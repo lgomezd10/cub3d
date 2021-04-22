@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:15:58 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/20 16:18:04 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 13:25:26 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ int	press_key(int keycode, t_game *data)
 		player->rotate = -1;
 	if (keycode == K_TURN_R)
 		player->rotate = 1;
-	if (keycode == K_MAP)
-	{
-		player->act_map = !player->act_map;
-		data->has_moved = 1;
-	}
 	if (keycode == K_ESC)
 		event_exit(data);
 	return (0);
@@ -62,7 +57,7 @@ int	release_key(int keycode, t_game *data)
 int	event_exit(t_game *data)
 {
 	data->closed = 1;
-	printf("See you late!\n");
+	ft_putendl_fd("Game over!", 1);
 	free_components(data);
 	exit(0);
 	return (0);

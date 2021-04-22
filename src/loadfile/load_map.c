@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 18:47:48 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/19 18:25:37 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 13:20:46 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	build_map(t_list *list, t_game *data, int noend)
 	if (!noend && data->player_init)
 	{
 		table = (char **)ft_calloc(sizeof(char *), data->table.rows);
-		has_been_created(table);
+		has_been_created(data, table);
 		i = 0;
 		while (table && list && i < data->table.rows)
 		{
 			table[i] = (char *)ft_calloc(sizeof(char), data->table.cols);
-			has_been_created(table[i]);
+			has_been_created(data, table[i]);
 			ft_memset(table[i], ' ', data->table.cols);
 			line = (char *)list->content;
 			ft_memcpy(table[i], line, ft_strlen(line));
@@ -36,7 +36,7 @@ int	build_map(t_list *list, t_game *data, int noend)
 		data->table.table = table;
 		return (1);
 	}
-	ft_errors("Map is not correct");
+	handle_error(data, "Map is not correct");
 	return (0);
 }
 
@@ -58,7 +58,7 @@ int	correct_line_map(char *str, t_game *data)
 				if (!data->player_init)
 					data->player_init = str[i];
 				else
-					ft_errors("There is more than one player on the map");
+					handle_error(data, "More than one player on the map");
 			}
 			i++;
 		}
@@ -106,7 +106,7 @@ int	get_map_of_file(int fd, char *str, t_game *data)
 	noend = 1;
 	len = ft_strlen(str);
 	str = ft_strdup(str);
-	has_been_created(str);
+	has_been_created(data, str);
 	while (noend >= 0 && str[0] && len && correct_line_map(str, data))
 	{
 		while (str[len - 1] == ' ')

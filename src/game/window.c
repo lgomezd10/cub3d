@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:16:05 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/20 16:18:04 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 12:15:31 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	load_window(t_game *data)
 		data->height = size.y - 23;
 	if (data->width < 500)
 		data->width = 500;
-	if (data->height < 300)
-		data->height = 300;
+	if (data->height < 400)
+		data->height = 400;
 	data->wallDist = ft_calloc(sizeof(double), data->width);
-	has_been_created(data->wallDist);
+	has_been_created(data, data->wallDist);
 	win->img.width = data->width;
 	win->img.height = data->height;
 	win->img.unitHeight = win->img.height / data->table.rows;
@@ -41,13 +41,20 @@ void	load_window(t_game *data)
 
 int	init_window(t_game *data)
 {
-	data->opt.mov_speed = 0.11;
-	data->opt.rot_speed = 0.11;
+	if (data->table.cols * data->table.rows > 900)
+	{
+		data->opt.mov_speed = 0.11;
+		data->opt.rot_speed = 0.11;
+	}
+	else
+	{
+		data->opt.mov_speed = 0.06;
+		data->opt.rot_speed = 0.03;
+	}	
 	data->opt.u_div = 1;
 	data->opt.v_div = 1;
 	data->opt.v_move = 0.0;
 	load_window(data);
-	init_minimap(data);
 	return (0);
 }
 
@@ -78,7 +85,7 @@ int	init_texture(t_game *data)
 	t_cont_img	*text;
 
 	text = (t_cont_img *)ft_calloc(sizeof(t_cont_img), Size);
-	has_been_created(text);
+	has_been_created(data, text);
 	load_img(data, &text[North], North);
 	load_img(data, &text[South], South);
 	load_img(data, &text[East], East);

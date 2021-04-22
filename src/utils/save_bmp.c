@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 17:47:22 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/14 19:48:19 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 12:19:46 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	write_header(t_game *data, int fd, int file_size)
 	header[26] = (unsigned char) 1;
 	header[28] = (unsigned char) 24;
 	if (write(fd, &header, 54) < 0)
-		ft_errors("Error to write screenshop.bmp");
+		handle_error(data, "Error to write screenshop.bmp");
 }
 
 void	write_image(t_game *data, int fd, int pad)
@@ -52,11 +52,11 @@ void	write_image(t_game *data, int fd, int pad)
 		{
 			color = my_mlx_pixel_get(&data->window.img, x, y);
 			if (write(fd, &color, 3) < 0)
-				ft_errors("Error to write screenshop.bmp");
+				handle_error(data, "Error to write screenshop.bmp");
 			x++;
 		}
 		if (write(fd, "\0\0\0", pad) < 0)
-			ft_errors("Error to write screenshop.bmp");
+			handle_error(data, "Error to write screenshop.bmp");
 		y--;
 	}
 }
@@ -71,11 +71,11 @@ void	save_bmp(t_game *data)
 	file_size = 54 + ((3 * data->width + pad) * data->height);
 	fd = open("screenshot.bmp", O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 0644);
 	if (fd < 0)
-		ft_errors("Can't open screenshop.bmp");
+		handle_error(data, "Can't open screenshop.bmp");
 	write_header(data, fd, file_size);
 	write_image(data, fd, pad);
 	close(fd);
-	printf("screamshot.bmp has been created in this directory\n");
+	ft_putendl_fd("screamshot.bmp has been created in this directory\n", 1);
 	event_exit(data);
 }
 
@@ -85,6 +85,6 @@ void	load_bmp(t_game *data)
 	init_texture(data);
 	data->window.img.img.img = mlx_new_image(data->window.ptr, \
 	data->width, data->height);
-	has_been_created(data->window.img.img.img);
+	has_been_created(data, data->window.img.img.img);
 	load_image(data);
 }

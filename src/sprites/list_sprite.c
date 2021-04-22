@@ -6,18 +6,18 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 20:42:30 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/14 18:49:14 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/20 18:21:49 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-t_sprite	*add_new_sp_back(t_list_sp *list, int x, int y)
+t_sprite	*add_new_sp_back(t_game *data, t_list_sp *list, int x, int y)
 {
 	t_sprite	*new;
 
 	new = (t_sprite *)ft_calloc(sizeof(t_sprite), 1);
-	has_been_created(new);
+	has_been_created(data, new);
 	new->pos.x = x + 0.5;
 	new->pos.y = y + 0.5;
 	if (!list->begin)

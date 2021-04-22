@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:15:47 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/20 16:18:04 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 13:06:13 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,6 @@ int	move(t_game *data)
 			move_one_side(data, player->dir);
 		if (player->move_in_dir == 1)
 			move_other_side(data, player->dir);
-	}
-	if (data->minimap.size_map)
-	{
-		move_minimap(data);
 	}
 	return (data->has_moved);
 }

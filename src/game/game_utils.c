@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 19:35:24 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/14 18:47:56 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/21 12:19:29 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ int	in_space(t_game *data, double x, double y)
 
 	i = (int)y;
 	j = (int)x;
-	is_space = y >= 0 && y < (double)data->height;
-	is_space = is_space && x >= 0 && x < (double)data->width;
+	is_space = y >= 0 && i < data->table.rows;
+	is_space = is_space && x >= 0 && j < data->table.cols;
 	is_space = is_space && data->table.table[i][j] != '1';
-	is_space = is_space && !hit_sprite(data, x, y);
 	return (is_space);
 }
 
@@ -63,8 +62,8 @@ int	in_space_int(t_game *data, int x, int y)
 {	
 	int	is_space;
 
-	is_space = y >= 0 && y < data->height;
-	is_space = is_space && x >= 0 && x < data->width;
+	is_space = y >= 0 && y < data->table.rows;
+	is_space = is_space && x >= 0 && x < data->table.cols;
 	is_space = is_space && data->table.table[y][x] != '1';
 	return (is_space);
 }

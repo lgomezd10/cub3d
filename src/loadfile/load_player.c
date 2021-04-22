@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   load_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:18:02 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/14 18:49:14 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/20 18:08:48 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	load_player(t_game *data, int x, int y)
 	t_player	*player;
 
 	player = (t_player *)ft_calloc(sizeof(t_player), 1);
-	has_been_created(player);
+	has_been_created(data, player);
 	player->pos.x = x + 0.5;
 	player->pos.y = y + 0.5;
 	load_dir_and_plane(data, player);
