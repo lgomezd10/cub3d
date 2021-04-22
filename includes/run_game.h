@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:14:16 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/22 15:57:53 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/22 19:41:20 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,7 @@ void			move_minimap(t_game *data);
 void			draw_triangle(t_game *data, int size, int color);
 void            init_life(t_game *data);
 void            draw_life_bar(t_game *data);
+void            rest_life(t_game *data);
+void            print_lives(t_game *data);
+void            game_over(t_game *data);
 #endif

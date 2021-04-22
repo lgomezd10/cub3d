@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/22 15:58:15 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/22 19:41:13 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	load_image(t_game *data)
 	static int	firts_time = 1;
 	t_image		*img;
 
-	if (!data->life.dead && (data->window.win || data->to_save))
+	if (/*!data->life.dead && */(data->window.win || data->to_save))
 	{
 		mlx_sync(1, data->window.img.img.img);
 		move(data);
@@ -55,6 +55,9 @@ int	load_image(t_game *data)
 			save_bmp(data);
 		mlx_put_image_to_window(data->window.ptr, \
 		data->window.win, img->img, 0, 0);
+		print_lives(data);
+		//if (data->life.dead)
+		//	game_over(data);
 		mlx_sync(2, data->window.win);
 	}
 	return (0);

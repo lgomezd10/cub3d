@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 19:35:24 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 15:40:02 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/22 18:34:30 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	hit_sprite(t_game *data, double x, double y)
 		point.x = x;
 		point.y = y;
 		if (is_in_radius(point, center, 0.8))
+		{
+			rest_life(data);
 			return (1);
+		}
 	}
 	return (0);
 }
