@@ -61,7 +61,7 @@ bonus : ${LIBFT} ${LIBMLX} ${OBJSBONUS}
 
 all : ${NAME}
 
-linux : ${LIBFT} ${OBJS} 
+linux : ${LIBFT} ${OBJSBONUS} 
 	clang -g -Wall -Wextra -Werror -lm -o ${NAME} ${OBJSBONUS}  ${LIBFT} ${MLX} -lbsd -lmlx -lXext -lX11
 
 ${LIBFT} :

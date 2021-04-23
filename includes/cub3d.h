@@ -20,7 +20,7 @@
 # include <math.h>
 
 //MAC
-
+/*
 # define K_LEFT 0
 # define K_RIGHT 2
 # define K_UP 13
@@ -30,9 +30,9 @@
 # define K_MAP 46
 # define K_ESC 53
 # define EVENT_EXIT 17
-
+*/
 //LINUX
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -42,7 +42,7 @@
 #define K_MAP 109
 #define K_ESC 65307
 #define EVENT_EXIT 33
-*/
+
 
 enum e_dir
 {
@@ -51,6 +51,7 @@ enum e_dir
 	East,
 	West,
 	Sprite,
+	Life,
 	GameOver,
 	Size
 };

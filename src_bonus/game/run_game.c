@@ -33,12 +33,12 @@ int	load_image(t_game *data)
 	static int	firts_time = 1;
 	t_image		*img;
 
-	if (/*!data->life.dead && */(data->window.win || data->to_save))
+	if ((data->window.win || data->to_save))
 	{
-		mlx_sync(1, data->window.img.img.img);
+		//mlx_sync(1, data->window.img.img.img);
 		move(data);
 		img = &data->window.img.img;
-		if (firts_time || data->has_moved)
+		if (!data->life.dead && (firts_time || data->has_moved))
 		{
 			data->has_moved = 0;
 			short_sprites(data);
@@ -49,16 +49,13 @@ int	load_image(t_game *data)
 			if (data->player->act_map)
 				draw_minimap(data);
 			draw_life_bar(data);
-			mlx_do_sync(data->window.ptr);
+			//mlx_do_sync(data->window.ptr);
 		}
 		if (data->to_save)
 			save_bmp(data);
 		mlx_put_image_to_window(data->window.ptr, \
 		data->window.win, img->img, 0, 0);
-		print_lives(data);
-		//if (data->life.dead)
-		//	game_over(data);
-		mlx_sync(2, data->window.win);
+		//mlx_sync(2, data->window.win);
 	}
 	return (0);
 }
