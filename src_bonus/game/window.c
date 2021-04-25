@@ -96,6 +96,16 @@ int	load_img(t_game *data, t_cont_img *img, int dir)
 		else
 			close(fd);
 	}
+	if (dir == Blood)
+	{
+		
+		str = "textures/blood.xpm";
+		fd = open(str, O_RDONLY);
+		if (fd < 0)
+			handle_error(data, "No se ha podido abrir el archivo");
+		else
+			close(fd);
+	}
 	img->img.img = mlx_xpm_file_to_image(data->window.ptr, \
 	str, &img->width, &img->height);
 	img->img.addr = mlx_get_data_addr(img->img.img, \
@@ -116,6 +126,7 @@ int	init_texture(t_game *data)
 	load_img(data, &text[Sprite], Sprite);
 	load_img(data, &text[Life], Life);
 	load_img(data, &text[GameOver], GameOver);
+	load_img(data, &text[Blood], Blood);
 	data->text = text;
 	return (0);
 }

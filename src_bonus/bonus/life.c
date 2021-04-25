@@ -18,7 +18,8 @@ void copy_img(t_game *data, t_point_int start, t_point_int end, int text)
 			pos_copy.x = ((pos.x - start.x) * copy->width) / (end.x - start.x);
 			pos_copy.y = ((pos.y - start.y) * copy->height) / (end.y - start.y);
 			color = my_mlx_pixel_get(copy, pos_copy.x, pos_copy.y);
-			my_mlx_pixel_put(img, pos.x, pos.y, color);			
+			if ((color & 0x00FFFFFF) != 0)
+				my_mlx_pixel_put(img, pos.x, pos.y, color);
 			pos.x++;
 		}
 		pos.y++;
@@ -68,6 +69,13 @@ void draw_life_bar(t_game *data)
 	end.x = start.x + (life.unit_bar * life.points) ;
 	draw_rectangle(data, start, end, color_int(255, 215, 0));
 	draw_lives(data);
+	set_point_int(&start, 0, 0);
+	set_point_int(&end, data->width, data->height);
+	if (life.blood)
+	{
+			copy_img(data, start, end, Blood);
+			data->life.blood--;
+	}
 }
 
 void print_lives(t_game *data)
@@ -97,6 +105,7 @@ void game_over(t_game *data)
 		img = &data->window.img;
 		set_point_int(&start, 0, 0);
 		set_point_int(&end, img->width, img->height);
+		draw_rectangle(data, start, end, color_int(0, 0, 0));
 		copy_img(data, start, end, GameOver);
 		mlx_put_image_to_window(data->window.ptr, \
 			data->window.win, img->img.img, 0, 0);
@@ -105,6 +114,7 @@ void game_over(t_game *data)
 
 void rest_life(t_game *data)
 {
+	data->life.blood = TIME;
 	data->life.points -= 5;
 	if (!data->life.points)
 	{		

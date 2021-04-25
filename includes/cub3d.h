@@ -53,6 +53,7 @@ enum e_dir
 	Sprite,
 	Life,
 	GameOver,
+	Blood,
 	Size
 };
 
@@ -171,6 +172,7 @@ typedef struct s_life
 	int len_bar;
 	int unit_bar;
 	int dead;
+	int blood;
 }	t_life;
 
 typedef struct s_game
