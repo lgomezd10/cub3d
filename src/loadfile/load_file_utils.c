@@ -59,20 +59,6 @@ int	str_to_color(t_game *data, char *color)
 	return (-1);
 }
 
-void	check_file(t_game *data, char *file)
-{
-	int		fd;
-	char	*msg;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		msg = ft_strjoin("Error to open file: ", file);
-		handle_error(data, msg);
-	}
-	close(fd);
-}
-
 void	save_color(t_game *data, t_color **color, char **split)
 {
 	*color = (t_color *)ft_calloc(sizeof(t_color), 1);

@@ -40,9 +40,11 @@ FILES = cub3d \
 
 BONUS = bonus/minimap \
 	bonus/draw_minimap \
+	bonus/game_bonus \
 	bonus/life \
 	bonus/utils_life \
-	bonus/utils_color
+	bonus/utils_color \
+	bonus/collect_sprites
 
 FBONUS = ${FILES} ${BONUS}
 

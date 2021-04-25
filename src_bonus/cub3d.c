@@ -41,16 +41,14 @@ int main(int argc, char **argv)
 
     data = 0;
     //system("leaks cub3D"); 
-    if (argc < 2 || argc > 3)
-        handle_error(data, "Minimum one argument and maximum two");
+    if (argc < 2)
+        handle_error(data, "Minimum one argument");
     else
     {
         data = (t_game *)ft_calloc(sizeof(t_game), 1);
         has_been_created(data, data);
-        if (argc == 3)
+        if (argc == 3 && !ft_strncmp(argv[2], "--save", 6))
         {
-            if (ft_strncmp(argv[2], "--save", 6))
-                handle_error(data, "Second argument it must be --save");
             data->to_save = 1;
             load_file(data, argv[1]);
             check_wall_closed(data);
@@ -60,12 +58,11 @@ int main(int argc, char **argv)
         }
         else
         {
-            //print_struct(data);
+            data->bonus.maps = argv;
+            data->bonus.levels = argc;
+            data->bonus.level = 1;
             load_file(data, argv[1]);
-            //print_struct(data);
             check_wall_closed(data);
-            //print_struct(data);
-            //printf("segunda impresión\n");
             run_game(data);
         }
     }

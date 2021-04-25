@@ -42,6 +42,7 @@
 #define K_MAP 109
 #define K_ESC 65307
 #define EVENT_EXIT 33
+#define K_NEXT 110
 
 
 enum e_dir
@@ -53,6 +54,7 @@ enum e_dir
 	Sprite,
 	Life,
 	GameOver,
+	NextLevel,
 	Blood,
 	Size
 };
@@ -165,15 +167,20 @@ typedef struct s_minimap
 	int			color_space;
 }	t_minimap;
 
-typedef struct s_life
+typedef struct s_bonus
 {
+	int game;
 	int points;
 	int lives;
 	int len_bar;
 	int unit_bar;
-	int dead;
+	int end;
 	int blood;
-}	t_life;
+	int add_points;
+	char **maps;
+	int level;
+	int levels;
+}	t_bonus;
 
 typedef struct s_game
 {
@@ -184,7 +191,7 @@ typedef struct s_game
 	t_player	*player;
 	t_window	window;
 	t_minimap	minimap;
-	t_life		life;
+	t_bonus		bonus;
 	char		*t_NO;
 	char		*t_SO;
 	char		*t_WE;
@@ -204,6 +211,7 @@ typedef struct s_game
 int			load_file(t_game *data, char *file);
 void		handle_error(t_game *data, char *msg);
 void		has_been_created(t_game *data, void *ptr);
+void		check_file(t_game *data, char *file);
 void		print_struct(t_game *data);
 int			run_game(t_game *data);
 int			event_exit(t_game *data);
@@ -219,5 +227,6 @@ void		draw_circle_map(t_game *data, t_point center, \
 double radius, int color);
 int			in_limits(t_point_int pos, t_point_int start, t_point_int end);
 void		load_bmp(t_game *data);
+void		load_next_level(t_game *data);
 
 #endif

@@ -56,14 +56,13 @@ int	init_window(t_game *data)
 	data->opt.v_move = 0.0;
 	load_window(data);
 	init_minimap(data);
-	init_life(data);
+	init_game_bonus(data);
 	return (0);
 }
 
 int	load_img(t_game *data, t_cont_img *img, int dir)
 {
 	char	*str;
-	int		fd;
 
 	str = 0;
 	if (dir == North)
@@ -78,33 +77,23 @@ int	load_img(t_game *data, t_cont_img *img, int dir)
 		str = data->sprite;
 	if (dir == GameOver)
 	{
-		
 		str = "textures/gameover.xpm";
-		fd = open(str, O_RDONLY);
-		if (fd < 0)
-			handle_error(data, "No se ha podido abrir el archivo");
-		else
-			close(fd);
+		check_file(data, str);
+	}
+	if (dir == NextLevel)
+	{
+		str = "textures/nextlevel.xpm";
+		check_file(data, str);
 	}
 	if (dir == Life)
 	{
-		
 		str = "textures/life.xpm";
-		fd = open(str, O_RDONLY);
-		if (fd < 0)
-			handle_error(data, "No se ha podido abrir el archivo");
-		else
-			close(fd);
+		check_file(data, str);
 	}
 	if (dir == Blood)
 	{
-		
 		str = "textures/blood.xpm";
-		fd = open(str, O_RDONLY);
-		if (fd < 0)
-			handle_error(data, "No se ha podido abrir el archivo");
-		else
-			close(fd);
+		check_file(data, str);
 	}
 	img->img.img = mlx_xpm_file_to_image(data->window.ptr, \
 	str, &img->width, &img->height);
@@ -126,6 +115,7 @@ int	init_texture(t_game *data)
 	load_img(data, &text[Sprite], Sprite);
 	load_img(data, &text[Life], Life);
 	load_img(data, &text[GameOver], GameOver);
+	load_img(data, &text[NextLevel], NextLevel);
 	load_img(data, &text[Blood], Blood);
 	data->text = text;
 	return (0);

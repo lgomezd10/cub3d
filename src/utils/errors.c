@@ -25,3 +25,18 @@ void	has_been_created(t_game *data, void *ptr)
 	if (!ptr)
 		handle_error(data, "Malloc return error");
 }
+
+
+void	check_file(t_game *data, char *file)
+{
+	int		fd;
+	char	*msg;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		msg = ft_strjoin("Error to open file: ", file);
+		handle_error(data, msg);
+	}
+	close(fd);
+}

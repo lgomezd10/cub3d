@@ -24,10 +24,18 @@ void	draw_minimap(t_game *data);
 char	get_value_table(t_game *data, int x, int y);
 void	draw_sprites(t_game *data);
 void    draw_rectangle(t_game *data, t_point_int start, t_point_int end, int color);
+void    draw_triangle(t_game *data, int size, int color);
 int     get_trans(int color);
 int     get_red(int color);
 int     get_green(int color);
 int     get_blue(int color);
 int     get_color(int t, int r, int g, int b);
 int     transparency_color(int color, double div);
+void    init_collect_sp(t_game *data);
+void    init_life(t_game *data);
+void    copy_img(t_game *data, t_point_int start, t_point_int end, int text);
+void    draw_lives(t_game *data);
+void    collect_sprite(t_game *data, int x, int y);
+void    rest_life(t_game *data);
+void    game_over(t_game *data);
 #endif

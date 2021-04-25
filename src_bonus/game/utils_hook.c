@@ -17,6 +17,12 @@ int	press_key(int keycode, t_game *data)
 	t_player	*player;
 
 	player = data->player;
+	
+	if (keycode == K_NEXT && data->bonus.game == 2 && data->bonus.end)
+	{
+		data->bonus.end = 0;
+		load_next_level(data);
+	}
 	if (keycode == K_RIGHT)
 		player->move_in_side = -1;
 	if (keycode == K_LEFT)

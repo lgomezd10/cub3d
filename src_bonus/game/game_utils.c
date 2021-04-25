@@ -40,7 +40,7 @@ int	hit_sprite(t_game *data, double x, double y)
 		point.y = y;
 		if (is_in_radius(point, center, 0.8))
 		{
-			rest_life(data);
+			sprite_found(data, j, i);
 			return (1);
 		}
 	}

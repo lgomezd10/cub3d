@@ -35,10 +35,8 @@ int				move(t_game *data);
 int				color_int(int red, int green, int blue);
 void			save_bmp(t_game *data);
 void			move_minimap(t_game *data);
-void			draw_triangle(t_game *data, int size, int color);
-void            init_life(t_game *data);
 void            draw_life_bar(t_game *data);
-void            rest_life(t_game *data);
-void            print_lives(t_game *data);
 void            game_over(t_game *data);
+void            init_game_bonus(t_game *data);
+void            sprite_found(t_game *data, int x, int y);
 #endif

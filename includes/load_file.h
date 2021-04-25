@@ -17,7 +17,6 @@
 int		name_file_ok(t_game *data, char *file);
 void	free_split(char ***split);
 int		str_to_color(t_game *data, char *color);
-void	check_file(t_game *data, char *file);
 void	save_color(t_game *data, t_color **color, char **split);
 int		correct_line_map(char *str, t_game *data);
 int		data_loaded(t_game *data);

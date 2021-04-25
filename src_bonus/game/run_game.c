@@ -38,7 +38,7 @@ int	load_image(t_game *data)
 		//mlx_sync(1, data->window.img.img.img);
 		move(data);
 		img = &data->window.img.img;
-		if (!data->life.dead && (firts_time || data->has_moved))
+		if (!data->bonus.end && (firts_time || data->has_moved))
 		{
 			data->has_moved = 0;
 			short_sprites(data);
