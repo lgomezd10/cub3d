@@ -59,7 +59,5 @@ void init_life(t_game *data)
 	bonus = &data->bonus;
 	bonus->points = POINTS;
 	bonus->lives = LIVES;
-	bonus->len_bar = (data->width / 4) - 10;
-	bonus->unit_bar = bonus->len_bar / POINTS;
 	bonus->add_points = 5;
 }

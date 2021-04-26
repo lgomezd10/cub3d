@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:15:58 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/22 15:58:35 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 18:04:41 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	press_key(int keycode, t_game *data)
 	t_player	*player;
 
 	player = data->player;
-	
 	if (keycode == K_NEXT && data->bonus.game == 2 && data->bonus.end)
 			load_next_level(data);
 	if (keycode == K_RIGHT)

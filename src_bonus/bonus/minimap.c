@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:15:39 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 14:18:02 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 17:31:13 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,25 @@ void	move_minimap(t_game *data)
 	map->end_table.x = data->player->pos.x + map->size_map / 2;
 	if (map->init_table.x < 0)
 	{
-		map->end_table.x = map->size_map - 1;
 		map->init_table.x = 0;
+		map->end_table.x = map->size_map -1;		
 	}
 	if (map->end_table.x >= data->table.cols)
 	{
 		map->end_table.x = data->table.cols - 1;
-		map->init_table.x = map->end_table.x - 1 - map->size_map;
+		map->init_table.x = map->end_table.x - map->size_map;
 	}
 	map->init_table.y = data->player->pos.y - map->size_map / 2;
 	map->end_table.y = data->player->pos.y + map->size_map / 2;
 	if (map->init_table.y < 0)
 	{
-		map->end_table.y = map->size_map - 1;
 		map->init_table.y = 0;
+		map->end_table.y = map->size_map - 1;
 	}
 	if (map->end_table.y >= data->table.cols)
 	{
 		map->end_table.y = data->table.cols - 1;
-		map->init_table.y = map->end_table.y - 1 - map->size_map;
+		map->init_table.y = map->end_table.y - map->size_map;
 	}
 }
 
@@ -60,15 +60,7 @@ char	get_value_table(t_game *data, int x, int y)
 		p_table.x += map->init_table.x;
 	}	
 	if (!valid_point(data, p_table.x, p_table.y))
-	{
-		printf("Se ha intentado acceder a x: %d y: %d\n", p_table.x, p_table.y);
-		printf("Desde las coordenadas pasadas x: %d, y: %d\n", x, y);
-		printf("con el init en pantalla x: %d, y: %d\n", map->init.x, map->init.y);
-		printf("Y el inicio en tabla x: %d, y: %d\n", map->init_table.x, map->init_table.y);
-		printf("Con la posicion del jugador x: %f, y: %f\n", data->player->pos.x, data->player->pos.y);
-		printf("hay %d cols y % d rows\n", data->table.cols, data->table.rows);
-		handle_error(data, "Error en minimap");
-	}
+		return (0);
 	return (table[p_table.y][p_table.x]);
 }
 
@@ -81,7 +73,7 @@ void	draw_minimap(t_game *data)
 	img = &data->window.img;
 	map = &data->minimap;
 	scream.y = map->init.y;
-	while (scream.y < map->height)
+	while (scream.y <= map->height)
 	{
 		scream.x = map->init.x;
 		while (scream.x < data->width - map->unit_width)
@@ -109,6 +101,7 @@ void init_minimap(t_game *data)
 	map->size_map = 20;
 	if (data->table.cols <= map->size_map || data->table.rows <= map->size_map)
 		map->size_map = 0;
+	printf("size minimap: %d\n", map->size_map);
 	if (map->size_map)
 	{
 		map->unit_width = map->width / map->size_map;
@@ -118,6 +111,8 @@ void init_minimap(t_game *data)
 	{
 		map->unit_width = map->width / data->table.cols;
 		map->unit_height = map->height / data->table.rows;
+		map->init_table.x = 0;
+		map->init_table.y = 0;
 	}
 	map->init.x = (map->width * 2) - map->unit_width;
 	map->init.y = 0;

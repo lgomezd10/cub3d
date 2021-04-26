@@ -59,7 +59,7 @@ int main(int argc, char **argv)
         else
         {
             data->bonus.maps = argv;
-            data->bonus.levels = argc;
+            data->bonus.levels = argc - 1;
             data->bonus.level = 1;
             load_file(data, argv[1]);
             check_wall_closed(data);

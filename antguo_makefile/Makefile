@@ -69,3 +69,6 @@ clean:
 	rm -rf ${NAME} *.o
 	rm -rf ${DIR_MLX}/*.o
 	rm -rf ${LIBMLX}
+
+game1: 
+	sh cub3D maps/mapa0.cub maps/mapa1.cub

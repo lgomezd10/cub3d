@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:13:50 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 18:11:12 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 18:25:30 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <math.h>
 
 //MAC
-/*
+
 # define K_LEFT 0
 # define K_RIGHT 2
 # define K_UP 13
@@ -30,9 +30,10 @@
 # define K_MAP 46
 # define K_ESC 53
 # define EVENT_EXIT 17
-*/
-//LINUX
+# define K_NEXT 45
 
+//LINUX
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -43,7 +44,7 @@
 #define K_ESC 65307
 #define EVENT_EXIT 33
 #define K_NEXT 110
-
+*/
 
 enum e_dir
 {
@@ -173,7 +174,7 @@ typedef struct s_bonus
 	int points;
 	int lives;
 	int len_bar;
-	int unit_bar;
+	double unit_bar;
 	int end;
 	int blood;
 	int add_points;
@@ -221,6 +222,7 @@ int			valid_point(t_game *data, int x, int y);
 void		set_point_int(t_point_int *point, int x, int y);
 t_sprite	*add_new_sp_back(t_game *data, t_list_sp *list, int x, int y);
 void		free_components(t_game *data);
+void		free_level(t_game *data);
 void		check_wall_closed(t_game *data);
 void		load_player(t_game *data, int y, int x);
 void		draw_circle_map(t_game *data, t_point center, \

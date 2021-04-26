@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:30:04 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/19 18:31:31 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 16:30:54 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,34 @@ void	clear_sprites(t_game *data)
 		data->sprites.end = 0;
 		data->sprites.size = 0;
 	}
+}
+
+void	free_level(t_game *data)
+{
+	free_table(data);
+	ft_bzero(&data->table, sizeof(t_table));
+	clear_sprites(data);
+	free(data->t_NO);
+	data->t_NO = 0;
+	free(data->t_SO);
+	data->t_SO = 0;
+	free(data->t_WE);
+	data->t_WE = 0;
+	free(data->t_EA);
+	data->t_EA = 0;
+	free(data->sprite);
+	data->sprite = 0;
+	free(data->ceiling);
+	data->ceiling = 0;
+	free(data->floor);
+	data->floor = 0;
+	free(data->player);
+	data->player = 0;
+	free(data->text);
+	data->text = 0;
+	data->width = 0;
+	data->height = 0;
+	data->player_init = 0;
 }
 
 void	free_components(t_game *data)

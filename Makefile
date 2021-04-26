@@ -16,6 +16,8 @@ FLAGSLIB = -Lmlx -lmlx -framework Metal -framework AppKit -lm
 
 NAME = cub3D
 
+NAMEBONUS = bonus
+
 FILES = cub3d \
 	utils/errors \
 	utils/save_bmp \
@@ -38,7 +40,7 @@ FILES = cub3d \
 	sprites/list_sprite \
 	sprites/sprites \
 
-BONUS = bonus/minimap \
+FILESBONUS = bonus/minimap \
 	bonus/draw_minimap \
 	bonus/game_bonus \
 	bonus/life \
@@ -46,7 +48,7 @@ BONUS = bonus/minimap \
 	bonus/utils_color \
 	bonus/collect_sprites
 
-FBONUS = ${FILES} ${BONUS}
+FBONUS = ${FILES} ${FILESBONUS}
 
 SRC = ${addsuffix .c, ${addprefix src/, ${FILES}}}
 
@@ -59,7 +61,7 @@ OBJSBONUS = ${SRCBONUS:.c=.o}
 ${NAME} : ${LIBFT} ${LIBMLX} ${OBJS}
 	gcc -g ${CFLAGS} -o ${NAME} ${OBJS} ${LIBFT} ${LIBMLX} ${FLAGSLIB}
 
-bonus : ${LIBFT} ${LIBMLX} ${OBJSBONUS}
+${NAMEBONUS} : ${LIBFT} ${LIBMLX} ${OBJSBONUS}
 	gcc -g ${CFLAGS} -o ${NAME} ${OBJSBONUS} ${LIBFT} ${LIBMLX} ${FLAGSLIB}
 
 all : ${NAME}
@@ -84,3 +86,11 @@ fclean:	clean
 	${RM} ${LIBMLX}
 
 re: fclean all
+
+game1:	${NAMEBONUS}
+	./cub3D maps/game1.cub
+game2:	${NAMEBONUS}
+	./cub3D maps/game201.cub maps/game202.cub maps/game203.cub
+
+game2easy:	${NAMEBONUS}
+	./cub3D maps/mapa0.cub maps/mapa1.cub
