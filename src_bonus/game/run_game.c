@@ -30,7 +30,6 @@ int	load_game(t_game *data)
 
 int	load_image(t_game *data)
 {
-	static int	firts_time = 1;
 	t_image		*img;
 
 	if ((data->window.win || data->to_save))
@@ -38,11 +37,10 @@ int	load_image(t_game *data)
 		//mlx_sync(1, data->window.img.img.img);
 		move(data);
 		img = &data->window.img.img;
-		if (!data->bonus.end && (firts_time || data->has_moved))
+		if (!data->bonus.end && data->has_moved)
 		{
 			data->has_moved = 0;
 			short_sprites(data);
-			firts_time = 0;
 			load_game(data);
 			raycaster(data);
 
@@ -67,9 +65,12 @@ int	run_game(t_game *data)
 	data->window.img.img.img = mlx_new_image(data->window.ptr, \
 	data->width, data->height);
 	has_been_created(data, data->window.img.img.img);
+	data->has_moved = 1;
 	load_image(data);
 	mlx_hook(data->window.win, 2, 1L << 0, press_key, data);
 	mlx_hook(data->window.win, 3, 1L << 1, release_key, data);
+	mlx_hook(data->window.win, 4, 1L << 2, press_mouse, data);
+	mlx_hook(data->window.win, 5, 1L << 3, release_mouse, data);
 	mlx_hook(data->window.win, EVENT_EXIT, 1L << 17, event_exit, data);
 	mlx_loop_hook(data->window.ptr, load_image, data);
 	mlx_loop(data->window.ptr);

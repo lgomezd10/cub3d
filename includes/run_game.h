@@ -23,6 +23,8 @@ t_cont_img *img);
 int				raycaster(t_game *data);
 int				press_key(int keycode, t_game *data);
 int				release_key(int keycode, t_game *data);
+int             press_mouse(int button, int x, int y, t_game *data);
+int             release_mouse(int button, int x, int y, t_game *data);
 void			my_mlx_pixel_put(t_cont_img *data, int x, int y, int color);
 unsigned int	my_mlx_pixel_get(t_cont_img *img, int x, int y);
 int				init_window(t_game *data);

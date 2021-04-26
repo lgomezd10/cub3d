@@ -37,16 +37,13 @@ void load_next_level(t_game *data)
     int level;
     int levels;
     char **maps;
-    t_point_int start;
-    t_point_int end;
 
     level = data->bonus.level;
     levels = data->bonus.levels;
     maps = data->bonus.maps;
     data->bonus.end = 1;
-    if (levels > level)
+    if (levels - 1 > level)
     {
-        printf("nievel anterior: %d, nievles: %d\n", level, levels);
         level++;
         check_file(data, maps[level]);
         free_components(data);
@@ -57,10 +54,6 @@ void load_next_level(t_game *data)
         load_file(data, data->bonus.maps[data->bonus.level]);
         check_wall_closed(data);
         run_game(data);
-        set_point_int(&start, 0, 0);
-        set_point_int(&end, data->width, data->height);
-        draw_rectangle(data, start, end, color_int(0, 0, 0));
-        copy_img(data, start, end, NextLevel);
     }
     else
         game_over(data);
@@ -79,7 +72,11 @@ void collect_sprite(t_game *data, int x, int y)
         set_point_int(&start, 0, 0);
         set_point_int(&end, data->width, data->height);
         draw_rectangle(data, start, end, color_int(0, 0, 0));
-        copy_img(data, start, end, NextLevel);
+        printf("levels: %d level: %d\n", data->bonus.levels, data->bonus.level);
+        if (data->bonus.levels - 1 > data->bonus.level)
+            copy_img(data, start, end, NextLevel);
+        else
+            copy_img(data, start, end, GameOver);
     }
 }
 

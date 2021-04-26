@@ -19,10 +19,7 @@ int	press_key(int keycode, t_game *data)
 	player = data->player;
 	
 	if (keycode == K_NEXT && data->bonus.game == 2 && data->bonus.end)
-	{
-		data->bonus.end = 0;
-		load_next_level(data);
-	}
+			load_next_level(data);
 	if (keycode == K_RIGHT)
 		player->move_in_side = -1;
 	if (keycode == K_LEFT)
@@ -61,6 +58,31 @@ int	release_key(int keycode, t_game *data)
 	if (keycode == K_TURN_L)
 		player->rotate = 0;
 	if (keycode == K_TURN_R)
+		player->rotate = 0;
+	return (0);
+}
+
+int press_mouse(int button, int x, int y, t_game *data)
+{
+	t_player	*player;
+
+	player = data->player;
+	if (button == 1)
+	{
+		if (x < data->width / 2 && y > 0)
+			player->rotate = -1;
+		else
+			player->rotate = 1;
+	}
+	return (0);
+}
+
+int release_mouse(int button, int x, int y, t_game *data)
+{
+	t_player	*player;
+
+	player = data->player;
+	if (button == 1 && x > 0 && y > 0)
 		player->rotate = 0;
 	return (0);
 }

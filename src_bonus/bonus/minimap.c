@@ -58,7 +58,7 @@ char	get_value_table(t_game *data, int x, int y)
 	{
 		p_table.y += map->init_table.y;
 		p_table.x += map->init_table.x;
-	}
+	}	
 	if (!valid_point(data, p_table.x, p_table.y))
 	{
 		printf("Se ha intentado acceder a x: %d y: %d\n", p_table.x, p_table.y);
