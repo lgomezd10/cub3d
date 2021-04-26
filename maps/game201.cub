@@ -1,7 +1,7 @@
 R 5000 5000
-WE textures/wood.xpm
-NO textures/redbrick.xpm
-SO textures/purplestone.xpm
+WE textures/greystone.xpm
+NO textures/greystone.xpm
+SO textures/greystone.xpm
 EA textures/greystone.xpm
 S textures/barrel.xpm
 F 125,25,25

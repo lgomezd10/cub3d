@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:16:05 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/22 15:57:00 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 20:02:11 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	load_img(t_game *data, t_cont_img *img, int dir)
 	char	*str;
 
 	str = 0;
+	str = load_img_bonus(data, dir);
 	if (dir == North)
 		str = data->t_NO;
 	if (dir == South)
@@ -74,27 +75,7 @@ int	load_img(t_game *data, t_cont_img *img, int dir)
 	if (dir == West)
 		str = data->t_WE;
 	if (dir == Sprite)
-		str = data->sprite;
-	if (dir == GameOver)
-	{
-		str = "textures/gameover.xpm";
-		check_file(data, str);
-	}
-	if (dir == NextLevel)
-	{
-		str = "textures/nextlevel.xpm";
-		check_file(data, str);
-	}
-	if (dir == Life)
-	{
-		str = "textures/life.xpm";
-		check_file(data, str);
-	}
-	if (dir == Blood)
-	{
-		str = "textures/blood.xpm";
-		check_file(data, str);
-	}
+		str = data->sprite;	
 	img->img.img = mlx_xpm_file_to_image(data->window.ptr, \
 	str, &img->width, &img->height);
 	img->img.addr = mlx_get_data_addr(img->img.img, \
@@ -117,6 +98,7 @@ int	init_texture(t_game *data)
 	load_img(data, &text[GameOver], GameOver);
 	load_img(data, &text[NextLevel], NextLevel);
 	load_img(data, &text[Blood], Blood);
+	load_img(data, &text[Blood], Beer);
 	data->text = text;
 	return (0);
 }

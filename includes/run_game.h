@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:14:16 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/22 19:41:20 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 20:02:11 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ t_cont_img *img);
 int				raycaster(t_game *data);
 int				press_key(int keycode, t_game *data);
 int				release_key(int keycode, t_game *data);
-int             press_mouse(int button, int x, int y, t_game *data);
-int             release_mouse(int button, int x, int y, t_game *data);
+int				press_mouse(int button, int x, int y, t_game *data);
+int				release_mouse(int button, int x, int y, t_game *data);
 void			my_mlx_pixel_put(t_cont_img *data, int x, int y, int color);
 unsigned int	my_mlx_pixel_get(t_cont_img *img, int x, int y);
 int				init_window(t_game *data);
@@ -37,8 +37,9 @@ int				move(t_game *data);
 int				color_int(int red, int green, int blue);
 void			save_bmp(t_game *data);
 void			move_minimap(t_game *data);
-void            draw_life_bar(t_game *data);
-void            game_over(t_game *data);
-void            init_game_bonus(t_game *data);
-void            sprite_found(t_game *data, int x, int y);
+void			draw_life_bar(t_game *data);
+void			game_over(t_game *data);
+void			init_game_bonus(t_game *data);
+void			sprite_found(t_game *data, int x, int y);
+char            *load_img_bonus(t_game *data, int dir);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 17:09:23 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 15:43:03 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 19:46:26 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	str_to_color(t_game *data, char *color)
 	handle_error(data, "Color must be between 0 y 255");
 	return (-1);
 }
-
-
 
 void	save_color(t_game *data, t_color **color, char **split)
 {

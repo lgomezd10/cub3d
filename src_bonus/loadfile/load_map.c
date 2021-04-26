@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 18:47:48 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 14:19:28 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 19:45:58 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	correct_line_map(char *str, t_game *data)
 				if (!data->player_init)
 					data->player_init = str[i];
 				else
-					handle_error(data, "There is more than one player on the map");
+					handle_error(data, "More than one player on the map");
 			}
 			i++;
 		}

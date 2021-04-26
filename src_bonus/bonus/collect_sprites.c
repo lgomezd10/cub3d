@@ -8,8 +8,7 @@ void delete_sprite(t_game *data, int x, int y)
 	sp = data->sprites.begin;
 	found = 0;
 	while (sp && !found)
-	{
-		
+	{		
 		if ((int)sp->pos.x == x && (int)sp->pos.y == y)
 		{
 			found = sp;
@@ -53,40 +52,12 @@ void load_next_level(t_game *data)
 		data->height = dimensions.y;
 		data->bonus.end = 0;
 		init_texture(data);
+		init_minimap(data);
 		init_game_bonus(data);       
 	}
 	else
 		game_over(data);
 }
-
-/*
-void load_next_level(t_game *data)
-{
-	int level;
-	int levels;
-	char **maps;
-
-	level = data->bonus.level;
-	levels = data->bonus.levels;
-	maps = data->bonus.maps;
-	data->bonus.end = 1;
-	if (levels > level)
-	{
-		level++;
-		check_file(data, maps[level]);
-		free_components(data);
-		data = (t_game *)ft_calloc(sizeof(t_game), 1);
-		data->bonus.level = level;
-		data->bonus.levels = levels;
-		data->bonus.maps = maps;
-		load_file(data, data->bonus.maps[data->bonus.level]);
-		check_wall_closed(data);
-		run_game(data);
-	}
-	else
-		game_over(data);
-}
-*/
 
 void collect_sprite(t_game *data, int x, int y)
 {

@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 18:24:25 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 13:21:15 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 19:33:28 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	has_been_created(t_game *data, void *ptr)
 	if (!ptr)
 		handle_error(data, "Malloc return error");
 }
-
 
 void	check_file(t_game *data, char *file)
 {

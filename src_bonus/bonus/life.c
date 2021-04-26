@@ -4,21 +4,23 @@ void draw_lives(t_game *data)
 {
 	t_point_int start;
 	t_point_int end;
+	t_point_int margin;
 	int size;
-	int marginx;
-	int marginy;
 	int i;
 
 	size = data->width / 24;
-	marginx = size / 6;
-	marginy = marginx;
+	margin.x = size / 6;
+	margin.y = margin.x;
 	i = 0;
 	while (i < data->bonus.lives && i < 6)
 	{
-		set_point_int(&start, marginx, marginy);
-		set_point_int(&end, marginx + size, marginy + size);
-		copy_img(data, start, end, Life);
-		marginx += size + marginy;
+		set_point_int(&start, margin.x, margin.y);
+		set_point_int(&end, margin.x + size, margin.y + size);
+		if (data->bonus.game == 1)
+			copy_img(data, start, end, Life);
+		if (data->bonus.game == 2)
+			copy_img(data, start, end, Beer);
+		margin.x += size + margin.y;
 		i++;
 	}
 }

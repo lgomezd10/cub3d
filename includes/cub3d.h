@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:13:50 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 18:25:30 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/26 19:54:00 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ enum e_dir
 	GameOver,
 	NextLevel,
 	Blood,
+	Beer,
 	Size
 };
 
@@ -170,17 +171,17 @@ typedef struct s_minimap
 
 typedef struct s_bonus
 {
-	int game;
-	int points;
-	int lives;
-	int len_bar;
-	double unit_bar;
-	int end;
-	int blood;
-	int add_points;
-	char **maps;
-	int level;
-	int levels;
+	int		game;
+	int		points;
+	int		lives;
+	int		len_bar;
+	double	unit_bar;
+	int		end;
+	int		blood;
+	int		add_points;
+	char	**maps;
+	int		level;
+	int		levels;
 }	t_bonus;
 
 typedef struct s_game
