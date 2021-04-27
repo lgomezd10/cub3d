@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:16:05 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 20:02:11 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 17:13:17 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	load_img(t_game *data, t_cont_img *img, int dir)
 	if (dir == West)
 		str = data->t_WE;
 	if (dir == Sprite)
-		str = data->sprite;	
+		str = data->sprite;
 	img->img.img = mlx_xpm_file_to_image(data->window.ptr, \
 	str, &img->width, &img->height);
 	img->img.addr = mlx_get_data_addr(img->img.img, \

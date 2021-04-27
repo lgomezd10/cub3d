@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 17:38:40 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 15:21:36 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 18:45:02 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,25 @@ int	load_game(t_game *data)
 
 int	load_image(t_game *data)
 {
-	t_image		*img;
-
-	if ((data->window.win || data->to_save))
+	if (data->window.win || data->to_save)
 	{
-		//mlx_sync(1, data->window.img.img.img);
+		mlx_sync(1, data->window.img.img.img);
 		move(data);
-		img = &data->window.img.img;
 		if (!data->bonus.end && data->has_moved)
 		{
 			data->has_moved = 0;
 			short_sprites(data);
 			load_game(data);
 			raycaster(data);
-
 			if (data->player->act_map)
 				draw_minimap(data);
 			draw_life_bar(data);
-			//mlx_do_sync(data->window.ptr);
+			mlx_do_sync(data->window.ptr);
 		}
-		if (data->to_save)
-			save_bmp(data);
-		mlx_put_image_to_window(data->window.ptr, \
-		data->window.win, img->img, 0, 0);
-		//mlx_sync(2, data->window.win);
 		check_next_level(data);
+		mlx_put_image_to_window(data->window.ptr, data->window.win, \
+		data->window.img.img.img, 0, 0);
+		mlx_sync(2, data->window.win);
 	}
 	return (0);
 }

@@ -6,21 +6,21 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:15:31 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 18:06:04 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 17:56:59 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bonus.h"
 
-t_point    pos_in_minimap(t_game *data, t_point src)
+t_point	pos_in_minimap(t_game *data, t_point src)
 {
-    t_point pos;
+	t_point	pos;
 
-    pos.x = (src.x - data->minimap.init_table.x) * data->minimap.unit_width;
-    pos.x += data->minimap.init.x;
+	pos.x = (src.x - data->minimap.init_table.x) * data->minimap.unit_width;
+	pos.x += data->minimap.init.x;
 	pos.y = (src.y - data->minimap.init_table.y) * data->minimap.unit_height;
-    pos.y += data->minimap.init.y;
-    return pos; 
+	pos.y += data->minimap.init.y;
+	return (pos);
 }
 
 void	draw_triangle(t_game *data, int size, int color)
@@ -32,7 +32,7 @@ void	draw_triangle(t_game *data, int size, int color)
 	int			sizey;
 
 	player = data->player;
-    pos = pos_in_minimap(data, player->pos);
+	pos = pos_in_minimap(data, player->pos);
 	add.x = 0;
 	sizey = size;
 	while (sizey > 0)
@@ -48,7 +48,7 @@ void	draw_triangle(t_game *data, int size, int color)
 		sizey--;
 		add.x++;
 		pos.x = pos.x + (player->dir.x);
-		pos.y = pos.y + (player->dir.y);		
+		pos.y = pos.y + (player->dir.y);
 	}
 }
 
@@ -60,7 +60,7 @@ void	draw_circle_map(t_game *data, t_point center, double radius, int color)
 	int		to_x;
 	t_point	point;
 
-    center = pos_in_minimap(data, center);
+	center = pos_in_minimap(data, center);
 	i = center.y - radius;
 	to_y = i + (2 * radius);
 	while (i <= to_y)
@@ -79,11 +79,11 @@ void	draw_circle_map(t_game *data, t_point center, double radius, int color)
 	}
 }
 
-void draw_sprites(t_game *data)
+void	draw_sprites(t_game *data)
 {
-	t_sprite *list;
-	t_minimap map;
-	t_point_int pos;
+	t_sprite	*list;
+	t_minimap	map;
+	t_point_int	pos;
 
 	map = data->minimap;
 	list = data->sprites.begin;
@@ -91,7 +91,8 @@ void draw_sprites(t_game *data)
 	{
 		pos.x = list->pos.x;
 		pos.y = list->pos.y;
-		if (!data->minimap.size_map || (in_limits(pos, map.init_table, map.end_table)))
+		if (!data->minimap.size_map
+			|| in_limits(pos, map.init_table, map.end_table))
 			draw_circle_map(data, list->pos, 8, data->minimap.color_sprites);
 		list = list->next;
 	}

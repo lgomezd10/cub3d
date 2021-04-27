@@ -45,7 +45,6 @@ FILESBONUS = bonus/minimap \
 	bonus/game_bonus \
 	bonus/utils_bonus \
 	bonus/life \
-	bonus/utils_life \
 	bonus/collect_sprites
 
 FBONUS = ${FILES} ${FILESBONUS}
@@ -90,7 +89,7 @@ re: fclean all
 game1:	${NAMEBONUS}
 	./cub3D maps/game1.cub
 game2:	${NAMEBONUS}
-	./cub3D maps/game200.cub maps/game201.cub maps/game202.cub maps/game203.cub
+	./cub3D maps/game201.cub maps/game202.cub maps/game203.cub
 
 game2easy:	${NAMEBONUS}
-	./cub3D maps/mapa0.cub maps/mapa1.cub
+	./cub3D maps/game200.cub maps/mapa0.cub maps/mapa1.cub

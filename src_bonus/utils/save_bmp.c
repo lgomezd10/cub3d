@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 17:47:22 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 14:19:28 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 19:01:53 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	save_bmp(t_game *data)
 	write_header(data, fd, file_size);
 	write_image(data, fd, pad);
 	close(fd);
-	printf("screamshot.bmp has been created in this directory\n");
+	ft_putstr_fd("screamshot.bmp has been created in this directory\n", 1);
 	event_exit(data);
 }
 
@@ -86,5 +86,11 @@ void	load_bmp(t_game *data)
 	data->window.img.img.img = mlx_new_image(data->window.ptr, \
 	data->width, data->height);
 	has_been_created(data, data->window.img.img.img);
-	load_image(data);
+	move(data);
+	data->has_moved = 0;
+	short_sprites(data);
+	load_game(data);
+	raycaster(data);
+	draw_life_bar(data);
+	save_bmp(data);
 }

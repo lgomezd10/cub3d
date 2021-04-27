@@ -1,4 +1,4 @@
-R 900 600
+R 5000 5000
 WE textures/redbrick.xpm
 NO textures/eagle.xpm
 SO textures/eagle.xpm

@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:16:05 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/21 12:15:31 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 19:03:51 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	load_window(t_game *data)
 		data->width = size.x;
 	if (data->height > size.y)
 		data->height = size.y - 23;
-	if (data->width < 500)
-		data->width = 500;
+	if (data->width < 600)
+		data->width = 600;
 	if (data->height < 400)
 		data->height = 400;
 	data->wallDist = ft_calloc(sizeof(double), data->width);

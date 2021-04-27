@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/27 17:25:07 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/04/27 17:25:10 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/bonus.h"
 
 char	*load_img_bonus(t_game *data, int dir)
@@ -20,13 +32,14 @@ char	*load_img_bonus(t_game *data, int dir)
 	return (str);
 }
 
-void copy_img(t_game *data, t_point_int start, t_point_int end, int text)
+void	copy_img(t_game *data, t_point_int start, t_point_int end, int text)
 {
-	t_cont_img *img;
-	t_cont_img *copy;
-	t_point_int pos;
-	t_point_int pos_copy;
-	int color;
+	t_cont_img	*img;
+	t_cont_img	*copy;
+	t_point_int	pos;
+	t_point_int	pos_copy;
+	int			color;
+
 	img = &data->window.img;
 	copy = &data->text[text];
 	pos.y = start.y;
@@ -43,5 +56,24 @@ void copy_img(t_game *data, t_point_int start, t_point_int end, int text)
 			pos.x++;
 		}
 		pos.y++;
+	}
+}
+
+void	draw_rectangle(t_game *data, t_point_int start, t_point_int end, \
+int color)
+{
+	int	x;
+	int	y;
+
+	y = start.y;
+	while (y < end.y)
+	{
+		x = start.x;
+		while (x < end.x)
+		{
+			my_mlx_pixel_put(&data->window.img, x, y, color);
+			x++;
+		}
+		y++;
 	}
 }

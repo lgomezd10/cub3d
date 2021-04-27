@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:12:44 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 19:39:45 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 18:55:07 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	draw_lives(t_game *data);
 void	collect_sprite(t_game *data, int x, int y);
 void	rest_life(t_game *data);
 void	game_over(t_game *data);
-void    show_end_level(t_game *data);
+void	show_end_level(t_game *data);
+
 #endif

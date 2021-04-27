@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:14:16 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 20:02:11 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 18:56:01 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void			init_minimap(t_game *data);
 int				init_texture(t_game *data);
 void			print_cel_floor(t_game *data, int ceiling, int floor, \
 t_cont_img *img);
+int				load_game(t_game *data);
 int				raycaster(t_game *data);
 int				press_key(int keycode, t_game *data);
 int				release_key(int keycode, t_game *data);
@@ -41,6 +42,6 @@ void			draw_life_bar(t_game *data);
 void			game_over(t_game *data);
 void			init_game_bonus(t_game *data);
 void			sprite_found(t_game *data, int x, int y);
-char            *load_img_bonus(t_game *data, int dir);
-void            check_next_level(t_game *data);
+char			*load_img_bonus(t_game *data, int dir);
+void			check_next_level(t_game *data);
 #endif

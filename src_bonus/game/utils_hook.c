@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:15:58 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 18:04:41 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 19:01:53 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	press_key(int keycode, t_game *data)
 
 	player = data->player;
 	if (keycode == K_NEXT && data->bonus.game == 2 && data->bonus.end)
-			load_next_level(data);
+		load_next_level(data);
 	if (keycode == K_RIGHT)
 		player->move_in_side = -1;
 	if (keycode == K_LEFT)
@@ -61,7 +61,7 @@ int	release_key(int keycode, t_game *data)
 	return (0);
 }
 
-int press_mouse(int button, int x, int y, t_game *data)
+int	press_mouse(int button, int x, int y, t_game *data)
 {
 	t_player	*player;
 
@@ -76,7 +76,7 @@ int press_mouse(int button, int x, int y, t_game *data)
 	return (0);
 }
 
-int release_mouse(int button, int x, int y, t_game *data)
+int	release_mouse(int button, int x, int y, t_game *data)
 {
 	t_player	*player;
 
@@ -89,7 +89,7 @@ int release_mouse(int button, int x, int y, t_game *data)
 int	event_exit(t_game *data)
 {
 	data->closed = 1;
-	printf("Game over!\n");
+	ft_putstr_fd("Game over!\n", 1);
 	free_components(data);
 	exit(0);
 	return (0);

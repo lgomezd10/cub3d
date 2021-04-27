@@ -6,7 +6,7 @@
 /*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 16:13:50 by lgomez-d          #+#    #+#             */
-/*   Updated: 2021/04/26 19:54:00 by lgomez-d         ###   ########.fr       */
+/*   Updated: 2021/04/27 16:05:01 by lgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <math.h>
 
 //MAC
-/*
+
 # define K_LEFT 0
 # define K_RIGHT 2
 # define K_UP 13
@@ -31,9 +31,9 @@
 # define K_ESC 53
 # define EVENT_EXIT 17
 # define K_NEXT 45
-*/
-//LINUX
 
+//LINUX
+/*
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -44,7 +44,7 @@
 #define K_ESC 65307
 #define EVENT_EXIT 33
 #define K_NEXT 110
-
+*/
 
 enum e_dir
 {

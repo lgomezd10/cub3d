@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   life.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgomez-d <lgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/27 17:44:57 by lgomez-d          #+#    #+#             */
+/*   Updated: 2021/04/27 17:48:02 by lgomez-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/bonus.h"
 
-void draw_lives(t_game *data)
+void	draw_lives(t_game *data)
 {
-	t_point_int start;
-	t_point_int end;
-	t_point_int margin;
-	int size;
-	int i;
+	t_point_int	start;
+	t_point_int	end;
+	t_point_int	margin;
+	int			size;
+	int			i;
 
 	size = data->width / 24;
 	margin.x = size / 6;
@@ -25,11 +37,11 @@ void draw_lives(t_game *data)
 	}
 }
 
-void game_over(t_game *data)
+void	game_over(t_game *data)
 {
-	t_cont_img *img;
-	t_point_int start;
-	t_point_int end;
+	t_cont_img	*img;
+	t_point_int	start;
+	t_point_int	end;
 
 	if (data->bonus.end)
 	{
@@ -43,20 +55,7 @@ void game_over(t_game *data)
 	}
 }
 
-void print_lives(t_game *data)
-{
-	char *lives;
-	int x;
-	int y;
-
-	x = 20;
-	y = 30;
-	lives = ft_itoa(data->bonus.lives);
-	mlx_string_put(data->window.ptr, data->window.win, x, y, color_int(255, 0, 0), lives);
-	free(lives);
-}
-
-void rest_life(t_game *data)
+void	rest_life(t_game *data)
 {
 	data->bonus.blood = TIME;
 	data->bonus.points -= data->bonus.add_points;
@@ -70,9 +69,9 @@ void rest_life(t_game *data)
 	}
 }
 
-void init_life(t_game *data)
+void	init_life(t_game *data)
 {
-	t_bonus *bonus;
+	t_bonus	*bonus;
 
 	bonus = &data->bonus;
 	bonus->points = POINTS;

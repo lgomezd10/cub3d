@@ -1,12 +1,12 @@
 R 1920 1080
-WE textures/purplestone.xpm
-NO textures/purplestone.xpm
-SO textures/purplestone.xpm
-EA textures/purplestone.xpm
+WE textures/colorstone.xpm
+NO textures/colorstone.xpm
+SO textures/colorstone.xpm
+EA textures/colorstone.xpm
 
 S textures/others/beer4.xpm
-C 222 ,112, 255
-F 123, 111, 0
+C 195, 160, 70
+F 106, 107, 77    
 
 
         1111111111111111111111111
