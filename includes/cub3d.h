@@ -177,6 +177,7 @@ typedef struct s_bonus
 	int		len_bar;
 	double	unit_bar;
 	int		end;
+	int		ending;
 	int		blood;
 	int		add_points;
 	char	**maps;

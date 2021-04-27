@@ -59,24 +59,29 @@ void load_next_level(t_game *data)
 		game_over(data);
 }
 
-void collect_sprite(t_game *data, int x, int y)
+void show_end_level(t_game *data)
 {
 	t_point_int start;
 	t_point_int end;
+
+	set_point_int(&start, 0, 0);
+	set_point_int(&end, data->width, data->height);
+	draw_rectangle(data, start, end, color_int(0, 0, 0));
+	printf("levels: %d level: %d\n", data->bonus.levels, data->bonus.level);
+	if (data->bonus.levels > data->bonus.level)
+		copy_img(data, start, end, NextLevel);
+	else
+		copy_img(data, start, end, GameOver);
+}
+
+void collect_sprite(t_game *data, int x, int y)
+{
 	data->table.table[y][x] = '0';
 	delete_sprite(data, x, y);
 	data->bonus.points += data->bonus.add_points;
 	if (!data->sprites.size)
 	{
-		data->bonus.end = 1;
-		set_point_int(&start, 0, 0);
-		set_point_int(&end, data->width, data->height);
-		draw_rectangle(data, start, end, color_int(0, 0, 0));
-		printf("levels: %d level: %d\n", data->bonus.levels, data->bonus.level);
-		if (data->bonus.levels > data->bonus.level)
-			copy_img(data, start, end, NextLevel);
-		else
-			copy_img(data, start, end, GameOver);
+		data->bonus.ending = 1;
 	}
 }
 

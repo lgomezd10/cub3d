@@ -42,4 +42,5 @@ void			game_over(t_game *data);
 void			init_game_bonus(t_game *data);
 void			sprite_found(t_game *data, int x, int y);
 char            *load_img_bonus(t_game *data, int dir);
+void            check_next_level(t_game *data);
 #endif

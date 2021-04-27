@@ -54,6 +54,7 @@ int	load_image(t_game *data)
 		mlx_put_image_to_window(data->window.ptr, \
 		data->window.win, img->img, 0, 0);
 		//mlx_sync(2, data->window.win);
+		check_next_level(data);
 	}
 	return (0);
 }

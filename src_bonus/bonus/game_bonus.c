@@ -1,49 +1,7 @@
 #include "../../includes/bonus.h"
 
-void copy_img(t_game *data, t_point_int start, t_point_int end, int text)
-{
-	t_cont_img *img;
-	t_cont_img *copy;
-	t_point_int pos;
-	t_point_int pos_copy;
-	int color;
-	img = &data->window.img;
-	copy = &data->text[text];
-	pos.y = start.y;
-	while (pos.y < end.y)
-	{
-		pos.x = start.x;
-		while (pos.x < end.x)
-		{
-			pos_copy.x = ((pos.x - start.x) * copy->width) / (end.x - start.x);
-			pos_copy.y = ((pos.y - start.y) * copy->height) / (end.y - start.y);
-			color = my_mlx_pixel_get(copy, pos_copy.x, pos_copy.y);
-			if ((color & 0x00FFFFFF) != 0)
-				my_mlx_pixel_put(img, pos.x, pos.y, color);
-			pos.x++;
-		}
-		pos.y++;
-	}
-}
 
-void game_over(t_game *data)
-{
-	t_cont_img *img;
-	t_point_int start;
-	t_point_int end;
-	
-	data->bonus.end = 1;
-	if (data->bonus.end)
-	{
-		img = &data->window.img;
-		set_point_int(&start, 0, 0);
-		set_point_int(&end, img->width, img->height);
-		draw_rectangle(data, start, end, color_int(0, 0, 0));
-		copy_img(data, start, end, GameOver);
-		mlx_put_image_to_window(data->window.ptr, \
-			data->window.win, img->img.img, 0, 0);
-	}
-}
+
 
 void sprite_found(t_game *data, int x, int y)
 {
@@ -79,6 +37,35 @@ void draw_life_bar(t_game *data)
 	{
 			copy_img(data, start, end, Blood);
 			data->bonus.blood--;
+	}
+}
+
+void check_next_level(t_game *data)
+{
+	static int temp = 0;
+	t_bonus *bonus;
+
+	bonus = &data->bonus;
+	if (bonus->ending)
+	{
+		if (!temp)
+			temp = 10;
+		else
+		{
+			temp--;
+			if (!temp)
+			{
+				bonus->ending = 0;
+				bonus->end = 1;
+			}
+		}
+	}
+	if (bonus->end)
+	{
+		if (bonus->game == 1)
+			game_over(data);
+		if (bonus->game == 2)
+			show_end_level(data);
 	}
 }
 

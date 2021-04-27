@@ -34,4 +34,5 @@ void	draw_lives(t_game *data);
 void	collect_sprite(t_game *data, int x, int y);
 void	rest_life(t_game *data);
 void	game_over(t_game *data);
+void    show_end_level(t_game *data);
 #endif

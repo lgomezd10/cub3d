@@ -25,6 +25,24 @@ void draw_lives(t_game *data)
 	}
 }
 
+void game_over(t_game *data)
+{
+	t_cont_img *img;
+	t_point_int start;
+	t_point_int end;
+
+	if (data->bonus.end)
+	{
+		img = &data->window.img;
+		set_point_int(&start, 0, 0);
+		set_point_int(&end, img->width, img->height);
+		draw_rectangle(data, start, end, color_int(0, 0, 0));
+		copy_img(data, start, end, GameOver);
+		mlx_put_image_to_window(data->window.ptr, \
+			data->window.win, img->img.img, 0, 0);
+	}
+}
+
 void print_lives(t_game *data)
 {
 	char *lives;
@@ -38,17 +56,15 @@ void print_lives(t_game *data)
 	free(lives);
 }
 
-
-
 void rest_life(t_game *data)
 {
 	data->bonus.blood = TIME;
 	data->bonus.points -= data->bonus.add_points;
 	if (!data->bonus.points)
-	{		
+	{
 		data->bonus.lives--;
 		if (!data->bonus.lives)
-			game_over(data);
+			data->bonus.ending = 1;
 		else
 			data->bonus.points = POINTS;
 	}
