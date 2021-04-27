@@ -98,7 +98,7 @@ int	init_texture(t_game *data)
 	load_img(data, &text[GameOver], GameOver);
 	load_img(data, &text[NextLevel], NextLevel);
 	load_img(data, &text[Blood], Blood);
-	load_img(data, &text[Blood], Beer);
+	load_img(data, &text[Beer], Beer);
 	data->text = text;
 	return (0);
 }

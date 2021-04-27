@@ -20,7 +20,7 @@
 # include <math.h>
 
 //MAC
-
+/*
 # define K_LEFT 0
 # define K_RIGHT 2
 # define K_UP 13
@@ -31,9 +31,9 @@
 # define K_ESC 53
 # define EVENT_EXIT 17
 # define K_NEXT 45
-
+*/
 //LINUX
-/*
+
 #define K_LEFT 97
 #define K_RIGHT 100
 #define K_UP 119
@@ -44,7 +44,7 @@
 #define K_ESC 65307
 #define EVENT_EXIT 33
 #define K_NEXT 110
-*/
+
 
 enum e_dir
 {

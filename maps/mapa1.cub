@@ -1,10 +1,10 @@
 R 1920 1080
 WE textures/bluestone.xpm
-NO textures/mossy.xpm
-SO textures/purplestone.xpm
-EA textures/eagle.xpm
+NO textures/bluestone.xpm
+SO textures/bluestone.xpm
+EA textures/bluestone.xpm
 
-S textures/barrel.xpm
+S textures/others/beer5.xpm
 C 222 ,112, 255
 F 123, 111, 0
    1111111      1111111

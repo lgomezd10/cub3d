@@ -1,10 +1,10 @@
 R 1920 1080
-WE textures/wood.xpm
-NO textures/redbrick.xpm
+WE textures/purplestone.xpm
+NO textures/purplestone.xpm
 SO textures/purplestone.xpm
-EA textures/greystone.xpm
+EA textures/purplestone.xpm
 
-S textures/barrel.xpm
+S textures/others/beer4.xpm
 C 222 ,112, 255
 F 123, 111, 0
 
